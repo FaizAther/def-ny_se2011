@@ -19,7 +19,7 @@ Steps to get Dafny 1.9.7.XX.. working on your local machine (Linux).
 
 	[-- END OF mono-project INSTALL INSTRUCTIONS --]
 
-	9)	cd ../; echo "method Main() {print "hello, Dafny\n";assert 10 > 2" >> test.dfy;}"
+	9)	cd ../; echo "method Main() {print "hello, Dafny\n";assert 10 > 2;}" >>test.dfy
 	
 	[-- Add path to the dafny folder in my case this is the path. ~=$HOME #home folder. --]
 
