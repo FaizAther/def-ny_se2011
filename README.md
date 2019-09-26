@@ -15,7 +15,7 @@ Steps to get Dafny 1.9.7.XX.. working on your local machine (Linux).
 	5)	sudo apt install apt-transport-https dirmngr gnupg ca-certificates
 	6)	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 	7)	echo "deb https://download.mono-project.com/repo/debian stable-stretch main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
-	8)	sudo apt update
+	8)	sudo apt update; sudo apt install mono-devel
 
 	[-- END OF mono-project INSTALL INSTRUCTIONS --]
 
