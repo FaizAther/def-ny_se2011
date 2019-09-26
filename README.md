@@ -2,7 +2,7 @@ This is SENG2011!
 
 Steps to get Dafny 1.9.7.XX.. working on your local machine (Linux).
 
-	1)	mkdir se2011; git clone "github-url"; echo "Clone repo"
+	1)	mkdir se2011; git clone git@github.com:FaizAther/def-ny_se2011.git
 	2)	cd dafny/
 	3)	chmod +x dafny
 	4)	chmod +x Dafny.exe
