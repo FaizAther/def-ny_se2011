@@ -25,7 +25,7 @@ Steps to get Dafny 1.9.7.XX.. working on your local machine (Linux).
 
 	10)	PATH=$PATH:~/Documents/se2011/dafny
 
-	[-- OPTIONAL STEP 11: Permanently add path to bash --]
+	[-- OPTIONAL STEP 11: Permanently add path to bash #your path may vary --]
 	
 	11)	echo "PATH=$PATH:~/Documents/se2011/dafny" >> ~/.bashrc
 
