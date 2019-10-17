@@ -1,4 +1,4 @@
-|           |&nbsp;<br/>
+|   &nbsp;        |<br/>
 {   x   x   }<br/>
  \    c    /<br/>
   \       /<br/>
