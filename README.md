@@ -49,5 +49,5 @@ Work &nbsp;Breakdown &nbsp;Structure<br/>
 <br/>
 <br/>
 <br/>
-Blood:=Love;<br/>
+#define Blood "Love"<br/>
 Blood Vlad
