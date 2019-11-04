@@ -12,6 +12,9 @@ class Capacity(object):
         for t in types:
             self._min[t] = 0
 
+    def max(self):
+        return self._max
+
     def min(self):
         return self._min
 
@@ -25,8 +28,6 @@ class Capacity(object):
         blood._storage = self
     # Postcondition: blood is assigned to this capacity
 
-    def max(self):
-        return self._max
 
     def __str__(self):
         return "{}\n{}\n{}".format(self._max, self._min, self._inventory)
