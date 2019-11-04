@@ -18,7 +18,7 @@ class MedicalFacility(object):
         return "{}\n{}\n{}".format(self._name, self._address, self._capacity)
 
 if __name__ == "__main__":
-    h1 = MedicalFacility("Sydney Childern Hospital",
+    h1 = MedicalFacility("Sydney Children Hospital",
                             "20, High Street, Randwick 2031,Sydney, NSW, AU",
-                            "1000 Gallon")
+                            1000000)
     print(h1)
