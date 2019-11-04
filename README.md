@@ -11,4 +11,8 @@
 #define Blood "Love"<br/>
 Blood Vlad
 
-<h1>PRROJECT VAMPIRE</h1>
+<h1>PROJECT VAMPIRE</h1>
+<h2>WARNING BLOOD NEEDED!</h2>
+
+This is a project repo for seng2011 group project.
+The code can be find in **proj** folder
