@@ -12,6 +12,9 @@ class Capacity(object):
         for t in types:
             self._min.append({"type":t, "amount":-1})
 
+    def max(self):
+        return self._max
+
     def min(self):
         return self._min
 
@@ -20,8 +23,6 @@ class Capacity(object):
             if m.get("type") == type:
                 m["amount"] = amount
 
-    def max(self):
-        return self._max
 
 
     def __str__(self):
