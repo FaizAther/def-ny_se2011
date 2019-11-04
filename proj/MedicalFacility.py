@@ -1,12 +1,19 @@
 from Capacity import Capacity
 
-class MedicalFacility(object):
+# This is the list of blood bags to use as reference when getting blood by id
+facilityList = []
+def assignFacilityId(facility):
+    facilityList.append(facility)
+    return len(facilityList)-1
 
+
+class MedicalFacility(object):
 
     def __init__(self, name, address, capacity):
         self._name = name
         self._address = address
         self._capacity = Capacity(capacity)
+        self._id = assignFacilityId(self)
 
     def name(self):
         return self._name
@@ -29,7 +36,7 @@ class MedicalFacility(object):
     # Return the blood object
     
     
-	# Remove blood: This function will be used when a facility either uses blood or removes expired blood
+    # Remove blood: This function will be used when a facility either uses blood or removes expired blood
     # Preconditions:
     #    Blood is in this location
     def removeBlood(self, blood):
