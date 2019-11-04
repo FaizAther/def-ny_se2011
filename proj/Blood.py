@@ -32,5 +32,5 @@ class Blood(object):
 if __name__ == "__main__":
     import datetime
     b1 = Blood(datetime.datetime.now(), 500)
-    b1.isVerified("B+")
+    b1.verify("B+")
     print(b1)

@@ -30,21 +30,21 @@ class Capacity(object):
 
 
     def __str__(self):
-        return "{}\n{}\n{}".format(self._max, self._min, self._inventory)
+        return "{}\n{}\n{}".format(self._max, self._min, list(map(str,self._inventory)))
 
 if __name__ == "__main__":
     c1= Capacity(100)
     import Blood
     import datetime
     
-    bag1 = Blood(datetime.datetime.now(), 20)
+    bag1 = Blood.Blood(datetime.datetime.now(), 20)
     bag1.verify("A+")
     
-    bag2 = Blood(datetime.datetime.now(), 10)
+    bag2 = Blood.Blood(datetime.datetime.now(), 10)
     bag2.verify("A-")
     
-    bag2 = Blood(datetime.datetime.now(), 5)
-    bag2.verify("B+")
+    bag3 = Blood.Blood(datetime.datetime.now(), 5)
+    bag3.verify("B+")
     
     c1.addBlood(bag1)
     c1.addBlood(bag2)
