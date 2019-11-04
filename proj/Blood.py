@@ -1,3 +1,10 @@
+
+# This is the list of blood bags to use as reference when getting blood by id
+bloodList = []
+def assignId(blood):
+	bloodList.append(blood)
+	return len(bloodList)-1
+
 class Blood(object):
     """docstring for Blood."""
 
@@ -7,6 +14,7 @@ class Blood(object):
         self._isVerified = False
         self._type = None
         self._storage = None
+		self._id = assignId(self)
 
     def collectionDate(self):
         return self._collectionDate

@@ -13,7 +13,11 @@ class MedicalFacility(object):
 
     def address(self):
         return self._address
-        
+    
+    # Send a message to this facility notifying of expired blood
+    def notifyExpired(self, bloodId):
+        pass
+    
     # Preconditions:
     #    Blood type is known
     #    Amount is positive
@@ -25,13 +29,12 @@ class MedicalFacility(object):
     # Return the blood object
     
     
+	# Remove blood: This function will be used when a facility either uses blood or removes expired blood
     # Preconditions:
-    #    Blood is marked for use
-    #    Blood is in location
-    def useBlood(self, blood):
+    #    Blood is in this location
+    def removeBlood(self, blood):
         pass
     # Postcondition: Blood is deleted from system
-        
 
     def __str__(self):
         return "{}\n{}\n{}".format(self._name, self._address, self._capacity)

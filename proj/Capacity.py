@@ -28,7 +28,7 @@ class Capacity(object):
         blood._storage = self
     # Postcondition: 
     #    Blood is assigned to this capacity
-    #    Maximum capacity is not exceeded
+    #    Capacity inventory is sorted by expiry date
 
 
     def __str__(self):
