@@ -8,46 +8,5 @@
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' &nbsp;' &nbsp;' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br/>
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' &nbsp;' &nbsp;' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;'<br/>
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; '<br/></p>
-<br/>
-<br/>
-Requirments<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-Use-Case<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-Work &nbsp;Breakdown &nbsp;Structure<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 #define Blood "Love"<br/>
 Blood Vlad
