@@ -13,6 +13,25 @@ class MedicalFacility(object):
 
     def address(self):
         return self._address
+        
+    # Preconditions:
+    #    Blood type is known
+    #    Amount is positive
+    def requestBlood(self, type, amount):
+        pass
+    # Postconditions: 
+    #    Blood is moved to location's capacity if not already there
+    #    Blood is marked for use
+    # Return the blood object
+    
+    
+    # Preconditions:
+    #    Blood is marked for use
+    #    Blood is in location
+    def useBlood(self, blood):
+        pass
+    # Postcondition: Blood is deleted from system
+        
 
     def __str__(self):
         return "{}\n{}\n{}".format(self._name, self._address, self._capacity)

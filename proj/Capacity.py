@@ -20,13 +20,15 @@ class Capacity(object):
 
     # Preconditions: 
     #    Blood._isVerified
-    #    Blood._amount + self._min[Blood._type] < self._max
+    #    Blood._amount + self._min.sum < self._max
     #    Blood is not owned by another facility
     def addBlood(self, blood):
         self._inventory.append(blood)
         self._min[blood._type] += blood._amount
         blood._storage = self
-    # Postcondition: blood is assigned to this capacity
+    # Postcondition: 
+    #    Blood is assigned to this capacity
+    #    Maximum capacity is not exceeded
 
 
     def __str__(self):
@@ -34,16 +36,16 @@ class Capacity(object):
 
 if __name__ == "__main__":
     c1= Capacity(100)
-    import Blood
+    from Blood import Blood
     import datetime
     
-    bag1 = Blood.Blood(datetime.datetime.now(), 20)
+    bag1 = Blood(datetime.datetime.now(), 20)
     bag1.verify("A+")
     
-    bag2 = Blood.Blood(datetime.datetime.now(), 10)
+    bag2 = Blood(datetime.datetime.now(), 10)
     bag2.verify("A-")
     
-    bag3 = Blood.Blood(datetime.datetime.now(), 5)
+    bag3 = Blood(datetime.datetime.now(), 5)
     bag3.verify("B+")
     
     c1.addBlood(bag1)
