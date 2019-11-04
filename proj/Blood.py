@@ -5,8 +5,8 @@ class Blood(object):
         self._collectionDate = collectionDate
         self._amount = amount
         self._isVerified = False
-        self._type = "N/A"
-
+        self._type = None
+        self._storage = None
 
     def collectionDate(self):
         return self._collectionDate
@@ -16,19 +16,21 @@ class Blood(object):
 
     def isVerified(self):
         return self._isVerified
-    def isVerified(self, isVerified):
-        self._isVerified = isVerified
+    
+    # Precondition: type is known and valid (one of O, A, B etc.), blood is verified
+    def verify(self, type):
+        self._type = type
+        self._isVerified = True
+    # Postcondition: blood is verified and typed
 
     def type(self):
         return self._type
-    def type(self, type):
-        self._type = type
 
     def __str__(self):
         return "{}, {}, {}, {}".format(self._collectionDate, self._amount, self._type, self._isVerified)
 
 if __name__ == "__main__":
-    b1 = Blood("10/02/2019", 500)
-    b1.isVerified(True)
-    b1.type("B+")
+    import datetime
+    b1 = Blood(datetime.datetime.now(), 500)
+    b1.isVerified("B+")
     print(b1)
