@@ -30,7 +30,7 @@ class Storage(object):
                 str+=b.__str__()
             str+="\n"
 
-        return "{}".format(str)
+        return str
 
 
 
