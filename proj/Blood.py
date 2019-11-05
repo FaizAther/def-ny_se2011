@@ -5,7 +5,7 @@ def assignBloodId(blood):
     bloodList.append(blood)
     return len(bloodList)-1
 
-class Blood(object):
+class Blood():
     """docstring for Blood."""
 
     def __init__(self, collectionDate, amount):
@@ -35,10 +35,10 @@ class Blood(object):
         return self._type
 
     def __str__(self):
-        return "{}, {}, {}, {}".format(self._collectionDate, self._amount, self._type, self._isVerified)
+        return "ID: %3s | Collection Date: %10s | Type: %3s | Amount: %5d" % (self._id, self._collectionDate, self._type or "?", self._amount)
 
 if __name__ == "__main__":
     import datetime
-    b1 = Blood(datetime.datetime.now(), 500)
+    b1 = Blood(datetime.date.today(), 500)
     b1.verify("B+")
     print(b1)

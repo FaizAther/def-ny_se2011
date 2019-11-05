@@ -1,5 +1,4 @@
-class Capacity(object):
-    """docstring for Capacity."""
+class Capacity():
 
     def __init__(self, max):
 
@@ -30,12 +29,17 @@ class Capacity(object):
     #    Blood is assigned to this capacity
     #    Capacity inventory is sorted by expiry date
 
+    # Preconditions:
+    #    Blood is assigned to this capacity
+    def removeBlood(self, blood):
+        pass
+    # Postcondition: Blood is no longer assigned to a capacity
 
     def __str__(self):
-        return "{}\n{}\n{}".format(self._max, self._min, list(map(str,self._inventory)))
+        return "Total Capacity: {}\nType totals: {}\n{}".format(self._max, self._min, "\n".join(map(str,self._inventory)))
 
 if __name__ == "__main__":
-    c1= Capacity(100)
+    c1 = Capacity(100)
     from Blood import Blood
     import datetime
     

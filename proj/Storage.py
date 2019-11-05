@@ -1,4 +1,4 @@
-class Storage(object):
+class Storage():
     Blood = {blood:[]}
     Fridge = {fridge:[Blood]}
     Section = {section:[Fridge]}
