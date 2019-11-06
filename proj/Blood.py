@@ -5,11 +5,14 @@ def assignBloodId(blood):
     bloodList.append(blood)
     return len(bloodList)-1
 
+import datetime
+from Storage import Storage
+
 class Blood(object):
     """docstring for Blood."""
-
+    import datetime
     def __init__(self, collectionDate, amount):
-        self._collectionDate = collectionDate
+        self._collectionDate = Blood.datetime.datetime.strptime(collectionDate, "%Y/%m/%d")
         self._amount = amount
         self._isVerified = False
         self._type = None
@@ -34,11 +37,36 @@ class Blood(object):
     def type(self):
         return self._type
 
+
+    def expiration(self):
+        for room in self._inventory:
+            for key in room:
+                print(key)
+
+
+    #Return TRUE if blood is expired
+    #Return FALSE if blood is not-expired
+    #42 - blood usage limit
+    def isExpired(self, collectionDate):
+        currentDate = datetime.datetime.now()
+        if((currentDate-collectionDate).days > 42):
+            print("Blood is Expired")
+            return True
+        else:
+            return False
+
+    #IF EXPIRED
+        #Notify
+        #Add blood to expired array
+        #Remove blood from storage
+
+
     def __str__(self):
         return "{}, {}, {}, {}".format(self._collectionDate, self._amount, self._type, self._isVerified)
 
 if __name__ == "__main__":
     import datetime
-    b1 = Blood(datetime.datetime.now(), 500)
+    b1 = Blood("2019/11/01", 500)
     b1.verify("B+")
     print(b1)
+    #b1.expiration()
