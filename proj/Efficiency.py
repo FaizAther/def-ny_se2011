@@ -39,7 +39,6 @@ class Efficiency(object):
                 #    j+=1
                 i+=1
             maxTT.insert(j, t)
-            #print(len(Efficiency.PATIENT[bType]))
         return maxTT
 
 
