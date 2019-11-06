@@ -34,6 +34,9 @@ class Storage(object):
 
         return str
 
+    #Add blood to storage
+    #Default unless room name is mentioned
+    #Does not add expired blood
     def addBlood(self, blood, **args):
         if blood.isExpired() == True:
             return
@@ -45,8 +48,10 @@ class Storage(object):
             for t in r.get('types'):
                 for k in (t.keys()):
                     if k == blood.type():
+                        #print(t.get(k))
                         #check expuery and add accordingly
                         t.get(k).append(blood)
+
 
     #Loops through rooms
     #Check expiration of blood
@@ -58,11 +63,13 @@ class Storage(object):
             for t in r.get('types'):
                 for a in t.values():
                     for b in a:
-                        print(b.isExpired())
+                        #print(b.isExpired())
                         if (b.isExpired() == True):
                             #print ("{} is Expired".format(b))
                             badBlood.append(b)
                             a.remove(b)
+                        #print(b)
+                    #print(a)
         return badBlood
 
 if __name__ == "__main__":
@@ -81,6 +88,7 @@ if __name__ == "__main__":
     b2 = Blood("2019/09/01", 500)
     b2.verify("AB-")
     s.addBlood(b2, room = "Pakistan")
-    print(s)
+    #print(s)
     s.expiration()
-    print(s)
+    #print(s)
+    s.sortBlood()
