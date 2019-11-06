@@ -1,3 +1,4 @@
+#from Storage import Storage
 class UseBlood(object):
     PATIENT = {'ABpos' : ["O-","O+","B-","B+","A-","A+","AB-","AB+"],
     'ABneg' : ["O-","B-","A-","AB-"],
@@ -9,9 +10,16 @@ class UseBlood(object):
     'Oneg' : ["O-"]
     }
     # most efficient algorithm to use blood
-    def __init__(self, requestedType):
+    def __init__(self, storage, requestedType):
 
         self._reqType = requestedType
+        self._storage = storage
+
+    def storage(self):
+        return storage
+
+    def storage(self, newStorage):
+        self._storage = newStorage
 
     def getSuitableBloods(self):
 
@@ -34,11 +42,13 @@ class UseBlood(object):
     def getTheBlood(self, suitableBloodType):
         for b in suitableBloodType:
             # TODO: find the blood type in the medical facility
+            x = storage().getBlood(b)
             print(b)
             # check only index 0 of the array
             # look for expired tomorrow
             # look for quantity highest and closest to expiry
         return "blood";
+        
 if __name__ == "__main__":
     c1= UseBlood("O+")
     x = c1.getSuitableBloods()
