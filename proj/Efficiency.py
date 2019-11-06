@@ -31,9 +31,9 @@ class Efficiency(object):
         for t in Efficiency.PATIENT[bType]:
             #print(storage.type(t))
             i = 0
-            j = 0
+            j = len(maxTT)
             for s in maxTT:
-                if storage.type(s) >= storage.type(t):
+                if storage.type(s) <= storage.type(t):
                     j = i
                 #else:
                 #    j+=1
