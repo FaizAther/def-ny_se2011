@@ -17,8 +17,35 @@ class Efficiency(object):
             if max < storage.type(t):
                 max = storage.type(t)
                 maxT = t
-        print(maxT, max)
+        print("Highest Amount: {}, {}".format( maxT, max))
 
+    def amount(storage, bType):
+        max = 0
+        maxT = ""
+        maxTT = []
+        temp = []
+        for t in Efficiency.PATIENT[bType]:
+            temp.append(t)
+            print (t)
+
+        for t in Efficiency.PATIENT[bType]:
+            #print(storage.type(t))
+            i = 0
+            j = 0
+            for s in maxTT:
+                if storage.type(s) >= storage.type(t):
+                    j = i
+                #else:
+                #    j+=1
+                i+=1
+            maxTT.insert(j, t)
+            #print(len(Efficiency.PATIENT[bType]))
+        return maxTT
+
+
+
+#    def insert(arr, obj, how):
+    #    for t in arr:
 
 
 
@@ -70,4 +97,4 @@ if __name__== "__main__":
     s.expiration()
     #print(s.types())
     print(s)
-    Efficiency.findBlood(s, "A+")
+    print(Efficiency.amount(s, "A+"))
