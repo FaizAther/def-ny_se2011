@@ -38,30 +38,19 @@ class Blood(object):
     def type(self):
         return self._type
 
-
-
-
-    #def expiration(self):
-    #    for room in self._inventory:
-    #        for key in room:
-    #            print(key)
-
-
     #Return TRUE if blood is expired
     #ELSE Return Number of day to expiery
     #42 - blood usage limit
     def isExpired(self):
         numDays = (datetime.datetime.now()-self._collectionDate).days
         if(numDays >= Blood.EXPIRATION_PERIOD):
+            #print("{} is expired".format(self))
             return True
         else:
             numDaysRemaining = Blood.EXPIRATION_PERIOD - numDays
+            #print("{} days remaining for expiery".format(numDaysRemaining))
             return numDaysRemaining
 
-    #IF EXPIRED
-        #Notify
-        #Add blood to expired array
-        #Remove blood from storage
 
 
     def __str__(self):
@@ -72,4 +61,7 @@ if __name__ == "__main__":
     b1 = Blood("2019/10/01", 500)
     b1.verify("B+")
     print(b1.isExpired())
-    #b1.expiration()
+    b2 = Blood("2019/09/01", 500)
+    b2.verify("B-")
+    print(b1.isExpired())
+    print(b2.isExpired())

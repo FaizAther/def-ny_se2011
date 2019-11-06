@@ -34,7 +34,9 @@ class Storage(object):
 
         return str
 
-    def addBlood(self, **args):
+    def addBlood(self, blood, **args):
+        if blood.isExpired() == True:
+            return
         if args.get('room') == None:
             args['room'] = "Default"
         for r in self._inventory:
@@ -42,29 +44,26 @@ class Storage(object):
                 continue
             for t in r.get('types'):
                 for k in (t.keys()):
-                    if k == args.get("blood").type():
+                    if k == blood.type():
                         #check expuery and add accordingly
-                        t.get(k).append(args.get("blood"))
+                        t.get(k).append(blood)
 
-
+    #Loops through rooms
+    #Check expiration of blood
+    #Removes expired blood from inventory
+    #Adds expired blod finto badBlood array
     def expiration(self):
-        for room in self._inventory:
-            for key in room:
-                print(key)
-
-
-    #Return TRUE if blood is expired
-    #Return FALSE if blood is not-expired
-    #42 - blood usage limit
-
-
-    #IF EXPIRED
-        #Notify
-        #Add blood to expired array
-        #Remove blood from storage
-
-
-
+        badBlood = []
+        for r in self._inventory:
+            for t in r.get('types'):
+                for a in t.values():
+                    for b in a:
+                        print(b.isExpired())
+                        if (b.isExpired() == True):
+                            #print ("{} is Expired".format(b))
+                            badBlood.append(b)
+                            a.remove(b)
+        return badBlood
 
 if __name__ == "__main__":
     s = Storage()
@@ -74,9 +73,14 @@ if __name__ == "__main__":
     #import datetime.datetime.datetime
     b = Blood("2019/10/10", 500)
     b.verify("AB+")
-    print(b)
-    s.addBlood(blood = b)
+    #print(b)
+    s.addBlood(b)
     b1 = Blood("2019/11/01", 500)
     b1.verify("AB-")
-    s.addBlood(blood = b1, room = "Pakistan")
+    s.addBlood(b1, room = "Pakistan")
+    b2 = Blood("2019/09/01", 500)
+    b2.verify("AB-")
+    s.addBlood(b2, room = "Pakistan")
+    print(s)
+    s.expiration()
     print(s)
