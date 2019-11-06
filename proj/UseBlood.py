@@ -40,10 +40,13 @@ class UseBlood(object):
         return UseBlood.PATIENT.get(name)
 
     def getTheBlood(self, suitableBloodType):
-        for b in suitableBloodType:
+        daysLeft = -1
+        for bt in suitableBloodType:
             # TODO: find the blood type in the medical facility
-            x = storage().getBlood(b)
-            print(b)
+            x = storage().getBlood(bt) # get the blood list in each Storage
+            if daysLeft < x[0].
+            print(x)
+            # assume the array is sorted(should be verified)
             # check only index 0 of the array
             # look for expired tomorrow
             # look for quantity highest and closest to expiry
