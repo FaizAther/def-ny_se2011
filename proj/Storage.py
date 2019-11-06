@@ -9,6 +9,8 @@ class Storage(object):
 
     def types(self):
         return self._types
+    def type(self, bType):
+        return self._types[bType]
 
     def inventory(self, desc):
         self._inventory.append(self.room(desc))
@@ -33,6 +35,7 @@ class Storage(object):
                 str+=t.__str__()
                 #for i in r.values():
             str+="\n"
+            str+=self._types.__str__()
         return str
 
 
@@ -129,6 +132,10 @@ if __name__ == "__main__":
     #AB- -> b4, b5, b3
 
     print(s)
+
+    b6 = Blood("2019/11/01", 300)
+    b6.verify("O-")
+    s.addBlood(b6, room = "Pakistan")
 
     s.expiration()
     #print(s.types())
