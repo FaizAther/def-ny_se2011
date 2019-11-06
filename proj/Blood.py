@@ -1,17 +1,18 @@
-
 # This is the list of blood bags to use as reference when getting blood by id
 bloodList = []
+
 def assignBloodId(blood):
     bloodList.append(blood)
     return len(bloodList)-1
 
 import datetime
-from Storage import Storage
 
 class Blood(object):
     """docstring for Blood."""
-    EXPIRATION_PERIOD = 42
     import datetime
+
+    EXPIRATION_PERIOD = 42
+
     def __init__(self, collectionDate, amount):
         self._collectionDate = Blood.datetime.datetime.strptime(collectionDate, "%Y/%m/%d")
         self._amount = amount
@@ -63,5 +64,6 @@ if __name__ == "__main__":
     print(b1.isExpired())
     b2 = Blood("2019/09/01", 500)
     b2.verify("B-")
+    print(b1)
     print(b1.isExpired())
     print(b2.isExpired())
