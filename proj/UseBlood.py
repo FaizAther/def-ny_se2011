@@ -48,7 +48,7 @@ class UseBlood(object):
             # look for expired tomorrow
             # look for quantity highest and closest to expiry
         return "blood";
-        
+
 if __name__ == "__main__":
     c1= UseBlood("O+")
     x = c1.getSuitableBloods()
