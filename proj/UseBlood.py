@@ -1,4 +1,4 @@
-#from Storage import Storage
+
 class UseBlood(object):
     PATIENT = {'ABpos' : ["O-","O+","B-","B+","A-","A+","AB-","AB+"],
     'ABneg' : ["O-","B-","A-","AB-"],
@@ -16,7 +16,7 @@ class UseBlood(object):
         self._storage = storage
 
     def storage(self):
-        return storage
+        return self._storage
 
     def storage(self, newStorage):
         self._storage = newStorage
@@ -24,7 +24,7 @@ class UseBlood(object):
     def getSuitableBloods(self):
 
         # TODO: check the blood type requested from table get the suitable blood
-        type = self._reqType[0]
+        type = self._reqType[:-1]
         con = self._reqType[-1]
         name = type
         if con == "+":
@@ -43,9 +43,10 @@ class UseBlood(object):
         daysLeft = 999999
         for bt in suitableBloodType:
             # TODO: find the blood type in the medical facility
-            x = storage().getBlood(bt) # get the blood list in each Storage
-            if daysLeft > x[0].isExpired():
-                daysLeft = x[0].isExpired()
+            x = self._storage.getBlood(bt) # get the blood list in each Storage
+            # if daysLeft > x[0].isExpired():
+            #     daysLeft = x[0].isExpired()
+            #print(bt)
             print(x)
             # assume the array is sorted(should be verified)
             # check only index 0 of the array
@@ -54,7 +55,23 @@ class UseBlood(object):
         return "blood";
 
 if __name__ == "__main__":
-    c1= UseBlood("O+")
+    from Storage import Storage
+    s = Storage()
+    s.inventory("Pakistan")
+    #print(s)
+    from Blood import Blood
+    #import datetime.datetime.datetime
+    b = Blood("2019/10/10", 500)
+    b.verify("AB+")
+    #print(b)
+    s.addBlood(b)
+    b1 = Blood("2019/11/01", 500)
+    b1.verify("AB-")
+    s.addBlood(b1, room = "Pakistan")
+    b2 = Blood("2019/09/01", 500)
+    b2.verify("AB-")
+    s.addBlood(b2, room = "Pakistan")
+    c1= UseBlood(s,"AB+")
     x = c1.getSuitableBloods()
     c1.getTheBlood(x)
     #print(UseBlood.ABpos)

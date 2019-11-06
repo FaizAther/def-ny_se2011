@@ -51,7 +51,12 @@ class Storage(object):
                         t.get(k).append(blood)
                         self._types[blood.type()]+=blood.amount()
 
+    def getBlood(self,bloodType):
+        # return a list of bloods
+        for i in self._inventory:
+            return i.get(bloodType)
 
+        #return self._types.get(bloodType)
     #Loops through rooms
     #Check expiration of blood
     #Removes expired blood from inventory
