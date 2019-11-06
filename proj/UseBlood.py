@@ -25,7 +25,7 @@ class UseBlood(object):
 
         # TODO: check the blood type requested from table get the suitable blood
         type = self._reqType[0]
-        con = self._reqType[1]
+        con = self._reqType[-1]
         name = type
         if con == "+":
             name+="pos"
@@ -40,11 +40,12 @@ class UseBlood(object):
         return UseBlood.PATIENT.get(name)
 
     def getTheBlood(self, suitableBloodType):
-        daysLeft = -1
+        daysLeft = 999999
         for bt in suitableBloodType:
             # TODO: find the blood type in the medical facility
             x = storage().getBlood(bt) # get the blood list in each Storage
-            if daysLeft < x[0].
+            if daysLeft > x[0].isExpired():
+                daysLeft = x[0].isExpired()
             print(x)
             # assume the array is sorted(should be verified)
             # check only index 0 of the array

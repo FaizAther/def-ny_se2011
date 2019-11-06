@@ -1,10 +1,12 @@
 class Storage(object):
-    types = ["O-", "O+", "B-", "B+", "A-", "A+", "AB-", "AB+"]
     def __init__(self):
         self._inventory = []
+        self._types = {'O-' : 0, 'O+' : 0, 'B-' : 0, 'B+' : 0, 'A-' : 0, 'A+' : 0, 'AB-' : 0, 'AB+' : 0}
         self.inventory("Default")
 #TODO add blood quantity to each type
 
+    def types(self):
+        return self._types
 
     def inventory(self, desc):
         self._inventory.append(self.room(desc))
@@ -14,7 +16,7 @@ class Storage(object):
         #Fridge = {fridge:[Blood]}
         #Section = {section:[Fridge]}
         Room = {'name': desc, 'types':[]}
-        for t in Storage.types:
+        for t in self._types.keys():
             Blood = {t:[]}
             Room.get('types').append(Blood)
 
@@ -47,6 +49,8 @@ class Storage(object):
                     if k == blood.type():
                         #check expuery and add accordingly
                         t.get(k).append(blood)
+                        self._types[blood.type()]+=blood.amount()
+
 
     #Loops through rooms
     #Check expiration of blood
@@ -62,6 +66,7 @@ class Storage(object):
                         if (b.isExpired() == True):
                             #print ("{} is Expired".format(b))
                             badBlood.append(b)
+                            self._types[b.type()]-=b.amount()
                             a.remove(b)
         return badBlood
 
@@ -83,4 +88,5 @@ if __name__ == "__main__":
     s.addBlood(b2, room = "Pakistan")
     print(s)
     s.expiration()
+    print(s.types())
     print(s)
