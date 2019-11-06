@@ -43,9 +43,25 @@ class Storage(object):
             for t in r.get('types'):
                 for k in (t.keys()):
                     if k == args.get("blood").type():
+                        #check expuery and add accordingly
                         t.get(k).append(args.get("blood"))
 
 
+    def expiration(self):
+        for room in self._inventory:
+            for key in room:
+                print(key)
+
+
+    #Return TRUE if blood is expired
+    #Return FALSE if blood is not-expired
+    #42 - blood usage limit
+
+
+    #IF EXPIRED
+        #Notify
+        #Add blood to expired array
+        #Remove blood from storage
 
 
 

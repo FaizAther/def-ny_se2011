@@ -10,6 +10,7 @@ from Storage import Storage
 
 class Blood(object):
     """docstring for Blood."""
+    EXPIRATION_PERIOD = 42
     import datetime
     def __init__(self, collectionDate, amount):
         self._collectionDate = Blood.datetime.datetime.strptime(collectionDate, "%Y/%m/%d")
@@ -38,22 +39,24 @@ class Blood(object):
         return self._type
 
 
-    def expiration(self):
-        for room in self._inventory:
-            for key in room:
-                print(key)
+
+
+    #def expiration(self):
+    #    for room in self._inventory:
+    #        for key in room:
+    #            print(key)
 
 
     #Return TRUE if blood is expired
-    #Return FALSE if blood is not-expired
+    #ELSE Return Number of day to expiery
     #42 - blood usage limit
-    def isExpired(self, collectionDate):
-        currentDate = datetime.datetime.now()
-        if((currentDate-collectionDate).days > 42):
-            print("Blood is Expired")
+    def isExpired(self):
+        numDays = (datetime.datetime.now()-self._collectionDate).days
+        if(numDays >= Blood.EXPIRATION_PERIOD):
             return True
         else:
-            return False
+            numDaysRemaining = Blood.EXPIRATION_PERIOD - numDays
+            return numDaysRemaining
 
     #IF EXPIRED
         #Notify
@@ -66,7 +69,7 @@ class Blood(object):
 
 if __name__ == "__main__":
     import datetime
-    b1 = Blood("2019/11/01", 500)
+    b1 = Blood("2019/10/01", 500)
     b1.verify("B+")
-    print(b1)
+    print(b1.isExpired())
     #b1.expiration()
