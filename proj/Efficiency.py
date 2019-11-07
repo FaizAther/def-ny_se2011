@@ -24,7 +24,7 @@ class Efficiency(object):
                 max = storage.type(t)
                 maxT = t
         print("Highest Amount: {}, {}".format( maxT, max))
-        #return maxT
+        return maxT
 
     #Returns an array
     #Descending order of blood type
@@ -149,11 +149,27 @@ if __name__== "__main__":
 
 
     s.expiration()
-    #print(s.types())
-    print(s)
+    print("Blood Inventory - Quantity")
+    print(s.types())
+    #print(s)
+    print()
 
+    #print("Compatible blood type with the highest quantity")
+
+    #print("Compatible blood for A+")
+    #print(Efficiency.findBlood(s, "A+"))
+    #print()
+
+    #print("Compatible blood for A-")
+    #print(Efficiency.findBlood(s, "A-"))
+    #print()
+
+    print("Descending Order bases on blood type quantity")
     #Compatible blood for A+
+    print("Compatible blood for A+")
     print(Efficiency.amount(s, "A+"))
+    print()
 
     #Compatibvle blood for A-
+    print("Compatible blood for A-")
     print(Efficiency.amount(s, "A-"))
