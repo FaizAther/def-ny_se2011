@@ -11,6 +11,10 @@ class Efficiency(object):
     'O-' : ["O-"]
     }
 
+    BLOOD_RANK = ['AB+', 'AB-', 'A+', 'B+', 'A-', 'B-', 'O+', 'O-']
+
+    REJECTION_CRITERIA = 25
+
     #Find the compatible blood group with maximum quantity of blood
     #Returns the blood group with maximum quantity
     def findBlood(storage, bType):
@@ -31,18 +35,26 @@ class Efficiency(object):
     #Based on quantity
     def amount(storage, bType):
         #
-        maxT = []
+        maxA = []
 
         for t in Efficiency.PATIENT[bType]:
             #print(storage.type(t))
             i = 0
-            j = len(maxT)
-            for s in maxT:
-                if storage.type(s) <= storage.type(t):
+            j = len(maxA)
+            hit = False
+            for s in maxA:
+                if not hit and storage.type(s) <= storage.type(t):
                     j = i
+                    hit = True
                 i+=1
-            maxT.insert(j, t)
-        return maxT
+            maxA.insert(j, t)
+        return maxA
+
+    def need(storage, bTypes):
+
+        return None
+
+    #def 
 
 
 if __name__== "__main__":
@@ -166,10 +178,11 @@ if __name__== "__main__":
 
     print("Descending Order bases on blood type quantity")
     #Compatible blood for A+
-    print("Compatible blood for A+")
-    print(Efficiency.amount(s, "A+"))
+    print("Compatible blood for AB+")
+    print(Efficiency.amount(s, "AB+"))
     print()
 
     #Compatibvle blood for A-
-    print("Compatible blood for A-")
-    print(Efficiency.amount(s, "A-"))
+    #print("Compatible blood for A-")
+    #print(Efficiency.amount(s, "A-"))
+
