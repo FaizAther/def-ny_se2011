@@ -9,6 +9,7 @@ class Storage(object):
 
     def types(self):
         return self._types
+
     def type(self, bType):
         return self._types[bType]
 
@@ -45,8 +46,11 @@ class Storage(object):
     #Add based on closest to expiery first
 
     def addBlood(self, blood, **args):
+
+        #Does not add if blood is expired
         if blood.isExpired() == True:
             return
+
         if args.get('room') == None:
             args['room'] = "Default"
         for r in self._inventory:
@@ -58,15 +62,15 @@ class Storage(object):
                         i = 0
                         j = 0
                         for b in t.get(k):
+                            #checks expiery duration and adds blood
                             if blood.isExpired() <= b.isExpired():
-                                print(i)
                                 j = i
                             i += 1
                         t.get(k).insert(j, blood)
                         self._types[blood.type()]+=blood.amount()
 
+    #return a list of bloods
     def getBlood(self,bloodType):
-        # return a list of bloods
         for i in self._inventory:
             return i.get(bloodType)
 
@@ -96,43 +100,50 @@ class Storage(object):
 if __name__ == "__main__":
     s = Storage()
     s.inventory("Room1")
-    #print(s)
+    print(s)
+    print()
 
     from Blood import Blood
 
-    # Checking Expiered blood
-    b1 = Blood("2019/09/02", 300)
-    b1.verify("AB-")
-    s.addBlood(b1, room = "Room1")
+#Adding blood into rooms
+#Does not add expiered blood
+#Adds based on oldest blood first
 
-    b2 = Blood("2019/10/10", 100)
-    b2.verify("AB+")
-    s.addBlood(b2)
+    b1 = Blood("2019/10/10", 100)
+    b1.verify("AB+")
+    s.addBlood(b1)
+
+    # Checking Expiered blood
+    b2 = Blood("2019/09/02", 300)
+    b2.verify("AB-")
+    s.addBlood(b2, room = "Room1")
 
     b3 = Blood("2019/11/02", 300)
     b3.verify("AB-")
     s.addBlood(b3, room = "Room1")
-
+    
     #AB- -> b3
-
     print(s)
+    print()
 
     b4 = Blood("2019/10/31", 500)
     b4.verify("AB-")
     s.addBlood(b4, room = "Room1")
 
-    print(s)
-
     #AB- -> b4, b3
+    print(s)
+    print()
 
     b5 = Blood("2019/11/01", 300)
     b5.verify("AB-")
     s.addBlood(b5, room = "Room1")
 
     #AB- -> b4, b5, b3
-
     print(s)
+    print()
 
+
+#Adding multiple bloods into inventory
     b6 = Blood("2019/11/01", 300)
     b6.verify("O-")
     s.addBlood(b6, room = "Room1")
@@ -206,6 +217,16 @@ if __name__ == "__main__":
     b22.verify("AB+")
     s.addBlood(b22, room = "Room1")
 
-    s.expiration()
-    #print(s.types())
+#Blood inventory
+#Before checking for any expiered blood
     print(s)
+    print()
+
+    s.expiration()
+    #print(s.expiration())
+
+#After checking for any expired blood
+    print(s)
+
+#blood type - quantity
+    #print(s.types())
