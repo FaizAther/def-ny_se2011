@@ -49,13 +49,44 @@ class Efficiency(object):
             maxA.insert(j, t)
         return maxA
 
-    def need(storage, bTypes):
+    # def need(storage, bTypes):
+    #
+    #     return None
 
-        return None
+    def bachodi(storage, bType, rQuan):
+        wantedBlood = []
+        for b in Efficiency.PATIENT[bType]:
+            #print(b)
+            bList = storage.getTypeArr(b)
+            print(bList)
+            # print()
+            #print(bList[0].amount())
+            wantedBlood.append(Efficiency.getOneEach(bList, rQuan).amount())
+            # for i in bList:
+            #     if(i.amount() >= (bQuan+(bQuan*.10))):
+            #         wantedBlood.append(i.type())
 
-    def bachodi(storage, bTypes, amount):
-        tArr = getTypeArr(bTypes):
+        print("Wanted Blood: {}".format(wantedBlood))
+        return min(wantedBlood)
+    def getOneEach(bList, rQuan):
+        best = []
+        counter = 0
+        min = 0
 
+        for i in bList:
+
+                if(i.amount() <= (rQuan + (rQuan*.10) and i.amount() >= rQuan)):
+                    best.append(i)
+                    counter += 1
+
+
+        if(counter == 0):
+            return bList[counter]
+        else:
+
+            return min(best)
+
+        return best
 
 
 if __name__== "__main__":
@@ -162,8 +193,8 @@ if __name__== "__main__":
 
 
     s.expiration()
-    print("Blood Inventory - Quantity")
-    print(s.types())
+    #print("Blood Inventory - Quantity")
+    #print(s.types())
     #print(s)
     print()
 
@@ -177,13 +208,15 @@ if __name__== "__main__":
     #print(Efficiency.findBlood(s, "A-"))
     #print()
 
-    print("Descending Order bases on blood type quantity")
+    #print("Descending Order bases on blood type quantity")
     #Compatible blood for A+
-    print("Compatible blood for AB+")
-    print(Efficiency.amount(s, "AB+"))
+    #print("Compatible blood for AB+")
+    #print(Efficiency.amount(s, "AB+"))
     print()
+
+    #print(Efficiency.bachodi(s,"A+"))
+    print(Efficiency.bachodi(s, "A+", 200))
 
     #Compatibvle blood for A-
     #print("Compatible blood for A-")
     #print(Efficiency.amount(s, "A-"))
-
