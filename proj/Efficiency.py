@@ -53,8 +53,9 @@ class Efficiency(object):
 
         return None
 
-    def bachodi(storage, bTypes, amount):
-        tArr = getTypeArr(bTypes):
+    def bachodi(storage, compBloods, amount):
+        tArr = getTypeArr(bTypes)
+
 
 
 
