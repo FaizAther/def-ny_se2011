@@ -70,9 +70,14 @@ class Storage(object):
                         self._types[blood.type()]+=blood.amount()
 
     #return a list of bloods
-    def getBlood(self,bloodType):
-        for i in self._inventory:
-            return i.get(bloodType)
+    def getTypeArr(self,bloodType):
+            #print(self._inventory[1].get('types'))
+            for t in self._inventory[1].get('types'):
+                #print(t)
+                for k in t.keys():
+                    if k == bloodType:
+                        return t.get(k)
+            #return.get(bloodType)
 
 
     #Loops through rooms
@@ -110,9 +115,9 @@ if __name__ == "__main__":
 #Does not add expiered blood
 #Adds based on oldest blood first
 
-    print("Checks oldest blood first")
-    print("Should not add expired blood")
-    print()
+    #print("Checks oldest blood first")
+    #print("Should not add expired blood")
+    #print()
 
     b1 = Blood("2019/10/10", 100)
     b1.verify("AB+")
@@ -123,36 +128,36 @@ if __name__ == "__main__":
     b2.verify("AB-")
     s.addBlood(b2, room = "Room1")
 
-    print("Does not add expired blood")
-    print(s)
-    print()
+    #print("Does not add expired blood")
+    #print(s)
+    #print()
 
     b3 = Blood("2019/11/02", 300)
     b3.verify("AB-")
     s.addBlood(b3, room = "Room1")
     
     #AB- -> b3
-    print("After adding first set of blood")
-    print(s)
-    print()
+    #print("After adding first set of blood")
+    #print(s)
+    #print()
 
     b4 = Blood("2019/10/31", 500)
     b4.verify("AB-")
     s.addBlood(b4, room = "Room1")
 
     #AB- -> b4, b3
-    print("After adding second set of blood")
-    print(s)
-    print()
+    #print("After adding second set of blood")
+    #print(s)
+    #print()
 
     b5 = Blood("2019/11/01", 300)
     b5.verify("AB-")
     s.addBlood(b5, room = "Room1")
 
     #AB- -> b4, b5, b3
-    print("After adding third set of blood")
-    print(s)
-    print()
+    #print("After adding third set of blood")
+    #print(s)
+    #print()
 
 
 #Adding multiple bloods into inventory
@@ -231,17 +236,19 @@ if __name__ == "__main__":
 
 #Blood inventory
 #Before checking for any expiered blood
-    print("After adding multiple sets of blood")
-    print("Before conducting expiration tests")
-    print(s)
+    #print("After adding multiple sets of blood")
+    #print("Before conducting expiration tests")
+    #print(s)
     print()
 
     s.expiration()
     #print(s.expiration())
 
 #After checking for any expired blood
-    print("After conducting expiration tests")
+    #print("After conducting expiration tests")
     print(s)
 
 #blood type - quantity
     #print(s.types())
+
+    print(s.getTypeArr("A+"))

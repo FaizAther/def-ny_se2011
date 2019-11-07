@@ -34,7 +34,6 @@ class Efficiency(object):
     #Descending order of blood type
     #Based on quantity
     def amount(storage, bType):
-        #
         maxA = []
 
         for t in Efficiency.PATIENT[bType]:
@@ -54,7 +53,9 @@ class Efficiency(object):
 
         return None
 
-    #def 
+    def bachodi(storage, bTypes, amount):
+        tArr = getTypeArr(bTypes):
+
 
 
 if __name__== "__main__":
