@@ -55,38 +55,60 @@ class Efficiency(object):
 
     def bachodi(storage, bType, rQuan):
         wantedBlood = []
+
         for b in Efficiency.PATIENT[bType]:
             #print(b)
             bList = storage.getTypeArr(b)
-            print(bList)
+            #print(bList)
             # print()
-            #print(bList[0].amount())
-            wantedBlood.append(Efficiency.getOneEach(bList, rQuan).amount())
+
+            if(Efficiency.getOneEach(bList, rQuan) != None):
+                wantedBlood.append(Efficiency.getOneEach(bList, rQuan).amount())
+
             # for i in bList:
             #     if(i.amount() >= (bQuan+(bQuan*.10))):
             #         wantedBlood.append(i.type())
 
         print("Wanted Blood: {}".format(wantedBlood))
         return min(wantedBlood)
+
+
     def getOneEach(bList, rQuan):
+        notBest = []
         best = []
         counter = 0
         min = 0
 
         for i in bList:
-
-                if(i.amount() <= (rQuan + (rQuan*.10) and i.amount() >= rQuan)):
+            if(i.amount() >= rQuan):
+                if(i.amount() <= (rQuan + (rQuan*.10)) and i.amount() >= rQuan) or i.isExpired() <=2:
+                    #print(rQuan, i.amount())
                     best.append(i)
                     counter += 1
+                else:
+                    #print("dada")
+                    notBest.append(i)
 
 
-        if(counter == 0):
-            return bList[counter]
+        if(counter == 0 and len(notBest) == 0):
+            return None
+        elif (counter == 0):
+            return notBest[0] ## BUG: poopie
         else:
 
-            return min(best)
+            m = best[0]
 
-        return best
+            for b in best:
+                #min amount in best
+                if b.isExpired() <=2:
+                    return b
+                if b.amount() < m.amount():
+                    m = b
+            #print ("{} M".format(m))
+            return m
+            #return best[0]
+
+        #return best
 
 
 if __name__== "__main__":
@@ -192,11 +214,11 @@ if __name__== "__main__":
     s.addBlood(b22, room = "Room1")
 
 
-    s.expiration()
+    #s.expiration()
     #print("Blood Inventory - Quantity")
     #print(s.types())
     #print(s)
-    print()
+    #print()
 
     #print("Compatible blood type with the highest quantity")
 
@@ -212,10 +234,10 @@ if __name__== "__main__":
     #Compatible blood for A+
     #print("Compatible blood for AB+")
     #print(Efficiency.amount(s, "AB+"))
-    print()
+    #print()
 
     #print(Efficiency.bachodi(s,"A+"))
-    print(Efficiency.bachodi(s, "A+", 200))
+    print(Efficiency.bachodi(s, "A+", 400))
 
     #Compatibvle blood for A-
     #print("Compatible blood for A-")
