@@ -100,6 +100,7 @@ class Storage(object):
 if __name__ == "__main__":
     s = Storage()
     s.inventory("Room1")
+    print("Initial Status of Rooms")
     print(s)
     print()
 
@@ -108,6 +109,10 @@ if __name__ == "__main__":
 #Adding blood into rooms
 #Does not add expiered blood
 #Adds based on oldest blood first
+
+    print("Checks oldest blood first")
+    print("Should not add expired blood")
+    print()
 
     b1 = Blood("2019/10/10", 100)
     b1.verify("AB+")
@@ -118,11 +123,16 @@ if __name__ == "__main__":
     b2.verify("AB-")
     s.addBlood(b2, room = "Room1")
 
+    print("Does not add expired blood")
+    print(s)
+    print()
+
     b3 = Blood("2019/11/02", 300)
     b3.verify("AB-")
     s.addBlood(b3, room = "Room1")
     
     #AB- -> b3
+    print("After adding first set of blood")
     print(s)
     print()
 
@@ -131,6 +141,7 @@ if __name__ == "__main__":
     s.addBlood(b4, room = "Room1")
 
     #AB- -> b4, b3
+    print("After adding second set of blood")
     print(s)
     print()
 
@@ -139,6 +150,7 @@ if __name__ == "__main__":
     s.addBlood(b5, room = "Room1")
 
     #AB- -> b4, b5, b3
+    print("After adding third set of blood")
     print(s)
     print()
 
@@ -219,6 +231,8 @@ if __name__ == "__main__":
 
 #Blood inventory
 #Before checking for any expiered blood
+    print("After adding multiple sets of blood")
+    print("Before conducting expiration tests")
     print(s)
     print()
 
@@ -226,6 +240,7 @@ if __name__ == "__main__":
     #print(s.expiration())
 
 #After checking for any expired blood
+    print("After conducting expiration tests")
     print(s)
 
 #blood type - quantity
