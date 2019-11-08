@@ -135,7 +135,7 @@ if __name__ == "__main__":
     b3 = Blood("2019/11/02", 300)
     b3.verify("AB-")
     s.addBlood(b3, room = "Room1")
-    
+
     #AB- -> b3
     #print("After adding first set of blood")
     #print(s)
