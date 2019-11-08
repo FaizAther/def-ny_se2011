@@ -200,7 +200,10 @@ if __name__== "__main__":
     #print(s)
 
 
-    #b2, b1, b3, b5, b4
+    #b2, b6, b1, b3, b5, b4
+    #or
+    #b6, b2, b1, b3, b5, b4
+
     b1 = Blood("2019/09/29", 300)
     b1.verify("A+")
     s.addBlood(b1, room = "Room1")
@@ -221,7 +224,7 @@ if __name__== "__main__":
     b5.verify("A+")
     s.addBlood(b5, room = "Room1")
 
-    b6 = Blood("2019/09/29", 100)
+    b6 = Blood("2019/09/29", 200)
     b6.verify("A-")
     s.addBlood(b6, room = "Room1")
 
@@ -230,6 +233,8 @@ if __name__== "__main__":
     #print("Best blood choice for A+")
     #print(Efficiency.getBestBlood(s, "A+", 100))
 
+
+    #SET1
 
     # b7 = Blood("2019/10/02", 300)
     # b7.verify("O-")
@@ -263,7 +268,10 @@ if __name__== "__main__":
     # b14.verify("AB+")
     # s.addBlood(b14, room = "Room1")
 
-    # #Expired Blood
+
+    #Expired Blood
+    #SET2
+
     # b15 = Blood("2019/09/02", 300)
     # b15.verify("O-")
     # s.addBlood(b15, room = "Room1")
@@ -296,6 +304,8 @@ if __name__== "__main__":
     # b22.verify("AB+")
     # s.addBlood(b22, room = "Room1")
 
+
+    #SET3
 
     # b23 = Blood("2019/11/02", 150)
     # b23.verify("O-")
