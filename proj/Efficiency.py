@@ -11,26 +11,13 @@ class Efficiency(object):
     'O-' : ["O-"]
     }
 
-    BLOOD_RANK = ['AB+', 'AB-', 'A+', 'B+', 'A-', 'B-', 'O+', 'O-']
+    BLOOD_RANK = {'AB+' : 1, 'AB-' : 2, 'A+' : 3, 'B+' : 4, 'A-' : 5, 'B-' : 6 ,'O+' : 7, 'O-' : 8}
 
-    REJECTION_CRITERIA = 25
+    EXPIERY_LIMIT = 2
+    WASTAGE_LIMIT = .10
 
-
-    #Find the compatible blood group with maximum quantity of blood
-    #Returns the blood group with maximum quantity
-
-    # def findBlood(storage, bType):
-    #     #maximum quantity
-    #     max = 0
-    #     #blood type - maximum quantity
-    #     maxT = ""
-    #     for t in Efficiency.PATIENT[bType]:
-    #         #print(storage.type(t))
-    #         if max < storage.type(t):
-    #             max = storage.type(t)
-    #             maxT = t
-    #     #print("Highest Amount: {}, {}".format( maxT, max))
-    #     return maxT
+    def bloodRank(bType):
+        return Efficiency.BLOOD_RANK[bType]
 
 
     #Returns an array
@@ -58,6 +45,7 @@ class Efficiency(object):
     def getBestBlood(storage, bType, rQuan):
         #The best blood that can be used
         wantedBlood = []
+        bestBloodRank = []
 
         for b in Efficiency.PATIENT[bType]:
             bList = storage.getTypeArr(b)
@@ -65,27 +53,30 @@ class Efficiency(object):
             if(Efficiency.getBestList(bList, rQuan) != None):
                 wantedBlood.append(Efficiency.getBestList(bList, rQuan))
 
-        #print("Wanted Blood: {}".format(wantedBlood))
+
+        # sort by blood type rank
+        n = len(wantedBlood)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if(Efficiency.bloodRank(wantedBlood[j].type()) > Efficiency.bloodRank.type(wantedBlood[j+1].type())):
+                    wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
+
+        # sort by blood type quantity
+        n = len(wantedBlood)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if(storage.type(wantedBlood[j].type()) < storage.type(wantedBlood[j+1].type())):
+                    wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
 
         # sort by quantity
-        #wantedBlood = sortByQuantity(wantedBlood)
-
-        n = len(wantedBlood)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(wantedBlood[j].amount() > wantedBlood[j+1].amount()):
-                    wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
+        wantedBlood = Efficiency.sortByQuantity(wantedBlood)
 
         # sort by expiration
-        #wantedBlood = sortByExpiration(wantedBlood)
-
-        n = len(wantedBlood)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(wantedBlood[j].isExpired() > wantedBlood[j+1].isExpired()):
-                    wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
+        wantedBlood = Efficiency.sortByExpiration(wantedBlood)
 
         #returns the best blood suitable
+
+
         return wantedBlood[0]
 
 
@@ -106,7 +97,7 @@ class Efficiency(object):
             #Cehcks - Bag quantity > requested quantity
             if(i.amount() >= rQuan):
                 #checking best suitable criteria
-                if(i.amount() <= (rQuan + (rQuan*.10)) and i.amount() >= rQuan) or i.isExpired() <=2:
+                if(i.amount() <= (rQuan + (rQuan * Efficiency.WASTAGE_LIMIT)) and i.amount() >= rQuan) or i.isExpired() <= Efficiency.EXPIERY_LIMIT:
                     best.append(i)
                     counter += 1
                 #not best suitable criteria
@@ -119,36 +110,17 @@ class Efficiency(object):
 
 
         # sort by quantity
-        #best = sortByQuantity(best)
-        n = len(best)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(best[j].amount() > best[j+1].amount()):
-                    best[j], best[j+1] = best[j+1], best[j]
+        best = Efficiency.sortByQuantity(best)
 
         # sort by expiration
-        #best = sortByExpiration(best)
-        n = len(best)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(best[j].isExpired() > best[j+1].isExpired()):
-                    best[j], best[j+1] = best[j+1], best[j]
+        best = Efficiency.sortByExpiration(best)
+
 
         # sort by expiration
-        #notBest = sortByExpiration(notBest)
-        n = len(notBest)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(notBest[j].isExpired() > notBest[j+1].isExpired()):
-                    notBest[j], notBest[j+1] = notBest[j+1], notBest[j]
+        notBest = Efficiency.sortByExpiration(notBest)
 
         # sort by quantity
-        #notBest = sortByQuantity(notBest)
-        n = len(notBest)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(notBest[j].amount() > notBest[j+1].amount()):
-                    notBest[j], notBest[j+1] = notBest[j+1], notBest[j]
+        notBest = Efficiency.sortByQuantity(notBest)
 
 
         #no blood matches quantity
@@ -163,27 +135,25 @@ class Efficiency(object):
 
 
     #sorts based on quantity
+    def sortByQuantity(bList):
+        n = len(bList)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if(bList[j].amount() > bList[j+1].amount()):
+                    bList[j], bList[j+1] = bList[j+1], bList[j]
 
-    # def sortByQuantity(bList):
-    #     n = len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(bList[j].amount() > bList[j+1].amount()):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-
-    #     return bList
+        return bList
 
 
     #sorts based on expiration duration
+    def sortByExpiration(bList):
+        n = len(bList)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if(bList[j].isExpired() > bList[j+1].isExpired()):
+                    bList[j], bList[j+1] = bList[j+1], bList[j]
 
-    # def sortByExpiration(bList):
-    #     n = len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(bList[j].isExpired() > bList[j+1].isExpired()):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-
-    #     return bList
+        return bList
 
 
 
@@ -196,7 +166,7 @@ if __name__== "__main__":
     from Storage import Storage
 
     s = Storage()
-    s.inventory("Room1")
+    #s.inventory("Room1")
     #print(s)
 
 
@@ -206,67 +176,67 @@ if __name__== "__main__":
 
     b1 = Blood("2019/09/29", 300)
     b1.verify("A+")
-    s.addBlood(b1, room = "Room1")
+    s.addBlood(b1)
 
     b2 = Blood("2019/09/29", 200)
     b2.verify("A+")
-    s.addBlood(b2, room = "Room1")
+    s.addBlood(b2)
 
     b3 = Blood("2019/09/30", 250)
     b3.verify("A+")
-    s.addBlood(b3, room = "Room1")
+    s.addBlood(b3)
 
     b4 = Blood("2019/10/02", 50)
     b4.verify("A+")
-    s.addBlood(b4, room = "Room1")
+    s.addBlood(b4)
 
     b5 = Blood("2019/10/01", 150)
     b5.verify("A+")
-    s.addBlood(b5, room = "Room1")
+    s.addBlood(b5)
 
     b6 = Blood("2019/09/29", 200)
     b6.verify("A-")
-    s.addBlood(b6, room = "Room1")
+    s.addBlood(b6)
 
     #print(s)
 
     #print("Best blood choice for A+")
-    #print(Efficiency.getBestBlood(s, "A+", 100))
+    print(Efficiency.getBestBlood(s, "A+", 100))
 
 
     #SET1
 
     # b7 = Blood("2019/10/02", 300)
     # b7.verify("O-")
-    # s.addBlood(b7, room = "Room1")
+    # s.addBlood(b7)
 
     # b8 = Blood("2019/10/02", 200)
     # b8.verify("O+")
-    # s.addBlood(b8, room = "Room1")
+    # s.addBlood(b8)
 
     # b9 = Blood("2019/10/03", 400)
     # b9.verify("A-")
-    # s.addBlood(b9, room = "Room1")
+    # s.addBlood(b9)
 
     # b10 = Blood("2019/10/04", 100)
     # b10.verify("A+")
-    # s.addBlood(b10, room = "Room1")
+    # s.addBlood(b10)
 
     # b11 = Blood("2019/10/01", 250)
     # b11.verify("B-")
-    # s.addBlood(b11, room = "Room1")
+    # s.addBlood(b11)
 
     # b12 = Blood("2019/10/01", 350)
     # b12.verify("B+")
-    # s.addBlood(b12, room = "Room1")
+    # s.addBlood(b12)
 
     # b13 = Blood("2019/10/06", 450)
     # b13.verify("AB-")
-    # s.addBlood(b13, room = "Room1")
+    # s.addBlood(b13)
 
     # b14 = Blood("2019/10/05", 150)
     # b14.verify("AB+")
-    # s.addBlood(b14, room = "Room1")
+    # s.addBlood(b14)
 
 
     #Expired Blood
@@ -274,70 +244,70 @@ if __name__== "__main__":
 
     # b15 = Blood("2019/09/02", 300)
     # b15.verify("O-")
-    # s.addBlood(b15, room = "Room1")
+    # s.addBlood(b15)
 
     # b16 = Blood("2019/09/02", 200)
     # b16.verify("O+")
-    # s.addBlood(b16, room = "Room1")
+    # s.addBlood(b16)
 
     # b17 = Blood("2019/09/03", 400)
     # b17.verify("A-")
-    # s.addBlood(b17, room = "Room1")
+    # s.addBlood(b17)
 
     # b18 = Blood("2019/09/04", 100)
     # b18.verify("A+")
-    # s.addBlood(b18, room = "Room1")
+    # s.addBlood(b18)
 
     # b19 = Blood("2019/09/01", 250)
     # b19.verify("B-")
-    # s.addBlood(b19, room = "Room1")
+    # s.addBlood(b19)
 
     # b20 = Blood("2019/09/01", 350)
     # b20.verify("B+")
-    # s.addBlood(b20, room = "Room1")
+    # s.addBlood(b20)
 
     # b21 = Blood("2019/09/06", 450)
     # b21.verify("AB-")
-    # s.addBlood(b21, room = "Room1")
+    # s.addBlood(b21)
 
     # b22 = Blood("2019/08/05", 150)
     # b22.verify("AB+")
-    # s.addBlood(b22, room = "Room1")
+    # s.addBlood(b22)
 
 
     #SET3
 
     # b23 = Blood("2019/11/02", 150)
     # b23.verify("O-")
-    # s.addBlood(b23, room = "Room1")
+    # s.addBlood(b23)
 
     # b24 = Blood("2019/11/02", 300)
     # b24.verify("O+")
-    # s.addBlood(b24, room = "Room1")
+    # s.addBlood(b24)
 
     # b25 = Blood("2019/10/31", 100)
     # b25.verify("A-")
-    # s.addBlood(b25, room = "Room1")
+    # s.addBlood(b25)
 
     # b26 = Blood("2019/11/04", 150)
     # b26.verify("A+")
-    # s.addBlood(b26, room = "Room1")
+    # s.addBlood(b26)
 
     # b27 = Blood("2019/11/01", 350)
     # b27.verify("B-")
-    # s.addBlood(b27, room = "Room1")
+    # s.addBlood(b27)
 
     # b28 = Blood("2019/10/21", 2000)
     # b28.verify("B+")
-    # s.addBlood(b28, room = "Room1")
+    # s.addBlood(b28)
 
     # b29 = Blood("2019/10/26", 350)
     # b29.verify("AB-")
-    # s.addBlood(b29, room = "Room1")
+    # s.addBlood(b29)
 
     # b30 = Blood("2019/10/25", 450)
     # b30.verify("AB+")
-    # s.addBlood(b30, room = "Room1")
+    # s.addBlood(b30)
 
 
     #Checking Expiration
@@ -346,6 +316,9 @@ if __name__== "__main__":
     #print(s.types())
     #print(s)
     #print()
+
+
+    #Efficiency.findBlood(s, "A+")
 
     #print("Best blood choice for A-")
     #print(Efficiency.getBestBlood(s, "A-", 150))
