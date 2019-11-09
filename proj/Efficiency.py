@@ -19,6 +19,23 @@ class Efficiency(object):
     def bloodRank(bType):
         return Efficiency.BLOOD_RANK[bType]
 
+#----------------------------------------------------------------------------
+
+    # # TODO // Change to max/min finder
+    # def maxMin(storage, bType):
+    #     #maximum quantity
+    #     max = 0
+    #     #blood type - maximum quantity
+    #     maxT = ""
+    #     for t in Efficiency.PATIENT[bType]:
+    #         print(storage.type(t))
+    #         if max < storage.type(t):
+    #             max = storage.type(t)
+    #             maxT = t
+    #     print("Highest Amount: {}, {}".format( maxT, max))
+    #     return maxT
+
+#----------------------------------------------------------------------------
 
     #Returns an array
     #Descending order of blood type
@@ -40,6 +57,89 @@ class Efficiency(object):
     #             i+=1
     #         maxA.insert(j, t)
     #     return maxA
+
+#----------------------------------------------------------------------------
+
+    # def getBestBlood(storage, bType, rQuan):
+    #     #The best blood that can be used
+    #     wantedBlood = []
+    #     bestBloodRank = []
+
+    #     for b in Efficiency.PATIENT[bType]:
+    #         bList = storage.getTypeArr(b)
+
+    #         if(Efficiency.getBestList(bList, rQuan) != None):
+    #             wantedBlood.append(Efficiency.getBestList(bList, rQuan))
+
+
+    #     # sort by blood type rank
+    #     n = len(wantedBlood)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(Efficiency.bloodRank(wantedBlood[j].type()) > Efficiency.bloodRank.type(wantedBlood[j+1].type())):
+    #                 wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
+
+    #     # sort by blood type quantity
+    #     n = len(wantedBlood)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(storage.type(wantedBlood[j].type()) < storage.type(wantedBlood[j+1].type())):
+    #                 wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
+
+    #     # sort by quantity
+    #     wantedBlood = Efficiency.sortByQuantity(wantedBlood)
+
+    #     # sort by expiration
+    #     wantedBlood = Efficiency.sortByExpiration(wantedBlood)
+
+
+    #     #returns the best blood suitable
+    #     return wantedBlood[0]
+
+#----------------------------------------------------------------------------
+
+    #TODO
+
+    # def calculateWeight(contributers, array):
+    #     Sum[contributer.size()][array.size()]
+    #     i = 0
+    #     j = 0
+
+    #     for c in contributers:
+
+    #         j = 0
+    #         for v in array:
+
+    #             Sum[i][j] = weight(v, c.weight())
+
+    #             j+=1
+
+    #         i += 1
+
+    #     cumulativeSum[array.size()]
+
+    #     while (i < array.size()):
+
+    #         j = 0
+    #         while(j < contributer.size()):
+                
+    #             array[i].weight += Sum[j][i]
+
+    #             j += 1
+
+    #         i+=1
+
+    #     # Sort By Object --> Wiight Attribute
+
+    # def weight(value, max, min, wieght):
+    #     # If weight > 0 then UP
+
+    #         # Formula W * ( 1 - (V - MIN) / MAX )
+
+    #     # Else DOWN
+
+    #         # Formula W * ( V - MIN ) / MAX
+
 
 
     def getBestBlood(storage, bType, rQuan):
@@ -74,9 +174,8 @@ class Efficiency(object):
         # sort by expiration
         wantedBlood = Efficiency.sortByExpiration(wantedBlood)
 
+
         #returns the best blood suitable
-
-
         return wantedBlood[0]
 
 

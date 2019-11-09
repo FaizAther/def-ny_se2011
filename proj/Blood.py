@@ -20,6 +20,7 @@ class Blood(object):
         self._type = None
         self._storage = None
         self._id = assignBloodId(self)
+        self.weight
 
     def collectionDate(self):
         return self._collectionDate
