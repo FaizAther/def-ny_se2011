@@ -143,49 +143,53 @@ class Efficiency(object):
 
     # 1. Contributors => >Expiration, >Amount Wastage, <Total Quantity, >Blood Rank
 
-    def weightedSum(contributors, array):
+    def weightedSum(contributors, array, **options):
         # print(contributors)
         for c in contributors:
-            Efficiency.values(c, [])
+            print(options)
+            low, high = Efficiency.values(c, array, requested=options['requested'], storage=options['storage'])
+            print(c)
+            print(low, high)
             #contributors[c]
 
+
     def values(contributors, array, **options):
-        r = []
         if len(array) == 0:
-            return r
-        for c in contributors:
-            if (c == 'Expiration'):
-                v = []
-                print(c)
-                for b in array:
-                    v.append(b.isExpired())
-                r.append(Efficiency.getLowHigh(v))
+            return None
+        #for c in contributors:
+        v = []
+        if (c == 'Expiration'):
+            print(c)
+            for b in array:
+                v.append(b.isExpired())
+            return(Efficiency.getLowHigh(v))
 
-            elif (c == 'Wastage'):
-                v = []
-                print(c)
-                for b in array:
-                    v.append(b.amount() - options['requested'])
-                r.append(Efficiency.getLowHigh(v))
+        elif (c == 'Wastage'):
+            #v = []
+            print(c)
+            for b in array:
+                v.append(b.amount() - options['requested'])
+            return (Efficiency.getLowHigh(v))
 
-            elif (c == 'TotalQuantity'):
-                v = []
-                print(c)
-                for b in array:
-                    v.append(options['storage'].type(b.type()))
-                r.append(Efficiency.getLowHigh(v))
+        elif (c == 'TotalQuantity'):
+            #v = []
+            print(c)
+            for b in array:
+                v.append(options['storage'].type(b.type()))
+            return(Efficiency.getLowHigh(v))
 
-            elif (c == 'BloodRank'):
-                v = []
-                print(c)
-                for b in array:
-                    v.append(Efficiency.BLOOD_RANK[b.type()])
-                r.append(Efficiency.getLowHigh(v))
+        elif (c == 'BloodRank'):
+            #v = []
+            print(c)
+            for b in array:
+                v.append(Efficiency.BLOOD_RANK[b.type()])
+            return(Efficiency.getLowHigh(v))
 
-            else:
-                print("What?")
+        else:
+            print("What?")
+            return None
 
-        return r
+        #return r
 
     def getLowHigh(array):
         if len(array) == 0:
@@ -483,7 +487,7 @@ if __name__== "__main__":
     #print("Best blood choice for A-")
     #print(Efficiency.getBestBlood(s, "A-", 150))
 
-    contributors = {'Expiration' : 5, 'Wastage' : 3.5, 'TotalQuantity' : 2.5, 'BloodRank' : 1}
+    contributors = {'Expiration' : 0.52, 'Wastage' : .27, 'TotalQuantity' : .15, 'BloodRank' : .06}
 
     Efficiency.weightedSum(contributors, [])
 
@@ -554,4 +558,4 @@ if __name__== "__main__":
     s.addBlood(b30)
 
 
-    print(Efficiency.values(['Expiration', 'Wastage', 'TotalQuantity', 'BloodRank'], b, requested=1000, storage=s))
+    print(Efficiency.weightedSum(['Expiration', 'Wastage', 'TotalQuantity', 'BloodRank'], b, requested=100, storage=s))
