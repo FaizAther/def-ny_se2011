@@ -22,10 +22,12 @@ class Blood(object):
         self._id = assignBloodId(self)
         self._weight = 0
 
-    def weight(self):
+    def getWeight(self):
         return self._weight
     def weight(self, weight):
-        self._weight = weight
+        self._weight += weight
+    def initWeight(self):
+        self._weight = 0
 
     def collectionDate(self):
         return self._collectionDate
@@ -60,7 +62,7 @@ class Blood(object):
 
 
     def __str__(self):
-        return "{}, {}, {}, {}".format(self._collectionDate, self._amount, self._type, self._isVerified)
+        return "{}, {}, {}, {}, {}".format(self.isExpired(), self._amount, self._type, self._isVerified, self._weight)
 
 if __name__ == "__main__":
 
