@@ -39,19 +39,25 @@ class Capacity():
     # Preconditions:
     #    Blood is assigned to this capacity
     def removeBlood(self, blood):
-        pass
-    # Postcondition: Blood is no longer assigned to a capacity
+        if blood not in self._inventory: raise Exception("Blood not in inventory")
+        self._inventory.remove(blood)
+        blood._storage = None
+        self._min[blood._type] -= blood._amount
+    # Postcondition: 
+    #    Blood is no longer assigned to a capacity
+    #    Blood totals are updated
 
     def displayBlood(self):
         for b in self._inventory:
             print("%-3s: %s (%s)"%(b._id, b._amount, b._type) )
 
     def __str__(self):
-        tots = 0
-        for t in self._types:
-            pass
-        
-        return "Total Capacity: %s\n"%(self._max) + "Type totals: {}\n{}".format(self._min, "\n".join(map(str,self._inventory)))
+        print(self._min.items())
+        return "\n".join(["Total Capacity: %s\n"%(self._max),
+            "Type totals:",
+            "\n".join(map(lambda x:"\t{}: {}".format(x[0], x[1]), sorted(self._min.items(), key=lambda x: -x[1]))),
+            "\n".join(map(str,self._inventory))
+        ])
 
 if __name__ == "__main__":
     c1 = Capacity(100, None)

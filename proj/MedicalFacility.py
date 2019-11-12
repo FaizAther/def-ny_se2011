@@ -33,7 +33,7 @@ class MedicalFacility():
     # Preconditions:
     #    Blood is in this location
     def removeBlood(self, blood):
-        pass
+        self._capacity.removeBlood(blood)
     # Postcondition: Blood is removed from this location
 
     def displayBlood(self):

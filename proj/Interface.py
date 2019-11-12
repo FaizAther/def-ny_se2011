@@ -8,7 +8,7 @@ from InterfaceHelperFunctions import *
 
 
 print("Welcome to Vampire Systems. Login?")
-u = getInput(lambda x: x in facilityList or x == 'Admin', "Type Admin, or one of (" + ','.join(facilityList.keys()) + "): ")
+u = getInput(lambda x: x in facilityList or x == 'Admin', "Type Admin, or one of (" + ', '.join(facilityList.keys()) + "): ")
 if u != 'Admin': u = facilityList[u]
 
 # Login
@@ -23,16 +23,11 @@ adminCommands = {
 }
 
 # Facility Commands:
-#	Add blood
-#	Remove blood
-#	Request Blood
-#	Query Blood
-#	Check messages for expired blood
 facilityCommands = {
 	'status': facilityStatus,
 	'add blood': addBlood,
 	'remove blood': removeBlood,
-	#'use blood': useBlood,
+	'request blood': requestBlood,
 	#'check expired': checkExpired,
 }
 

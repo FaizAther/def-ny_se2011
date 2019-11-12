@@ -24,6 +24,9 @@ def isNum(n):
 		return True
 	except e:
 		return False
+		
+def isPositive(n): return isNum(n) and int(n) > 0
+
 def isBloodType(b):
 	return b in ["O-", "O+", "B-", "B+", "A-", "A+", "AB-", "AB+"]
 
@@ -49,16 +52,29 @@ def addBlood(f):
 	f.addBlood(b)
 
 def removeBlood(f):
-	"""Remove blood from your hospital"""
+	"""Remove blood from your facility"""
 	f.displayBlood()
-	id = getInput(isBlood, "Enter blood id: ")
+	id = getInput(lambda x:isPositive(x) and int(x) < len(bloodList) and bloodList[int(x)] in f._capacity._inventory, "Enter blood id: ")
+	f.removeBlood(bloodList[int(id)])
+	
+
+def requestBlood(f):
+	"""Request blood to use"""
+	type = getInput(isBloodType, "Enter blood type: ")
+	amount = getInput(isPositive, "Enter amount: ")
+	ids = f.requestBlood(type, amount)
+	if ids:
+		print("The blood bags with ids %s have been allocated to your use"%(str(id)))
+		#print("They are located at")	# If storage is implemented
+	else:
+		print("No blood is available for use")
 
 
 # Admin Commands
 def addFacility():
 	"""Add a facility to the system"""
 	name = getInput(lambda x: x != 'Admin' and x not in facilityList.keys(), "Enter name of new facility: ")
-	capacity = getInput(lambda x:isNum(x) and int(x) > 0, "Enter capacity: ")
+	capacity = getInput(isPositive, "Enter capacity: ")
 	
 	MedicalFacility(name, None, int(capacity))
 	
