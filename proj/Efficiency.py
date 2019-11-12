@@ -13,6 +13,8 @@ class Efficiency(object):
 
     BLOOD_RANK = {'AB+' : 1, 'AB-' : 2, 'A+' : 3, 'B+' : 4, 'A-' : 5, 'B-' : 6 ,'O+' : 7, 'O-' : 8}
 
+    CONTRIBUTORS = {'Expiration' : 0.52, 'Wastage' : 0.27, 'TotalQuantity' : -0.15, 'BloodRank' : 0.06}
+
     EXPIERY_LIMIT = 2
 
     WASTAGE_LIMIT = .10
@@ -143,10 +145,12 @@ class Efficiency(object):
     #         # Formula W * ( V - MIN ) / MAX
 
     def weight(value, min, max, weight):
-        if weight > 0:
-            return weight * ( 1 - ( value - min ) / max )
+        if weight > 0: 
+            return weight * ((min - value) / (min - max))
+            #return weight * ( 1 - ( value - min ) / max )
         else:
-            return weight * ( ( value - min ) / max )
+            return (-1 * (weight * ((max - value) / (max - min))))
+            #return weight * ( ( value - min ) / max )
     # 1. Contributors => >Expiration, >Amount Wastage, <Total Quantity, >Blood Rank
 
     def weightedSum(contributors, array, **options):
@@ -508,7 +512,7 @@ if __name__== "__main__":
     #print("Best blood choice for A-")
     #print(Efficiency.getBestBlood(s, "A-", 150))
 
-    contributors = {'Expiration' : 5, 'Wastage' : 3.5, 'TotalQuantity' : -1.5, 'BloodRank' : 1}
+    contributors = {'Expiration' : 0.52, 'Wastage' : 0.27, 'TotalQuantity' : -0.15, 'BloodRank' : 0.06}
 
     #Efficiency.weightedSum(contributors, [])
 
