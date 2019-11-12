@@ -71,4 +71,4 @@ if __name__ == "__main__":
 
     print(d)
 
-    DonorStorage.numDonorType(d, "AB+")
+    d.numDonorType("AB+")

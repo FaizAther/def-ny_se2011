@@ -31,7 +31,6 @@ class Storage(object):
             for t in r.get('types'):
                 str+="\n\t"
                 str+=t.__str__()
-                #for i in r.values():
             str+="\n"
             str+=self._types.__str__()
         return str
