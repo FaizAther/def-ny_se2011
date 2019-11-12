@@ -40,7 +40,9 @@ class Efficiency(object):
 
 #----------------------------------------------------------------------------
 
-    #Returns an array
+    #Returns an array<<<<<<< HEAD
+    contributors = {'Expiration' : 0.52, 'Wastage' : .27, 'TotalQuantity' : .15, 'BloodRank' : .06}
+=======
     #Descending order of blood type
     #Based on quantity
 
@@ -592,14 +594,4 @@ if __name__== "__main__":
     s.addBlood(b30)
 
 
-<<<<<<< HEAD
     print(Efficiency.weightedSum(['Expiration', 'Wastage', 'TotalQuantity', 'BloodRank'], b, requested=100, storage=s))
-=======
-    Efficiency.weightedSum(contributors, b, requested=1000, storage=s)
-    print(s.types())
-    print()
-    print('requested ', 1000)
-    print()
-    for b in (Efficiency.sortByWeight(b)):
-        print(b)
->>>>>>> yaa
