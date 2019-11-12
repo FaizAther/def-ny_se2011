@@ -114,6 +114,28 @@ class Storage(object):
         return badBlood
 
 
+    def numBagsType(self, bType):
+        counter = 0
+        for r in self._inventory:
+            for t in r.get('types'):
+                for a in t.values():
+                    for b in a:
+                        if(b.type() == bType):
+                            counter += 1
+        #print(counter)
+        return counter
+
+
+    def typeQuantity(self, bType):
+        counter = 0
+        counter = self.type(bType)
+        #print(counter)
+        return counter
+
+  
+
+
+
 if __name__ == "__main__":
     s = Storage()
     #s.inventory("Room1")
@@ -155,7 +177,7 @@ if __name__ == "__main__":
 
     b4 = Blood("2019/10/31", 500)
     b4.verify("AB-")
-    s.addBlood(b4,)
+    s.addBlood(b4)
 
     #AB- -> b4, b3
     #print("After adding second set of blood")
@@ -333,3 +355,6 @@ if __name__ == "__main__":
 
 #blood type - quantity
     #print(s.types())
+#s.numBagsType("AB-")
+
+#s.typeQuantity("AB-")
