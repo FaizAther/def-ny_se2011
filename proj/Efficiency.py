@@ -105,49 +105,6 @@ class Efficiency(object):
     #     return wantedBlood[0]
 
 #----------------------------------------------------------------------------
-#----------------------------------------------------------------------------
-
-    #TODO
-
-    # def calculateWeight(contributers, array):
-    #     Sum[contributer.size()][array.size()]
-    #     i = 0
-    #     j = 0
-
-    #     for c in contributers:
-
-    #         j = 0
-    #         for v in array:
-
-    #             Sum[i][j] = weight(v, c.weight())
-
-    #             j+=1
-
-    #         i += 1
-
-    #     cumulativeSum[array.size()]
-
-    #     while (i < array.size()):
-
-    #         j = 0
-    #         while(j < contributer.size()):
-
-    #             array[i].weight += Sum[j][i]
-
-    #             j += 1
-
-    #         i+=1
-
-    #     # Sort By Object --> Wiight Attribute
-
-    # def weight(value, max, min, wieght):
-    #     # If weight > 0 then UP
-
-    #         # Formula W * ( 1 - (V - MIN) / MAX )
-
-    #     # Else DOWN
-
-    #         # Formula W * ( V - MIN ) / MAX
 
     def weight(value, min, max, weight):
         if weight > 0:
@@ -156,7 +113,6 @@ class Efficiency(object):
         else:
             return (-1 * (weight * ((max - value) / (max - min))))
             #return weight * ( ( value - min ) / max )
-    # 1. Contributors => >Expiration, >Amount Wastage, <Total Quantity, >Blood Rank
 
     def weightedSum(contributors, array, **options):
         for v in array:
@@ -178,7 +134,6 @@ class Efficiency(object):
     	}
     	if c == 'BloodRank':
                         value = Efficiency.BLOOD_RANK[v.type()]
-                    #print(v)
                     v.weight(Efficiency.weight(value, low, high, contributors[c]))
 f(dungeon.isPlayerDead()) {
     		return;
