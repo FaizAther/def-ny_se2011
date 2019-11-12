@@ -70,13 +70,14 @@ class Storage(object):
     def removeUsedBloodObj(self, blood):
         usedBlood = []
         for r in self._inventory[0].get('types'):
-            for t in r.get('types'):
-                for a in t.values():
-                    for b in a:
-                        if b == blood:
-                            usedbBlood.append(b)
-                            self._types[b.type()]-=b.amount()
-                            a.remove(b)
+            #for k in r.get('types'):
+            for a in r.values():
+                for b in a:
+                    if b == blood:
+                        usedBlood.append(b)
+                        self._types[b.type()]-=b.amount()
+                        a.remove(b)
+
 
             
 
@@ -302,9 +303,18 @@ if __name__ == "__main__":
 
     #SET4
 
-    # b23 = Blood("2019/11/02", 150)
-    # b23.verify("O-")
-    # s.addBlood(b23)
+    b23 = Blood("2019/11/02", 150)
+    b23.verify("O-")
+    s.addBlood(b23)
+
+    #print("NON REMOVED")
+    #print(s)
+    #print()
+
+    #s.removeUsedBloodObj(b23)
+
+    #print("REMOVED")
+    #print(s)
 
     # b24 = Blood("2019/11/02", 300)
     # b24.verify("O+")
@@ -355,6 +365,7 @@ if __name__ == "__main__":
 
 #blood type - quantity
     #print(s.types())
-#s.numBagsType("AB-")
 
-#s.typeQuantity("AB-")
+# s.numBagsType("AB-")
+
+# s.typeQuantity("AB-")
