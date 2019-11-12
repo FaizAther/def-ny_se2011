@@ -20,7 +20,14 @@ class Blood(object):
         self._type = None
         self._storage = None
         self._id = assignBloodId(self)
-        self.weight
+        self._weight = 0
+
+    def getWeight(self):
+        return self._weight
+    def weight(self, weight):
+        self._weight += weight
+    def initWeight(self):
+        self._weight = 0
 
     def collectionDate(self):
         return self._collectionDate
@@ -30,7 +37,7 @@ class Blood(object):
 
     def isVerified(self):
         return self._isVerified
-    
+
     # Precondition: type is known and valid (one of O, A, B etc.), blood is verified
     def verify(self, type):
         self._type = type
@@ -55,7 +62,7 @@ class Blood(object):
 
 
     def __str__(self):
-        return "{}, {}, {}, {}".format(self._collectionDate, self._amount, self._type, self._isVerified)
+        return "{}, {}, {}, {}, {}".format(self.isExpired(), self._amount, self._type, self._isVerified, self._weight)
 
 if __name__ == "__main__":
 

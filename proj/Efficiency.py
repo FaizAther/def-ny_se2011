@@ -14,6 +14,7 @@ class Efficiency(object):
     BLOOD_RANK = {'AB+' : 1, 'AB-' : 2, 'A+' : 3, 'B+' : 4, 'A-' : 5, 'B-' : 6 ,'O+' : 7, 'O-' : 8}
 
     EXPIERY_LIMIT = 2
+
     WASTAGE_LIMIT = .10
 
     def bloodRank(bType):
@@ -123,7 +124,7 @@ class Efficiency(object):
 
     #         j = 0
     #         while(j < contributer.size()):
-                
+
     #             array[i].weight += Sum[j][i]
 
     #             j += 1
@@ -141,6 +142,90 @@ class Efficiency(object):
 
     #         # Formula W * ( V - MIN ) / MAX
 
+    def weight(value, min, max, weight):
+        if weight > 0:
+            return weight * ( 1 - ( value - min ) / max )
+        else:
+            return weight * ( ( value - min ) / max )
+    # 1. Contributors => >Expiration, >Amount Wastage, <Total Quantity, >Blood Rank
+
+    def weightedSum(contributors, array, **options):
+        for v in array:
+            v.initWeight()
+
+        for c in contributors:
+            low, high = Efficiency.values(c, array, options)
+
+            for v in array:
+                if type(v).__name__ == 'Blood':
+                    if c == 'Expiration':
+                        value = v.isExpired()
+                    elif c == 'Wastage':
+                        value = v.amount() - options['requested']
+                    elif c == 'TotalQuantity':
+                        value = options['storage'].type(v.type())
+                    elif c == 'BloodRank':
+                        value = Efficiency.BLOOD_RANK[v.type()]
+                    #print(v)
+                    v.weight(Efficiency.weight(value, low, high, contributors[c]))
+
+    def values(c, array, options):
+        if len(array) == 0:
+            return r
+
+        if (c == 'Expiration'):
+            v = []
+            for b in array:
+                v.append(b.isExpired())
+            return Efficiency.getLowHigh(v)
+
+        elif (c == 'Wastage'):
+            v = []
+            for b in array:
+                v.append(b.amount() - options['requested'])
+            return Efficiency.getLowHigh(v)
+
+        elif (c == 'TotalQuantity'):
+            v = []
+            for b in array:
+                v.append(options['storage'].type(b.type()))
+            return Efficiency.getLowHigh(v)
+
+        elif (c == 'BloodRank'):
+            v = []
+            for b in array:
+                v.append(Efficiency.BLOOD_RANK[b.type()])
+            return Efficiency.getLowHigh(v)
+
+        else:
+            print("What?")
+
+
+
+    def getLowHigh(array):
+        if len(array) == 0:
+            return 0, 0
+        else:
+            low = array[0]
+            high = array[0]
+        for a in array:
+            #print(a)
+            if a < low and a != True:
+                low  = a
+            elif a > high and a != True:
+                high = a
+
+        return low, high
+
+    #sorts based on weight
+    def sortByWeight(bList):
+        n = len(bList)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if(bList[j].getWeight() > bList[j+1].getWeight()):
+                    bList[j], bList[j+1] = bList[j+1], bList[j]
+
+        return bList
 
 
     def getBestBlood(storage, bType, rQuan):
@@ -262,46 +347,46 @@ if __name__== "__main__":
     #print(Efficiency.PATIENT)
     #print(s)
 
-    from Blood import Blood
-    from Storage import Storage
-
-    s = Storage()
-    #s.inventory("Room1")
-    #print(s)
-
-
-    #b2, b6, b1, b3, b5, b4
-    #or
-    #b6, b2, b1, b3, b5, b4
-
-    b1 = Blood("2019/09/29", 300)
-    b1.verify("A+")
-    s.addBlood(b1)
-
-    b2 = Blood("2019/09/29", 200)
-    b2.verify("A+")
-    s.addBlood(b2)
-
-    b3 = Blood("2019/09/30", 250)
-    b3.verify("A+")
-    s.addBlood(b3)
-
-    b4 = Blood("2019/10/02", 50)
-    b4.verify("A+")
-    s.addBlood(b4)
-
-    b5 = Blood("2019/10/01", 150)
-    b5.verify("A+")
-    s.addBlood(b5)
-
-    b6 = Blood("2019/09/29", 200)
-    b6.verify("A-")
-    s.addBlood(b6)
-
-    #print(s)
-
-    #print("Best blood choice for A+")
-    print(Efficiency.getBestBlood(s, "A+", 100))
+    # from Blood import Blood
+    # from Storage import Storage
+    #
+    # s = Storage()
+    # #s.inventory("Room1")
+    # #print(s)
+    #
+    #
+    # #b2, b6, b1, b3, b5, b4
+    # #or
+    # #b6, b2, b1, b3, b5, b4
+    #
+    # b1 = Blood("2019/09/29", 300)
+    # b1.verify("A+")
+    # s.addBlood(b1)
+    #
+    # b2 = Blood("2019/09/29", 200)
+    # b2.verify("A+")
+    # s.addBlood(b2)
+    #
+    # b3 = Blood("2019/09/30", 250)
+    # b3.verify("A+")
+    # s.addBlood(b3)
+    #
+    # b4 = Blood("2019/10/02", 50)
+    # b4.verify("A+")
+    # s.addBlood(b4)
+    #
+    # b5 = Blood("2019/10/01", 150)
+    # b5.verify("A+")
+    # s.addBlood(b5)
+    #
+    # b6 = Blood("2019/09/29", 200)
+    # b6.verify("A-")
+    # s.addBlood(b6)
+    #
+    # #print(s)
+    #
+    # #print("Best blood choice for A+")
+    # print(Efficiency.getBestBlood(s, "A+", 100))
 
 
     #SET1
@@ -411,7 +496,7 @@ if __name__== "__main__":
 
 
     #Checking Expiration
-    s.expiration()
+    # s.expiration()
     #print("Blood Inventory - Quantity")
     #print(s.types())
     #print(s)
@@ -422,3 +507,82 @@ if __name__== "__main__":
 
     #print("Best blood choice for A-")
     #print(Efficiency.getBestBlood(s, "A-", 150))
+
+    contributors = {'Expiration' : 5, 'Wastage' : 3.5, 'TotalQuantity' : -1.5, 'BloodRank' : 1}
+
+    #Efficiency.weightedSum(contributors, [])
+
+    t = [1, 2, 3, -28, 4, 20, 6, 7, 8, 9]
+
+    from Blood import Blood
+    b = []
+    b31 = Blood("2019/10/04", 1200)
+    b31.verify("AB+")
+    b.append(b31)
+    b32 = Blood("2019/10/05", 1225)
+    b32.verify("AB-")
+    b.append(b32)
+    b33 = Blood("2019/10/10", 1175)
+    b33.verify("A+")
+    b.append(b33)
+    b34 = Blood("2019/10/02", 1280)
+    b34.verify("A-")
+    b.append(b34)
+    b35 = Blood("2019/10/04", 1300)
+    b35.verify("B+")
+    b.append(b35)
+    b36 = Blood("2019/10/02", 1500)
+    b36.verify("B-")
+    b.append(b36)
+    b36 = Blood("2019/10/03", 1175)
+    b36.verify("O+")
+    b.append(b36)
+    b37 = Blood("2019/10/05", 1200)
+    b37.verify("O-")
+    b.append(b37)
+    #print(b36.isExpired())
+
+    from Storage import Storage
+
+    s = Storage()
+
+    b23 = Blood("2019/11/02", 2500)
+    b23.verify("O-")
+    s.addBlood(b23)
+
+    b24 = Blood("2019/11/02", 1500)
+    b24.verify("O+")
+    s.addBlood(b24)
+
+    b25 = Blood("2019/10/31", 800)
+    b25.verify("B-")
+    s.addBlood(b25)
+
+    b26 = Blood("2019/11/04", 750)
+    b26.verify("B+")
+    s.addBlood(b26)
+
+    b27 = Blood("2019/11/01", 2700)
+    b27.verify("A-")
+    s.addBlood(b27)
+
+    b28 = Blood("2019/10/21", 1500)
+    b28.verify("A+")
+    s.addBlood(b28)
+
+    b29 = Blood("2019/10/26", 3000)
+    b29.verify("AB-")
+    s.addBlood(b29)
+
+    b30 = Blood("2019/10/25", 2500)
+    b30.verify("AB+")
+    s.addBlood(b30)
+
+
+    Efficiency.weightedSum(contributors, b, requested=1000, storage=s)
+    print(s.types())
+    print()
+    print('requested ', 1000)
+    print() 
+    for b in (Efficiency.sortByWeight(b)):
+        print(b)
