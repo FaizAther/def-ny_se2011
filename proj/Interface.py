@@ -1,70 +1,65 @@
+# Main interface for the Vampire systemss
 
 from Blood import *
 from Capacity import *
 from MedicalFacility import *
 from datetime import *
+from InterfaceHelperFunctions import *
 
-
-# Create a generic facility
-m1 = MedicalFacility("Hospital",
-						(-33.915754, 151.231848),
-						1000000)
-
-bag1 = Blood(date.today(), 20)
-bag1.verify("A+")
-
-bag2 = Blood(date.today(), 10)
-bag2.verify("A-")
-
-bag3 = Blood(date.today(), 5)
-bag3.verify("B+")
-
-m1.addBlood(bag1)
-m1.addBlood(bag2)
-m1.addBlood(bag3)
 
 print("Welcome to Vampire Systems. Login?")
-while 1:
-	u = input("Type one of (" + ','.join(facilityList.keys()) + "): ")
-
-	if u in facilityList: break 
+u = getInput(lambda x: x in facilityList or x == 'Admin', "Type Admin, or one of (" + ','.join(facilityList.keys()) + "): ")
+if u != 'Admin': u = facilityList[u]
 
 # Login
 
-# Commands:
+# Admin Commands:
+#	Add facility
+#	Status
+
+adminCommands = {
+	'add facility': addFacility,
+	'status': adminStatus
+}
+
+# Facility Commands:
 #	Add blood
 #	Remove blood
 #	Request Blood
 #	Query Blood
 #	Check messages for expired blood
+facilityCommands = {
+	'status': facilityStatus,
+	'add blood': addBlood,
+	'remove blood': removeBlood,
+	#'use blood': useBlood,
+	#'check expired': checkExpired,
+}
+
 
 print("Type help for a list of commands")
 
+
+
 while 1:
-	command = input(">> ").lower()
+	command = getInput().lower()
 	if command == "help":
-		print("Commands are: 'status', 'add blood', 'remove blood', 'use blood', 'check expired', 'exit'")
-	elif command == "status":
-		print(m1._capacity)
-	elif command == "add blood":
-		# Get blood amount
-		# Get blood type
-		# Add blood to facility
-		pass
-	elif command == "remove blood":
-		# Get blood id
-		# Call remove blood
-		pass
-	elif command == "use blood":
-		# Get blood amount
-		# Get blood type
-		# Call use blood function
-		pass
-	elif command == "check expired":
-		# Print out any blood bags that are expired
-		pass
+		print("Commands are:")
+		print("\t%-15s: Display this list of commands"%'help')
+		commands = adminCommands if u == 'Admin' else facilityCommands
+		for c in commands:
+			print("\t%-15s: %s"%(c, commands[c].__doc__))
+			
+		print("\t%-15s: Exit the program"%'exit')
 	elif command == "exit":
 		break
-		
+	elif u == 'Admin':
+		if command in adminCommands:
+			adminCommands[command]()
+	else:
+		if command in facilityCommands:
+			facilityCommands[command](u	)
+
+saveFacilities()
+saveBlood()
 print("Thank you for using Vampire Systems")
-	
