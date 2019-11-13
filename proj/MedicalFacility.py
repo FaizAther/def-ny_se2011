@@ -54,7 +54,7 @@ class MedicalFacility(object):
         blood = Blood(date, quantity)
         if (len(kwargs) == 1):
             blood.verify(kwargs['type'])
-            print(blood)
+            #print(blood)
             self.storage().addBlood(blood)
 
 

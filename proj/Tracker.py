@@ -27,8 +27,10 @@ class Tracker(object):
     def __str__(self):
         str = "Medical Facilities"
         for m in self._medicalFacilities:
-            str+="\n"
+            str+="\n+++\n"
             str+=m.__str__()
+        str+="+++"
+        return str
 
 if __name__ == "__main__":
     from Blood import Blood
@@ -38,11 +40,11 @@ if __name__ == "__main__":
     h1 = MedicalFacility("Sydney Children Hospital",
                             "20, High Street, Randwick 2031, Sydney, NSW, AU",
                             1000000)
-    t.medicalFacility(h1)
+    t.medicalFacilities(h1)
     h1.addBlood("2019/11/14", 200, type='AB+')
-    t.medicalFacility(h1)
     h2 = MedicalFacility("Melbourne Children Hospital",
                             "10, Low Street, Richmond 3031, Melboure, VIC, AU",
                             500000)
     h2.addBlood("2019/11/14", 200, type='AB+')
+    t.medicalFacilities(h2)
     print(t)
