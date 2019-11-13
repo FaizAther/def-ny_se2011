@@ -15,6 +15,14 @@ class MedicalFacility(object):
         self._address = address
         self._capacity = Capacity(capacity)
         self._id = assignFacilityId(self)
+        self._weight = 0
+
+    def getWeight(self):
+        return self._weight
+    def weight(self, weight):
+        self._weight += weight
+    def initWeight(self):
+        self._weight = 0
 
     def capacity(self):
         return self._capacity
