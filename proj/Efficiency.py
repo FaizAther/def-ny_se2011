@@ -72,6 +72,7 @@ class Efficiency(object):
             return (-1 * (weight * ((max - value) / (max - min))))
             #return weight * ( ( value - min ) / max )
 
+    #VERIFICATION
     def weightedSum(contributors, array, **options):
         for v in array:
             v.initWeight()
@@ -91,6 +92,7 @@ class Efficiency(object):
                         value = Efficiency.BLOOD_RANK[v.type()]
                     v.weight(Efficiency.weight(value, low, high, contributors[c]))
 
+    #VERIFICATION
     def values(c, array, options):
         if len(array) == 0:
             return r
@@ -124,6 +126,7 @@ class Efficiency(object):
 
 
 
+    #VERIFICATION
     def getLowHigh(array):
         if len(array) == 0:
             return 0, 0
@@ -140,6 +143,7 @@ class Efficiency(object):
         return low, high
 
 
+    #VERIFICATION
     def getBestBlood(storage, bType, rQuan):
         #The best blood that can be used
         wantedBlood = []
@@ -186,6 +190,7 @@ class Efficiency(object):
     #Sorts through each list of compatible bloods
     #Returns the best available blood from each list
 
+    #VERIFICATION
     def getBestList(bList, rQuan):
 
         #bloods that do not match best suitable criteria
@@ -238,6 +243,7 @@ class Efficiency(object):
 
 
     #sorts based on quantity
+    #VERIFICATION
     def sortByQuantity(bList):
         n = len(bList)
         for i in range(n):
@@ -249,6 +255,7 @@ class Efficiency(object):
 
 
     #sorts based on expiration duration
+    #VERIFICATION
     def sortByExpiration(bList):
         n = len(bList)
         for i in range(n):
@@ -259,6 +266,7 @@ class Efficiency(object):
         return bList
 
     #sorts based on weight
+    #VERIFICATION
     def sortByWeight(bList):
         n = len(bList)
         for i in range(n):
