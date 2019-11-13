@@ -5,7 +5,7 @@ class Capacity(object):
 
     TYPE_ALGO = 1/36
 
-    MINIMUM_LIMIT = 0.25
+    MINIMUM_LIMIT = 0.15
 
     def __init__(self, max):
 

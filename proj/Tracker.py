@@ -3,6 +3,8 @@ from Efficiency import Efficiency
 class Tracker(object):
     """docstring for Tracker."""
 
+    CLASSIFY = {'seeder' : 0.5, 'leecher' : 0.35, 'danger' : 0.15}
+
     def __init__(self):
 
         self._medicalFacilities = []
@@ -42,6 +44,20 @@ if __name__ == "__main__":
                             1000000)
     t.medicalFacilities(h1)
     h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBlood("2019/11/14", 200, type='AB+')
+
     h2 = MedicalFacility("Melbourne Children Hospital",
                             "10, Low Street, Richmond 3031, Melboure, VIC, AU",
                             500000)
