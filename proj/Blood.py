@@ -40,8 +40,9 @@ class Blood(object):
 
     # Precondition: type is known and valid (one of O, A, B etc.), blood is verified
     def verify(self, type):
-        self._type = type
-        self._isVerified = True
+        if type != None:
+            self._type = type
+            self._isVerified = True
     # Postcondition: blood is verified and typed
 
     def type(self):
@@ -62,7 +63,8 @@ class Blood(object):
 
 
     def __str__(self):
-        return "{}, {}, {}, {}, {}".format(self.isExpired(), self._amount, self._type, self._isVerified, self._weight)
+        #return "Blood expiry={}, amount={}".format(self.isExpired(), self._amount)
+        return "(expiry,amount)=({},{})".format(self.isExpired(), self._amount)
 
 if __name__ == "__main__":
 
