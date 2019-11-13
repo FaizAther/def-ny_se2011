@@ -62,13 +62,19 @@ def requestBlood(f):
 	"""Request blood to use"""
 	type = getInput(isBloodType, "Enter blood type: ")
 	amount = getInput(isPositive, "Enter amount: ")
-	ids = f.requestBlood(type, amount)
-	if ids:
-		print("The blood bags with ids %s have been allocated to your use"%(str(id)))
-		#print("They are located at")	# If storage is implemented
+	bloods = f.requestBlood(type, amount)
+	if bloods:
+		print("The blood bags with ids %s have been allocated to your use"%(map(lambda b: b._id, id)))
 	else:
 		print("No blood is available for use")
 
+def checkExpired(f):
+	"""Show a list of expired blood bags"""
+	bs = f.expiredBloodBags()
+	if ids:
+		print("The blood bags with ids %s are expired.\nPlease remove them and type the command 'remove blood' for each of them."%(map(lambda b: b._id, id)))
+	else:
+		print("No blood bags are expired")
 
 # Admin Commands
 def addFacility():

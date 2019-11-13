@@ -28,13 +28,11 @@ facilityCommands = {
 	'add blood': addBlood,
 	'remove blood': removeBlood,
 	'request blood': requestBlood,
-	#'check expired': checkExpired,
+	'check expired': checkExpired,
 }
 
 
 print("Type help for a list of commands")
-
-
 
 while 1:
 	command = getInput().lower()
@@ -42,9 +40,7 @@ while 1:
 		print("Commands are:")
 		print("\t%-15s: Display this list of commands"%'help')
 		commands = adminCommands if u == 'Admin' else facilityCommands
-		for c in commands:
-			print("\t%-15s: %s"%(c, commands[c].__doc__))
-			
+		for c in commands: print("\t%-15s: %s"%(c, commands[c].__doc__))
 		print("\t%-15s: Exit the program"%'exit')
 	elif command == "exit":
 		break

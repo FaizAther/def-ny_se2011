@@ -20,6 +20,10 @@ class MedicalFacility():
     def notifyExpired(self, bloodId):
         pass
     
+    # Return a list of the expired blood bags
+    def expiredBlood(self):
+        pass
+    
     # Preconditions:
     #    Blood type is known
     #    Amount is positive

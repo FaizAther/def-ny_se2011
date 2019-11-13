@@ -52,8 +52,7 @@ class Capacity():
             print("%-3s: %s (%s)"%(b._id, b._amount, b._type) )
 
     def __str__(self):
-        print(self._min.items())
-        return "\n".join(["Total Capacity: %s\n"%(self._max),
+        return "\n".join(["Total Capacity: %s"%(self._max),
             "Type totals:",
             "\n".join(map(lambda x:"\t{}: {}".format(x[0], x[1]), sorted(self._min.items(), key=lambda x: -x[1]))),
             "\n".join(map(str,self._inventory))
