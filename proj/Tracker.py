@@ -31,7 +31,7 @@ class Tracker(object):
         for m in self._medicalFacilities:
             str+="\n+++\n"
             str+=m.__str__()
-        str+="+++"
+        str+="\n+++"
         return str
 
 if __name__ == "__main__":

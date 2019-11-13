@@ -39,7 +39,7 @@ class Storage(object):
                         str+= "-b-"
                         #str+="  "
                         str+=b.__str__()
-                    str+="---: }"
+                    str+="-: }"
             str+="\n"
             str+=self._types.__str__()
         return str
