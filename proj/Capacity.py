@@ -52,6 +52,8 @@ class Capacity(object):
 
 if __name__ == "__main__":
     c1= Capacity(100)
+    print(c1)
+    
     # from Blood import Blood
     # #import datetime.datetime
     #
@@ -67,4 +69,4 @@ if __name__ == "__main__":
     # c1.addBlood(bag1)
     # c1.addBlood(bag2)
     # c1.addBlood(bag3)
-    print(c1)
+    

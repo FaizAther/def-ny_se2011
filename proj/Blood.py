@@ -74,20 +74,27 @@ if __name__ == "__main__":
     b1.verify("B+")
     print(b1)
     z = b1.isExpired()
-    #print(b1.isExpired())
     if(z == True):
-        print("Expired".format(b1))
+        print("Expired")
     else:
         print("Days to Expiere - {}".format(z))
-
     print()
 
     b2 = Blood("2019/09/01", 500)
     b2.verify("B-")
     print(b2)
     z = b2.isExpired()
-    #print(b2.isExpired())
     if(z == True):
-        print("Expired".format(b2))
+        print("Expired")
+    else:
+        print("Days to Expiere - {}".format(z))
+    print()
+
+    b3 = Blood("2019/11/01", 500)
+    b3.verify("B-")
+    print(b3)
+    z = b3.isExpired()
+    if(z == True):
+        print("Expired")
     else:
         print("Days to Expiere - {}".format(z))

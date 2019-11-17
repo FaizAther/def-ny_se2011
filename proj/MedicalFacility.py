@@ -72,13 +72,13 @@ class MedicalFacility(object):
 if __name__ == "__main__":
     h1 = MedicalFacility("Sydney Children Hospital",
                             "20, High Street, Randwick 2031,Sydney, NSW, AU",
-                            1000000)
+                            4000)
 
     h1.addBlood("2019/11/14", 200, type='AB+')
 
     h2 = MedicalFacility("Melbourne Children Hospital",
                             "10, High Street, Richmond 3031,Melboure, VIC, AU",
-                            500000)
+                            5000)
 
     h2.addBlood("2019/11/14", 200, type='B+')
     h2.addBlood("2019/10/14", 300, type='B+')
