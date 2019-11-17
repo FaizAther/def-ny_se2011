@@ -30,7 +30,16 @@ class Storage(object):
             str+=" Blood:"
             for t in r.get('types'):
                 str+="\n\t"
-                str+=t.__str__()
+                #str+=t.__str__()
+                for k in t.keys():
+                    str+="{ "
+                    str+=k
+                    str+=" :"
+                    for b in t[k]:
+                        str+= "-b-"
+                        #str+="  "
+                        str+=b.__str__()
+                    str+="-: }"
             str+="\n"
             str+=self._types.__str__()
         return str
@@ -80,7 +89,7 @@ class Storage(object):
                         a.remove(b)
 
 
-            
+
 
     #return a list of bloods
     #Return??
@@ -138,7 +147,7 @@ class Storage(object):
         #print(counter)
         return counter
 
-  
+
 
 
 
