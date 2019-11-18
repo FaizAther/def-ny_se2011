@@ -339,7 +339,7 @@ class Efficiency(object):
             j = 0
             k = 0
             while i < len(left) and j < len(right):
-                if left[i].getWeight() < right[j].getWeight():
+                if left[i].getWeight() > right[j].getWeight():
                     bList[k] = left[i]
                     i = i + 1
                 else:
@@ -373,7 +373,7 @@ class Efficiency(object):
             j = 0
             k = 0
             while i < len(left) and j < len(right):
-                if(storage.type(left[i].type()) < storage.type(right[j].type())):
+                if(storage.type(left[i].type()) > storage.type(right[j].type())):
                     bList[k] = left[i]
                     i = i + 1
                 else:
@@ -406,7 +406,7 @@ class Efficiency(object):
             j = 0
             k = 0
             while i < len(left) and j < len(right):
-                if(Efficiency.BLOOD_RANK[left[i].type()] > Efficiency.BLOOD_RANK[right[j].type()]):
+                if(Efficiency.BLOOD_RANK[left[i].type()] < Efficiency.BLOOD_RANK[right[j].type()]):
                     bList[k] = left[i]
                     i = i + 1
                 else:
@@ -531,7 +531,7 @@ if __name__== "__main__":
     b3.verify("O+")
     s.addBlood(b3)
     
-    b4 = Blood("2019/10/10", 150)
+    b4 = Blood("2019/10/10", 170)
     b4.verify("O-")
     s.addBlood(b4)
     
@@ -539,7 +539,7 @@ if __name__== "__main__":
     b5.verify("A+")
     s.addBlood(b5)
     
-    b6 = Blood("2019/10/10", 200)
+    b6 = Blood("2019/10/15", 200)
     b6.verify("A-")
     s.addBlood(b6)
     
