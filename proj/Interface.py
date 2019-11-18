@@ -26,9 +26,9 @@ adminCommands = {
 facilityCommands = {
 	'status': facilityStatus,
 	'add blood': addBlood,
-	'remove blood': removeBlood,
+	# 'remove blood': removeBlood,
 	'request blood': requestBlood,
-	'check expired': checkExpired,
+	# 'check expired': checkExpired,
 }
 
 

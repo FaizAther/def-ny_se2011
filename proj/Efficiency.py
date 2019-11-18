@@ -1,6 +1,6 @@
-class Efficiency(object):
+class Efficiency():
 
-    #Compatible blood groups
+    #Compatible blood types
     PATIENT = {'AB+' : ["O-","O+","B-","B+","A-","A+","AB-","AB+"],
     'AB-' : ["O-","B-","A-","AB-"],
     'A+' : ["O-","O+","A-","A+"],
@@ -182,8 +182,8 @@ class Efficiency(object):
 
         #Efficiency.sortByWeight(wantedBlood)
 
-        print(wantedBlood)
-        print()
+        #print(wantedBlood)
+        #print()
 
         #
         storage.removeUsedBloodObj(wantedBlood[0])
@@ -494,52 +494,52 @@ if __name__== "__main__":
     #or
     #b6, b2, b1, b3, b5, b4
     
-    # b1 = Blood("2019/09/29", 300)
+    # b1 = Blood("2019-09-29", 300)
     # b1.verify("A+")
     # s.addBlood(b1)
     
-    # b2 = Blood("2019/09/29", 200)
+    # b2 = Blood("2019-09-29", 200)
     # b2.verify("A+")
     # s.addBlood(b2)
     
-    # b3 = Blood("2019/09/30", 250)
+    # b3 = Blood("2019-09-30", 250)
     # b3.verify("A+")
     # s.addBlood(b3)
     
-    # b4 = Blood("2019/10/02", 50)
+    # b4 = Blood("2019-10-02", 50)
     # b4.verify("A+")
     # s.addBlood(b4)
     
-    # b5 = Blood("2019/10/01", 150)
+    # b5 = Blood("2019-10-01", 150)
     # b5.verify("A+")
     # s.addBlood(b5)
     
-    # b6 = Blood("2019/09/29", 200)
+    # b6 = Blood("2019-09-29", 200)
     # b6.verify("A-")
     # s.addBlood(b6)
 
 
-    b1 = Blood("2019/10/29", 300)
+    b1 = Blood("2019-10-29", 300)
     b1.verify("A-")
     s.addBlood(b1)
     
-    b2 = Blood("2019/10/29", 200)
+    b2 = Blood("2019-10-29", 200)
     b2.verify("A+")
     s.addBlood(b2)
     
-    b3 = Blood("2019/10/10", 250)
+    b3 = Blood("2019-10-10", 250)
     b3.verify("O+")
     s.addBlood(b3)
     
-    b4 = Blood("2019/10/10", 150)
+    b4 = Blood("2019-10-10", 150)
     b4.verify("O-")
     s.addBlood(b4)
     
-    b5 = Blood("2019/10/11", 150)
+    b5 = Blood("2019-10-11", 150)
     b5.verify("A+")
     s.addBlood(b5)
     
-    b6 = Blood("2019/10/10", 200)
+    b6 = Blood("2019-10-10", 200)
     b6.verify("A-")
     s.addBlood(b6)
     
@@ -551,35 +551,35 @@ if __name__== "__main__":
 
     #SET1
 
-    # b7 = Blood("2019/10/02", 300)
+    # b7 = Blood("2019-10-02", 300)
     # b7.verify("O-")
     # s.addBlood(b7)
 
-    # b8 = Blood("2019/10/02", 200)
+    # b8 = Blood("2019-10-02", 200)
     # b8.verify("O+")
     # s.addBlood(b8)
 
-    # b9 = Blood("2019/10/03", 400)
+    # b9 = Blood("2019-10-03", 400)
     # b9.verify("A-")
     # s.addBlood(b9)
 
-    # b10 = Blood("2019/10/04", 100)
+    # b10 = Blood("2019-10-04", 100)
     # b10.verify("A+")
     # s.addBlood(b10)
 
-    # b11 = Blood("2019/10/01", 250)
+    # b11 = Blood("2019-10-01", 250)
     # b11.verify("B-")
     # s.addBlood(b11)
 
-    # b12 = Blood("2019/10/01", 350)
+    # b12 = Blood("2019-10-01", 350)
     # b12.verify("B+")
     # s.addBlood(b12)
 
-    # b13 = Blood("2019/10/06", 450)
+    # b13 = Blood("2019-10-06", 450)
     # b13.verify("AB-")
     # s.addBlood(b13)
 
-    # b14 = Blood("2019/10/05", 150)
+    # b14 = Blood("2019-10-05", 150)
     # b14.verify("AB+")
     # s.addBlood(b14)
 
@@ -587,70 +587,70 @@ if __name__== "__main__":
     # #Expired Blood
     # #SET2
 
-    # b15 = Blood("2019/09/02", 300)
+    # b15 = Blood("2019-09-02", 300)
     # b15.verify("O-")
     # s.addBlood(b15)
 
-    # b16 = Blood("2019/09/02", 200)
+    # b16 = Blood("2019-09-02", 200)
     # b16.verify("O+")
     # s.addBlood(b16)
 
-    # b17 = Blood("2019/09/03", 400)
+    # b17 = Blood("2019-09-03", 400)
     # b17.verify("A-")
     # s.addBlood(b17)
 
-    # b18 = Blood("2019/09/04", 100)
+    # b18 = Blood("2019-09-04", 100)
     # b18.verify("A+")
     # s.addBlood(b18)
 
-    # b19 = Blood("2019/09/01", 250)
+    # b19 = Blood("2019-09-01", 250)
     # b19.verify("B-")
     # s.addBlood(b19)
 
-    # b20 = Blood("2019/09/01", 350)
+    # b20 = Blood("2019-09-01", 350)
     # b20.verify("B+")
     # s.addBlood(b20)
 
-    # b21 = Blood("2019/09/06", 450)
+    # b21 = Blood("2019-09-06", 450)
     # b21.verify("AB-")
     # s.addBlood(b21)
 
-    # b22 = Blood("2019/08/05", 150)
+    # b22 = Blood("2019-08-05", 150)
     # b22.verify("AB+")
     # s.addBlood(b22)
 
 
     # #SET3
 
-    # b23 = Blood("2019/11/02", 150)
+    # b23 = Blood("2019-11-02", 150)
     # b23.verify("O-")
     # s.addBlood(b23)
 
-    # b24 = Blood("2019/11/02", 300)
+    # b24 = Blood("2019-11-02", 300)
     # b24.verify("O+")
     # s.addBlood(b24)
 
-    # b25 = Blood("2019/10/31", 100)
+    # b25 = Blood("2019-10-31", 100)
     # b25.verify("A-")
     # s.addBlood(b25)
 
-    # b26 = Blood("2019/11/04", 150)
+    # b26 = Blood("2019-11-04", 150)
     # b26.verify("A+")
     # s.addBlood(b26)
 
-    # b27 = Blood("2019/11/01", 350)
+    # b27 = Blood("2019-11-01", 350)
     # b27.verify("B-")
     # s.addBlood(b27)
 
-    # b28 = Blood("2019/10/21", 2000)
+    # b28 = Blood("2019-10-21", 2000)
     # b28.verify("B+")
     # s.addBlood(b28)
 
-    # b29 = Blood("2019/10/26", 350)
+    # b29 = Blood("2019-10-26", 350)
     # b29.verify("AB-")
     # s.addBlood(b29)
 
-    # b30 = Blood("2019/10/25", 450)
+    # b30 = Blood("2019-10-25", 450)
     # b30.verify("AB+")
     # s.addBlood(b30)
 
@@ -676,28 +676,28 @@ if __name__== "__main__":
 
     # from Blood import Blood
     # b = []
-    # b31 = Blood("2019/10/04", 1200)
+    # b31 = Blood("2019-10-04", 1200)
     # b31.verify("AB+")
     # b.append(b31)
-    # b32 = Blood("2019/10/05", 1225)
+    # b32 = Blood("2019-10-05", 1225)
     # b32.verify("AB-")
     # b.append(b32)
-    # b33 = Blood("2019/10/10", 1175)
+    # b33 = Blood("2019-10-10", 1175)
     # b33.verify("A+")
     # b.append(b33)
-    # b34 = Blood("2019/10/02", 1280)
+    # b34 = Blood("2019-10-02", 1280)
     # b34.verify("A-")
     # b.append(b34)
-    # b35 = Blood("2019/10/04", 1300)
+    # b35 = Blood("2019-10-04", 1300)
     # b35.verify("B+")
     # b.append(b35)
-    # b36 = Blood("2019/10/02", 1500)
+    # b36 = Blood("2019-10-02", 1500)
     # b36.verify("B-")
     # b.append(b36)
-    # b36 = Blood("2019/10/03", 1175)
+    # b36 = Blood("2019-10-03", 1175)
     # b36.verify("O+")
     # b.append(b36)
-    # b37 = Blood("2019/10/05", 1200)
+    # b37 = Blood("2019-10-05", 1200)
     # b37.verify("O-")
     # b.append(b37)
     # #print(b36.isExpired())
@@ -706,35 +706,35 @@ if __name__== "__main__":
 
     # s = Storage()
 
-    # b23 = Blood("2019/11/02", 2500)
+    # b23 = Blood("2019-11-02", 2500)
     # b23.verify("O-")
     # s.addBlood(b23)
 
-    # b24 = Blood("2019/11/02", 1500)
+    # b24 = Blood("2019-11-02", 1500)
     # b24.verify("O+")
     # s.addBlood(b24)
 
-    # b25 = Blood("2019/10/31", 800)
+    # b25 = Blood("2019-10-31", 800)
     # b25.verify("B-")
     # s.addBlood(b25)
 
-    # b26 = Blood("2019/11/04", 750)
+    # b26 = Blood("2019-11-04", 750)
     # b26.verify("B+")
     # s.addBlood(b26)
 
-    # b27 = Blood("2019/11/01", 2700)
+    # b27 = Blood("2019-11-01", 2700)
     # b27.verify("A-")
     # s.addBlood(b27)
 
-    # b28 = Blood("2019/10/21", 1500)
+    # b28 = Blood("2019-10-21", 1500)
     # b28.verify("A+")
     # s.addBlood(b28)
 
-    # b29 = Blood("2019/10/26", 3000)
+    # b29 = Blood("2019-10-26", 3000)
     # b29.verify("AB-")
     # s.addBlood(b29)
 
-    # b30 = Blood("2019/10/25", 2500)
+    # b30 = Blood("2019-10-25", 2500)
     # b30.verify("AB+")
     # s.addBlood(b30)
 

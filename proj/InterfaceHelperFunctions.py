@@ -3,6 +3,7 @@
 from Blood import *
 from Capacity import *
 from MedicalFacility import *
+from Efficiency import *
 from datetime import *
 
 
@@ -22,7 +23,7 @@ def isNum(n):
 	try:
 		int(n)
 		return True
-	except e:
+	except Exception as e:
 		return False
 		
 def isPositive(n): return isNum(n) and int(n) > 0
@@ -44,7 +45,7 @@ def addBlood(f):
 	date = getInput(isDate, "Enter date blood was drawn (YYYY-MM-DD): ")
 	# Get blood amount
 	amount = getInput(isNum, "Enter amount of blood: ")
-	b = Blood(datetime.strptime(date, '%Y-%m-%d').date(), int(amount))
+	b = Blood(date, int(amount))
 	# Get blood type
 	type = getInput(isBloodType, "Enter blood type: ")
 	b.verify(type)
@@ -60,11 +61,16 @@ def removeBlood(f):
 
 def requestBlood(f):
 	"""Request blood to use"""
-	type = getInput(isBloodType, "Enter blood type: ")
-	amount = getInput(isPositive, "Enter amount: ")
-	bloods = f.requestBlood(type, amount)
-	if bloods:
-		print("The blood bags with ids %s have been allocated to your use"%(map(lambda b: b._id, id)))
+	btype = getInput(isBloodType, "Enter blood type: ")
+	amount = int(getInput(isPositive, "Enter amount: "))
+	blood = Efficiency.getBestBlood(f._capacity._storage, btype, amount)
+	if type(blood) is not list: blood = [blood]
+	if blood:
+		if len(blood) > 1:
+			print("These blood bags have been allocated to your use:")
+		else:
+			print("This blood bag has been allocated to your use:")
+		print("\n".join(map(str, blood)))
 	else:
 		print("No blood is available for use")
 
