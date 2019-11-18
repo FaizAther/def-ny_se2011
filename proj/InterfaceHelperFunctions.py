@@ -70,9 +70,9 @@ def requestBlood(f):
 
 def checkExpired(f):
 	"""Show a list of expired blood bags"""
-	bs = f.expiredBloodBags()
-	if ids:
-		print("The blood bags with ids %s are expired.\nPlease remove them and type the command 'remove blood' for each of them."%(map(lambda b: b._id, id)))
+	bs = f.expiredBlood()
+	if bs:
+		print("The blood bags with ids %s are expired.\nPlease remove them and type the command 'remove blood' for each of them."%(map(lambda b: b._id, bs)))
 	else:
 		print("No blood bags are expired")
 
