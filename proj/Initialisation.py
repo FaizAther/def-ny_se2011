@@ -4,6 +4,7 @@ from Blood import *
 from Capacity import *
 from MedicalFacility import *
 from datetime import *
+from Donor import *
 from InterfaceHelperFunctions import *
 
 # Reset lists
@@ -45,7 +46,16 @@ m2.addBlood(bag1)
 m2.addBlood(bag2)
 m2.addBlood(bag3)
 
+donorList.clear()
+
+p1 = Donor("John", 2033, "AB+")
+p1.verify("AB+")
+
+p2 = Donor("David", 2035, "B+")
+p2.verify("B+")
+
 
 # Save to file
 saveFacilities()
 saveBlood()
+saveDonors()

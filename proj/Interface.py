@@ -19,23 +19,32 @@ if u != 'Admin': u = facilityList[u]
 
 adminCommands = {
 	'add facility': addFacility,
-	'status': adminStatus
+	'status': adminStatus,
+	'donors': listDonors,
+	'register donor': registerDonor,
+	'query donor': queryDonor,
 }
 
 # Facility Commands:
 facilityCommands = {
 	'status': facilityStatus,
 	'add blood': addBlood,
-	# 'remove blood': removeBlood,
 	'request blood': requestBlood,
-	# 'check expired': checkExpired,
+	'donors': listDonors,
+	'register donor': registerDonor,
+	'query donor': queryDonor,
+	'type': getType
 }
 
 
 print("Type help for a list of commands")
 
 while 1:
-	command = getInput().lower()
+	bs = u.removeExpiredBlood()
+	if bs:
+		print("Expired blood bags were removed:")
+		print("\n".join(map(str,bs)))
+	command = getInput().lower().strip()
 	if command == "help":
 		print("Commands are:")
 		print("\t%-15s: Display this list of commands"%'help')
@@ -49,8 +58,9 @@ while 1:
 			adminCommands[command]()
 	else:
 		if command in facilityCommands:
-			facilityCommands[command](u	)
+			facilityCommands[command](u)
 
+saveDonors()
 saveFacilities()
 saveBlood()
 print("Thank you for using Vampire Systems")
