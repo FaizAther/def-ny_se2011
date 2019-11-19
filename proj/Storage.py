@@ -78,19 +78,17 @@ class Storage(object):
                         a.remove(b)
 
 
-            
+
 
     #return a list of bloods
-    #Return??
+    #Return all the  bloods of the give type
+
     def getTypeArr(self,bloodType):
-            #print(self._inventory[1].get('types'))
             for t in self._inventory[0].get('types'):
                 #print(t)
                 for k in t.keys():
                     if k == bloodType:
                         return t.get(k)
-            #return.get(bloodType)
-
 
     #Loops through rooms
     #Check expiration of blood
@@ -132,7 +130,7 @@ class Storage(object):
         #print(counter)
         return counter
 
-  
+
 
 
 
