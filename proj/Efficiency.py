@@ -1,6 +1,6 @@
-class Efficiency(object):
+class Efficiency():
 
-    #Compatible blood groups
+    #Compatible blood types
     PATIENT = {'AB+' : ["O-","O+","B-","B+","A-","A+","AB-","AB+"],
     'AB-' : ["O-","B-","A-","AB-"],
     'A+' : ["O-","O+","A-","A+"],
@@ -66,12 +66,13 @@ class Efficiency(object):
 
     def weight(value, min, max, weight):
         if weight > 0: 
-            return weight * ((min - value) / (min - max))
-            #return weight * ( 1 - ( value - min ) / max )
+            #return weight * ((min - value) / (min - max))
+            return weight * ( 1 - ( value - min ) / max )
         else:
-            return (-1 * (weight * ((max - value) / (max - min))))
-            #return weight * ( ( value - min ) / max )
+            #return (-1 * (weight * ((max - value) / (max - min))))
+            return weight * ( ( value - min ) / max )
 
+    #VERIFICATION
     def weightedSum(contributors, array, **options):
         for v in array:
             v.initWeight()
@@ -91,6 +92,7 @@ class Efficiency(object):
                         value = Efficiency.BLOOD_RANK[v.type()]
                     v.weight(Efficiency.weight(value, low, high, contributors[c]))
 
+    #VERIFICATION
     def values(c, array, options):
         if len(array) == 0:
             return r
@@ -124,6 +126,7 @@ class Efficiency(object):
 
 
 
+    #VERIFICATION
     def getLowHigh(array):
         if len(array) == 0:
             return 0, 0
@@ -140,6 +143,7 @@ class Efficiency(object):
         return low, high
 
 
+    #VERIFICATION
     def getBestBlood(storage, bType, rQuan):
         #The best blood that can be used
         wantedBlood = []
@@ -151,30 +155,35 @@ class Efficiency(object):
             if(Efficiency.getBestList(bList, rQuan) != None):
                 wantedBlood.append(Efficiency.getBestList(bList, rQuan))
 
-
+#MERGE SORT
         # sort by blood type rank
-        n = len(wantedBlood)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(Efficiency.BLOOD_RANK[wantedBlood[j].type()] > Efficiency.BLOOD_RANK[wantedBlood[j+1].type()]):
-                    wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
-
+        wantedBlood = Efficiency.sortMByTypeRank(wantedBlood)
         # sort by blood type quantity
-        n = len(wantedBlood)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(storage.type(wantedBlood[j].type()) < storage.type(wantedBlood[j+1].type())):
-                    wantedBlood[j], wantedBlood[j+1] = wantedBlood[j+1], wantedBlood[j]
-
+        wantedBlood = Efficiency.sortMByTypeQuan(storage, wantedBlood)
         # sort by quantity
-        wantedBlood = Efficiency.sortByQuantity(wantedBlood)
-
+        wantedBlood = Efficiency.sortMByQuantity(wantedBlood)
         # sort by expiration
-        wantedBlood = Efficiency.sortByExpiration(wantedBlood)
+        wantedBlood = Efficiency.sortMByExpiration(wantedBlood)
+
+
+#BUBBLE SORT
+        # sort by blood type rank
+        #wantedBlood = Efficiency.sortByTypeRank(wantedBlood)
+        # sort by blood type quantity
+        #wantedBlood = Efficiency.sortByTypeQuan(storage, wantedBlood)
+        # sort by quantity
+        #wantedBlood = Efficiency.sortByQuantity(wantedBlood)
+        # sort by expiration
+        #wantedBlood = Efficiency.sortByExpiration(wantedBlood)
 
 
         Efficiency.weightedSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
-        Efficiency.sortByWeight(wantedBlood)
+        Efficiency.sortMByWeight(wantedBlood)
+
+        #Efficiency.sortByWeight(wantedBlood)
+
+        #print(wantedBlood)
+        #print()
 
         #
         storage.removeUsedBloodObj(wantedBlood[0])
@@ -186,6 +195,7 @@ class Efficiency(object):
     #Sorts through each list of compatible bloods
     #Returns the best available blood from each list
 
+    #VERIFICATION
     def getBestList(bList, rQuan):
 
         #bloods that do not match best suitable criteria
@@ -212,18 +222,27 @@ class Efficiency(object):
                 print("Required blood smaller than quantity")
 
 
+    #MERGE SORT
         # sort by quantity
-        best = Efficiency.sortByQuantity(best)
+        best = Efficiency.sortMByQuantity(best)
+        # sort by expiration
+        best = Efficiency.sortMByExpiration(best)
 
         # sort by expiration
-        best = Efficiency.sortByExpiration(best)
-
-
-        # sort by expiration
-        notBest = Efficiency.sortByExpiration(notBest)
-
+        notBest = Efficiency.sortMByExpiration(notBest)
         # sort by quantity
-        notBest = Efficiency.sortByQuantity(notBest)
+        notBest = Efficiency.sortMByQuantity(notBest)
+
+    # #BUBBLE SORT
+    #     # sort by quantity
+    #     best = Efficiency.sortByQuantity(best)
+    #     # sort by expiration
+    #     best = Efficiency.sortByExpiration(best)
+
+    #     # sort by expiration
+    #     notBest = Efficiency.sortByExpiration(notBest)
+    #     # sort by quantity
+    #     notBest = Efficiency.sortByQuantity(notBest)
 
 
         #no blood matches quantity
@@ -236,37 +255,225 @@ class Efficiency(object):
         else:
             return best[0]
 
+#MERGE SORT
 
-    #sorts based on quantity
-    def sortByQuantity(bList):
-        n = len(bList)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(bList[j].amount() > bList[j+1].amount()):
-                    bList[j], bList[j+1] = bList[j+1], bList[j]
+    #Merge Sort based on Quantity
+    def sortMByQuantity(bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
+
+            Efficiency.sortMByQuantity(left)
+            Efficiency.sortMByQuantity(right)
+
+            i = 0
+            j = 0
+            k = 0
+            while i < len(left) and j < len(right):
+                if left[i].amount() < right[j].amount():
+                    bList[k] = left[i]
+                    i = i + 1
+                else:
+                    bList[k] = right[j]
+                    j = j + 1
+                k = k + 1
+
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
+
+        return bList
+
+    #Merge Sort based on Expiration
+    def sortMByExpiration(bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
+
+            Efficiency.sortMByExpiration(left)
+            Efficiency.sortMByExpiration(right)
+
+            i = 0
+            j = 0
+            k = 0
+            while i < len(left) and j < len(right):
+                if left[i].isExpired() < right[j].isExpired():
+                    bList[k] = left[i]
+                    i = i + 1
+                else:
+                    bList[k] = right[j]
+                    j = j + 1
+                k = k + 1
+
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
+
+        return bList
+
+    #Merge Sort based on Blood Weight
+    def sortMByWeight(bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
+
+            Efficiency.sortMByWeight(left)
+            Efficiency.sortMByWeight(right)
+
+            i = 0
+            j = 0
+            k = 0
+            while i < len(left) and j < len(right):
+                if left[i].getWeight() < right[j].getWeight():
+                    bList[k] = left[i]
+                    i = i + 1
+                else:
+                    bList[k] = right[j]
+                    j = j + 1
+                k = k + 1
+
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
+
+        return bList
+
+    #Merge Sort based on blood type quantity
+    def sortMByTypeQuan(storage, bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
+
+            Efficiency.sortMByTypeQuan(storage, left)
+            Efficiency.sortMByTypeQuan(storage, right)
+
+            i = 0
+            j = 0
+            k = 0
+            while i < len(left) and j < len(right):
+                if(storage.type(left[i].type()) < storage.type(right[j].type())):
+                    bList[k] = left[i]
+                    i = i + 1
+                else:
+                    bList[k] = right[j]
+                    j = j + 1
+                k = k + 1
+
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
+
+        return bList
+
+    def sortMByTypeRank(bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
+
+            Efficiency.sortMByTypeRank(left)
+            Efficiency.sortMByTypeRank(right)
+
+            i = 0
+            j = 0
+            k = 0
+            while i < len(left) and j < len(right):
+                if(Efficiency.BLOOD_RANK[left[i].type()] > Efficiency.BLOOD_RANK[right[j].type()]):
+                    bList[k] = left[i]
+                    i = i + 1
+                else:
+                    bList[k] = right[j]
+                    j = j + 1
+                k = k + 1
+
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
 
         return bList
 
 
-    #sorts based on expiration duration
-    def sortByExpiration(bList):
-        n = len(bList)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(bList[j].isExpired() > bList[j+1].isExpired()):
-                    bList[j], bList[j+1] = bList[j+1], bList[j]
+#BUBBLE SORT
+#-----------------------------------------------------------------------------
+    # #sorts based on quantity
+    # def sortByQuantity(bList):
+    #     n = len(bList)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(bList[j].amount() > bList[j+1].amount()):
+    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
+    #     return bList
 
-        return bList
+    # #sorts based on expiration duration
+    # def sortByExpiration(bList):
+    #     n = len(bList)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(bList[j].isExpired() > bList[j+1].isExpired()):
+    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
+    #     return bList
 
-    #sorts based on weight
-    def sortByWeight(bList):
-        n = len(bList)
-        for i in range(n):
-            for j in range(0, n-i-1):
-                if(bList[j].getWeight() > bList[j+1].getWeight()):
-                    bList[j], bList[j+1] = bList[j+1], bList[j]
+    # #sorts based on weight
+    # def sortByWeight(bList):
+    #     n = len(bList)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(bList[j].getWeight() > bList[j+1].getWeight()):
+    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
+    #     return bList
 
-        return bList
+    # # sort by blood type quantity
+    # def sortByTypeQuan(storage, bList):
+    #     n= len(bList)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(storage.type(bList[j].type()) < storage.type(bList[j+1].type())):
+    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
+    #     return bList
+
+    # # sort by blood type rank
+    # def sortByTypeRank(bList):
+    #     n = len(bList)
+    #     for i in range(n):
+    #         for j in range(0, n-i-1):
+    #             if(Efficiency.BLOOD_RANK[bList[j].type()] > Efficiency.BLOOD_RANK[bList[j+1].type()]):
+    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
+    #     return bList
+#-----------------------------------------------------------------------------
 
 
 
@@ -287,27 +494,52 @@ if __name__== "__main__":
     #or
     #b6, b2, b1, b3, b5, b4
     
-    b1 = Blood("2019/09/29", 300)
-    b1.verify("A+")
+    # b1 = Blood("2019-09-29", 300)
+    # b1.verify("A+")
+    # s.addBlood(b1)
+    
+    # b2 = Blood("2019-09-29", 200)
+    # b2.verify("A+")
+    # s.addBlood(b2)
+    
+    # b3 = Blood("2019-09-30", 250)
+    # b3.verify("A+")
+    # s.addBlood(b3)
+    
+    # b4 = Blood("2019-10-02", 50)
+    # b4.verify("A+")
+    # s.addBlood(b4)
+    
+    # b5 = Blood("2019-10-01", 150)
+    # b5.verify("A+")
+    # s.addBlood(b5)
+    
+    # b6 = Blood("2019-09-29", 200)
+    # b6.verify("A-")
+    # s.addBlood(b6)
+
+
+    b1 = Blood("2019-10-29", 300)
+    b1.verify("A-")
     s.addBlood(b1)
     
-    b2 = Blood("2019/09/29", 200)
+    b2 = Blood("2019-10-29", 200)
     b2.verify("A+")
     s.addBlood(b2)
     
-    b3 = Blood("2019/09/30", 250)
-    b3.verify("A+")
+    b3 = Blood("2019-10-10", 250)
+    b3.verify("O+")
     s.addBlood(b3)
     
-    b4 = Blood("2019/10/02", 50)
-    b4.verify("A+")
+    b4 = Blood("2019-10-10", 150)
+    b4.verify("O-")
     s.addBlood(b4)
     
-    b5 = Blood("2019/10/01", 150)
+    b5 = Blood("2019-10-11", 150)
     b5.verify("A+")
     s.addBlood(b5)
     
-    b6 = Blood("2019/09/29", 200)
+    b6 = Blood("2019-10-10", 200)
     b6.verify("A-")
     s.addBlood(b6)
     
@@ -319,108 +551,108 @@ if __name__== "__main__":
 
     #SET1
 
-    b7 = Blood("2019/10/02", 300)
-    b7.verify("O-")
-    s.addBlood(b7)
+    # b7 = Blood("2019-10-02", 300)
+    # b7.verify("O-")
+    # s.addBlood(b7)
 
-    b8 = Blood("2019/10/02", 200)
-    b8.verify("O+")
-    s.addBlood(b8)
+    # b8 = Blood("2019-10-02", 200)
+    # b8.verify("O+")
+    # s.addBlood(b8)
 
-    b9 = Blood("2019/10/03", 400)
-    b9.verify("A-")
-    s.addBlood(b9)
+    # b9 = Blood("2019-10-03", 400)
+    # b9.verify("A-")
+    # s.addBlood(b9)
 
-    b10 = Blood("2019/10/04", 100)
-    b10.verify("A+")
-    s.addBlood(b10)
+    # b10 = Blood("2019-10-04", 100)
+    # b10.verify("A+")
+    # s.addBlood(b10)
 
-    b11 = Blood("2019/10/01", 250)
-    b11.verify("B-")
-    s.addBlood(b11)
+    # b11 = Blood("2019-10-01", 250)
+    # b11.verify("B-")
+    # s.addBlood(b11)
 
-    b12 = Blood("2019/10/01", 350)
-    b12.verify("B+")
-    s.addBlood(b12)
+    # b12 = Blood("2019-10-01", 350)
+    # b12.verify("B+")
+    # s.addBlood(b12)
 
-    b13 = Blood("2019/10/06", 450)
-    b13.verify("AB-")
-    s.addBlood(b13)
+    # b13 = Blood("2019-10-06", 450)
+    # b13.verify("AB-")
+    # s.addBlood(b13)
 
-    b14 = Blood("2019/10/05", 150)
-    b14.verify("AB+")
-    s.addBlood(b14)
-
-
-    #Expired Blood
-    #SET2
-
-    b15 = Blood("2019/09/02", 300)
-    b15.verify("O-")
-    s.addBlood(b15)
-
-    b16 = Blood("2019/09/02", 200)
-    b16.verify("O+")
-    s.addBlood(b16)
-
-    b17 = Blood("2019/09/03", 400)
-    b17.verify("A-")
-    s.addBlood(b17)
-
-    b18 = Blood("2019/09/04", 100)
-    b18.verify("A+")
-    s.addBlood(b18)
-
-    b19 = Blood("2019/09/01", 250)
-    b19.verify("B-")
-    s.addBlood(b19)
-
-    b20 = Blood("2019/09/01", 350)
-    b20.verify("B+")
-    s.addBlood(b20)
-
-    b21 = Blood("2019/09/06", 450)
-    b21.verify("AB-")
-    s.addBlood(b21)
-
-    b22 = Blood("2019/08/05", 150)
-    b22.verify("AB+")
-    s.addBlood(b22)
+    # b14 = Blood("2019-10-05", 150)
+    # b14.verify("AB+")
+    # s.addBlood(b14)
 
 
-    #SET3
+    # #Expired Blood
+    # #SET2
 
-    b23 = Blood("2019/11/02", 150)
-    b23.verify("O-")
-    s.addBlood(b23)
+    # b15 = Blood("2019-09-02", 300)
+    # b15.verify("O-")
+    # s.addBlood(b15)
 
-    b24 = Blood("2019/11/02", 300)
-    b24.verify("O+")
-    s.addBlood(b24)
+    # b16 = Blood("2019-09-02", 200)
+    # b16.verify("O+")
+    # s.addBlood(b16)
 
-    b25 = Blood("2019/10/31", 100)
-    b25.verify("A-")
-    s.addBlood(b25)
+    # b17 = Blood("2019-09-03", 400)
+    # b17.verify("A-")
+    # s.addBlood(b17)
 
-    b26 = Blood("2019/11/04", 150)
-    b26.verify("A+")
-    s.addBlood(b26)
+    # b18 = Blood("2019-09-04", 100)
+    # b18.verify("A+")
+    # s.addBlood(b18)
 
-    b27 = Blood("2019/11/01", 350)
-    b27.verify("B-")
-    s.addBlood(b27)
+    # b19 = Blood("2019-09-01", 250)
+    # b19.verify("B-")
+    # s.addBlood(b19)
 
-    b28 = Blood("2019/10/21", 2000)
-    b28.verify("B+")
-    s.addBlood(b28)
+    # b20 = Blood("2019-09-01", 350)
+    # b20.verify("B+")
+    # s.addBlood(b20)
 
-    b29 = Blood("2019/10/26", 350)
-    b29.verify("AB-")
-    s.addBlood(b29)
+    # b21 = Blood("2019-09-06", 450)
+    # b21.verify("AB-")
+    # s.addBlood(b21)
 
-    b30 = Blood("2019/10/25", 450)
-    b30.verify("AB+")
-    s.addBlood(b30)
+    # b22 = Blood("2019-08-05", 150)
+    # b22.verify("AB+")
+    # s.addBlood(b22)
+
+
+    # #SET3
+
+    # b23 = Blood("2019-11-02", 150)
+    # b23.verify("O-")
+    # s.addBlood(b23)
+
+    # b24 = Blood("2019-11-02", 300)
+    # b24.verify("O+")
+    # s.addBlood(b24)
+
+    # b25 = Blood("2019-10-31", 100)
+    # b25.verify("A-")
+    # s.addBlood(b25)
+
+    # b26 = Blood("2019-11-04", 150)
+    # b26.verify("A+")
+    # s.addBlood(b26)
+
+    # b27 = Blood("2019-11-01", 350)
+    # b27.verify("B-")
+    # s.addBlood(b27)
+
+    # b28 = Blood("2019-10-21", 2000)
+    # b28.verify("B+")
+    # s.addBlood(b28)
+
+    # b29 = Blood("2019-10-26", 350)
+    # b29.verify("AB-")
+    # s.addBlood(b29)
+
+    # b30 = Blood("2019-10-25", 450)
+    # b30.verify("AB+")
+    # s.addBlood(b30)
 
 
     #Checking Expiration
@@ -444,28 +676,28 @@ if __name__== "__main__":
 
     # from Blood import Blood
     # b = []
-    # b31 = Blood("2019/10/04", 1200)
+    # b31 = Blood("2019-10-04", 1200)
     # b31.verify("AB+")
     # b.append(b31)
-    # b32 = Blood("2019/10/05", 1225)
+    # b32 = Blood("2019-10-05", 1225)
     # b32.verify("AB-")
     # b.append(b32)
-    # b33 = Blood("2019/10/10", 1175)
+    # b33 = Blood("2019-10-10", 1175)
     # b33.verify("A+")
     # b.append(b33)
-    # b34 = Blood("2019/10/02", 1280)
+    # b34 = Blood("2019-10-02", 1280)
     # b34.verify("A-")
     # b.append(b34)
-    # b35 = Blood("2019/10/04", 1300)
+    # b35 = Blood("2019-10-04", 1300)
     # b35.verify("B+")
     # b.append(b35)
-    # b36 = Blood("2019/10/02", 1500)
+    # b36 = Blood("2019-10-02", 1500)
     # b36.verify("B-")
     # b.append(b36)
-    # b36 = Blood("2019/10/03", 1175)
+    # b36 = Blood("2019-10-03", 1175)
     # b36.verify("O+")
     # b.append(b36)
-    # b37 = Blood("2019/10/05", 1200)
+    # b37 = Blood("2019-10-05", 1200)
     # b37.verify("O-")
     # b.append(b37)
     # #print(b36.isExpired())
@@ -474,35 +706,35 @@ if __name__== "__main__":
 
     # s = Storage()
 
-    # b23 = Blood("2019/11/02", 2500)
+    # b23 = Blood("2019-11-02", 2500)
     # b23.verify("O-")
     # s.addBlood(b23)
 
-    # b24 = Blood("2019/11/02", 1500)
+    # b24 = Blood("2019-11-02", 1500)
     # b24.verify("O+")
     # s.addBlood(b24)
 
-    # b25 = Blood("2019/10/31", 800)
+    # b25 = Blood("2019-10-31", 800)
     # b25.verify("B-")
     # s.addBlood(b25)
 
-    # b26 = Blood("2019/11/04", 750)
+    # b26 = Blood("2019-11-04", 750)
     # b26.verify("B+")
     # s.addBlood(b26)
 
-    # b27 = Blood("2019/11/01", 2700)
+    # b27 = Blood("2019-11-01", 2700)
     # b27.verify("A-")
     # s.addBlood(b27)
 
-    # b28 = Blood("2019/10/21", 1500)
+    # b28 = Blood("2019-10-21", 1500)
     # b28.verify("A+")
     # s.addBlood(b28)
 
-    # b29 = Blood("2019/10/26", 3000)
+    # b29 = Blood("2019-10-26", 3000)
     # b29.verify("AB-")
     # s.addBlood(b29)
 
-    # b30 = Blood("2019/10/25", 2500)
+    # b30 = Blood("2019-10-25", 2500)
     # b30.verify("AB+")
     # s.addBlood(b30)
 

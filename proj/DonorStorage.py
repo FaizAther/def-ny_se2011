@@ -1,4 +1,4 @@
-class DonorStorage(object):
+class DonorStorage():
 
 	def __init__(self):
 		self._inventory = []
@@ -46,9 +46,9 @@ class DonorStorage(object):
 				continue
 			for t in r.get('types'):
 				for k in (t.keys()):
-					if k == donor.group():
+					if k == donor.type():
 						t.get(k).append(donor)
-						self._types[donor.group()]+=1
+						self._types[donor.type()]+=1
 
 
 	def numDonorType(self, bType):

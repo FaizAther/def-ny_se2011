@@ -6,15 +6,15 @@ def assignDonorId(donor):
 
 import datetime
 
-class Donor(object):
+class Donor():
 
 	import datetime
 
-	def __init__(self, name, postCode, group):
+	def __init__(self, name, postCode, type):
 		self._name = name
 		self._postCode = postCode
 		self._isVerified = False
-		self._group = None
+		self._type = None
 		self._id = assignDonorId(self)
 
 
@@ -27,12 +27,15 @@ class Donor(object):
 	def isVerified(self):
 		return self._isVerified
 
-	def verify(self, group):
-		self._group = group
+	def verify(self, type):
+		self._type = type
 		self._isVerified = True
 
-	def group(self):
-		return self._group
+	def type(self):
+		return self._type
+		
+	def __str__(self):
+		return "ID: %3s | Name: %15s | Type: %3s" % (self._id, self._name, self._type or "?")
 
 
 if __name__ == "__main__":
