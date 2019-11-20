@@ -65,11 +65,14 @@ class Efficiency():
 #----------------------------------------------------------------------------
 
     def weight(value, min, max, weight):
-        if weight > 0: 
+        if weight > 0:
             #return weight * ((min - value) / (min - max))
+            #print("{}".format(weight * ( 1 - ( value - min ) / max )))
             return weight * ( 1 - ( value - min ) / max )
         else:
+            #print("{}".format(-1*weight * ( ( value - min ) / max )))
             #return (-1 * (weight * ((max - value) / (max - min))))
+            ##return weight * ( ( value - min ) / max )
             return weight * ( ( value - min ) / max )
 
     #VERIFICATION
@@ -92,10 +95,13 @@ class Efficiency():
                         value = Efficiency.BLOOD_RANK[v.type()]
                     v.weight(Efficiency.weight(value, low, high, contributors[c]))
 
+                    #print(v, v.getWeight())
+
+
     #VERIFICATION
     def values(c, array, options):
         if len(array) == 0:
-            return r
+            return []
 
         if (c == 'Expiration'):
             v = []
@@ -179,6 +185,9 @@ class Efficiency():
 
         Efficiency.weightedSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
         Efficiency.sortMByWeight(wantedBlood)
+        print("hello")
+        for b in wantedBlood:
+            print(b)
 
         #Efficiency.sortByWeight(wantedBlood)
 
@@ -270,14 +279,13 @@ class Efficiency():
             i = 0
             j = 0
             k = 0
-            while i < len(left) and j < len(right):
-                if left[i].amount() < right[j].amount():
-                    bList[k] = left[i]
-                    i = i + 1
-                else:
-                    bList[k] = right[j]
-                    j = j + 1
-                k = k + 1
+            if left[i].amount() < right[j].amount():
+                bList[k] = left[i]
+                i = i + 1
+            else:
+                bList[k] = right[j]
+                j = j + 1
+            k = k + 1
 
             while i < len(left):
                 bList[k] = left[i]
@@ -339,7 +347,7 @@ class Efficiency():
             j = 0
             k = 0
             while i < len(left) and j < len(right):
-                if left[i].getWeight() < right[j].getWeight():
+                if left[i].getWeight() > right[j].getWeight():
                     bList[k] = left[i]
                     i = i + 1
                 else:
@@ -484,36 +492,36 @@ if __name__== "__main__":
 
     from Blood import Blood
     from Storage import Storage
-    
+
     s = Storage()
     #s.inventory("Room1")
     #print(s)
-    
-    
+
+
     #b2, b6, b1, b3, b5, b4
     #or
     #b6, b2, b1, b3, b5, b4
-    
+
     # b1 = Blood("2019-09-29", 300)
     # b1.verify("A+")
     # s.addBlood(b1)
-    
+
     # b2 = Blood("2019-09-29", 200)
     # b2.verify("A+")
     # s.addBlood(b2)
-    
+
     # b3 = Blood("2019-09-30", 250)
     # b3.verify("A+")
     # s.addBlood(b3)
-    
+
     # b4 = Blood("2019-10-02", 50)
     # b4.verify("A+")
     # s.addBlood(b4)
-    
+
     # b5 = Blood("2019-10-01", 150)
     # b5.verify("A+")
     # s.addBlood(b5)
-    
+
     # b6 = Blood("2019-09-29", 200)
     # b6.verify("A-")
     # s.addBlood(b6)
@@ -522,29 +530,33 @@ if __name__== "__main__":
     b1 = Blood("2019-10-29", 300)
     b1.verify("A-")
     s.addBlood(b1)
-    
+
+    bz = Blood("2019-10-12", 200)
+    bz.verify("A-")
+    s.addBlood(bz)
+
     b2 = Blood("2019-10-29", 200)
     b2.verify("A+")
     s.addBlood(b2)
-    
+
     b3 = Blood("2019-10-10", 250)
     b3.verify("O+")
     s.addBlood(b3)
-    
-    b4 = Blood("2019-10-10", 150)
+
+    b4 = Blood("2019-11-10", 150)
     b4.verify("O-")
     s.addBlood(b4)
-    
+
     b5 = Blood("2019-10-11", 150)
     b5.verify("A+")
     s.addBlood(b5)
-    
+
     b6 = Blood("2019-10-10", 200)
     b6.verify("A-")
     s.addBlood(b6)
-    
+
     #print(s)
-    
+
     #print("Best blood choice for A+")
     #print(Efficiency.getBestBlood(s, "A+", 100))
 
@@ -743,6 +755,6 @@ if __name__== "__main__":
     # print(s.types())
     # print()
     # print('requested ', 1000)
-    # print() 
+    # print()
     # for b in (Efficiency.sortByWeight(b)):
     #     print(b)

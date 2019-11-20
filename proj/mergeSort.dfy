@@ -243,3 +243,116 @@ predicate sorted(a: array<int>)
 {
    forall j, k :: 0 <= j < k < a.Length ==> a[j] >= a[k]
 }
+
+
+// not working also
+
+method mergeSort(bloods: array?<int>)
+modifies bloods;
+requires bloods != null;
+requires bloods.Length > 0;
+ensures sorted(bloods);
+ensures bloods.Length > 0;
+//requires |bloods| > 0;
+
+{
+  if bloods.Length > 1
+  {
+    var n := bloods.Length;
+    var mid := n/2;
+
+    var left := new int[mid];
+    var right := new int[n-mid];
+    var l := 0;
+    var r := mid;
+
+    while l < mid
+    decreases mid - l
+    invariant 0 <= l <= mid;
+    {
+      left[l] := bloods[l];
+      l := l + 1;
+    }
+
+    while r < n
+    decreases n - r
+    invariant mid <= r <= n;
+    {
+      right[r-mid] := bloods[r];
+      r := r+1;
+    }
+    // Problem: we are pretty sure that everything up till(line 34) now is verified.
+
+    // now the dafny complain about the loop is not terminated because of the recursion
+    // we have tried to put a return statement but it doesnt works
+    //Tried giving a decreases clause, but not sure on how to go about it
+    mergeSort(left);
+    mergeSort(right);
+
+    //If we use this
+    //Error: wrong numbe of method result arguments(got:1, expected:0)
+    //left := mergeSort(left);
+    //If we use this
+    //Error: wrong numbe of method result arguments(got:0, expected:1)
+    //right := mergeSort();
+
+    //left := mergeSort(left);
+    //right := mergeSort(right);
+
+
+    var i := 0;
+    var j := 0;
+    var k := 0;
+
+    var x := left.Length;
+    var y := right.Length;
+
+    while i < x && j < y
+    invariant 0 <= i <= x;
+    invariant 0 <= j <= y;
+    invariant sorted(bloods);
+    decreases n-k
+    {
+      if left[i] > right[j]
+      {
+        bloods[k] := left[i];
+        i := i + 1;
+
+      } else
+      {
+        bloods[k] := right[j];
+        j := j + 1;
+      }
+
+      k := k + 1;
+    }
+
+    while i < x
+    invariant 0 <= i <= x;
+
+    {
+      bloods[k] := left[i];
+      i := i+1;
+      k := k+1;
+    }
+
+    while j < y
+    invariant 0 <= j <= y;
+    {
+      bloods[k] := right[j];
+      j := j + 1;
+      k := k+1;
+    }
+
+
+  }
+
+    return;
+}
+
+predicate sorted(a: array?<int>)
+   requires a != null
+   reads a
+{
+   forall j, k :: 0 <= j < k < a.Length ==> a[j] >= a[k]
+}

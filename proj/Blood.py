@@ -68,10 +68,10 @@ class Blood():
     def __str__(self):
         #return "Blood expiry={}, amount={}".format(self.isExpired(), self._amount)
         #return "(expiry,amount)=({},{})".format(self.isExpired(), self._amount)
-        return "ID: %3s | Collection Date: %10s | Type: %3s | Amount: %5d" % (self._id, self._collectionDate, self._type or "?", self._amount)
+        return "ID: %3s | Collection Date: %10s | Type: %3s | Amount: %5d | D2E: %d | Weight: %d " % (self._id, self._collectionDate, self._type or "?", self._amount, self.isExpired(), self._weight)
 
 
-    
+
     def __lt__(self, other):
         return self._collectionDate < other._collectionDate
 
@@ -80,11 +80,11 @@ class Blood():
         b._isVerified = o['isVerified']
         b._type = o['type']
         if o['storage']: getFacility(o['storage']).addBlood(b)
-        
+
     def toObject(self):
         return {'collectionDate': str(self._collectionDate), 'amount': self._amount, 'isVerified': self._isVerified, 'type': self._type, 'storage': self._storage._facility._name if self._storage else ''}
 
-        
+
 
 # This is the list of blood bags to use as reference when getting blood by id
 bloodList = []
@@ -109,7 +109,7 @@ f.close()
 
 
 if __name__ == "__main__":
-    
+
     b1 = Blood("2019-10-01", 500)
     b1.verify("B+")
     print(b1)
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     else:
         print("Days to Expire - {}".format(z))
         print()
-        
+
         b2 = Blood("2019-09-01", 500)
         b2.verify("B-")
         print(b2)
@@ -129,7 +129,7 @@ if __name__ == "__main__":
         else:
             print("Days to Expire - {}".format(z))
             print()
-            
+
             b3 = Blood("2019-11-01", 500)
             b3.verify("B-")
             print(b3)
@@ -138,6 +138,5 @@ if __name__ == "__main__":
                 print("Expired")
             else:
                 print("Days to Expire - {}".format(z))
-    
-    print("\n".join(map(str,bloodList)))
 
+    print("\n".join(map(str,bloodList)))
