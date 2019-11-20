@@ -93,7 +93,7 @@ class Storage():
                         self._types[b.type()]-=b.amount()
                         a.remove(b)
         if b in self._allBlood: self._allBlood.remove(b)
-        
+
 
     def getTypeArr(self,bloodType):
             for t in self._inventory[0].get('types'):
@@ -378,5 +378,5 @@ if __name__ == "__main__":
     #print(s.types())
 
 # s.numBagsType("AB-")
-
+    print("something")
 # s.typeQuantity("AB-")
