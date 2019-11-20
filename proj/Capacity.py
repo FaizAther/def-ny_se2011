@@ -1,6 +1,6 @@
 from Storage import Storage
 
-class Capacity(object):
+class Capacity():
     """docstring for Capacity."""
 
     TYPE_ALGO = 1/36
@@ -28,15 +28,17 @@ class Capacity(object):
 
     def min(self):
         return self._min
+        
+    def totalBloodAmount(self):
+        return sum(self._storage._types.values())
 
     # Preconditions:
     #    Blood._isVerified
     #    Blood._amount + self._min.sum < self._max
     #    Blood is not owned by another facility
     def addBlood(self, blood):
-        self._inventory.append(blood)
-        self._min[blood._type] += blood._amount
-        blood._storage = self
+        self._storage.addBlood(blood)
+
     # Postcondition:
     #    Blood is assigned to this capacity
     #    Capacity inventory is sorted by expiry date
@@ -46,27 +48,46 @@ class Capacity(object):
             return True
         return False
 
+    # Preconditions:
+    #    Blood is assigned to this capacity
+    def removeBlood(self, blood):
+        if blood not in self._inventory: raise Exception("Blood not in inventory")
+        self._inventory.remove(blood)
+        blood._storage = None
+        self._min[blood._type] -= blood._amount
+    # Postcondition: 
+    #    Blood is no longer assigned to a capacity
+    #    Blood totals are updated
+
+    def displayBlood(self):
+        for b in self._storage._allBlood:
+            print("%-3s: %s (%s)"%(b._id, b._amount, b._type) )
 
     def __str__(self):
-        return "{}\n{}\n{}".format(self._max, self._types, self._storage.__str__())
+        return "\n".join(["Total Capacity: %s"%(self._max),
+            "Type totals:",
+            "\n".join(map(lambda x:"\t{}: {}".format(x[0], x[1]), sorted(self._storage._types.items(), key=lambda x: -x[1]))),
+			"Blood bags:",
+            "\n".join(map(str,self._storage._allBlood))
+        ])
 
 if __name__ == "__main__":
     c1= Capacity(100)
     print(c1)
     
-    # from Blood import Blood
-    # #import datetime.datetime
-    #
-    # bag1 = Blood("2019/11/01", 20)
-    # bag1.verify("A+")
-    #
-    # bag2 = Blood(, 10)
-    # bag2.verify("A-")
-    #
-    # bag3 = Blood(datetime.datetime.now(), 5)
-    # bag3.verify("B+")
-    #
-    # c1.addBlood(bag1)
-    # c1.addBlood(bag2)
-    # c1.addBlood(bag3)
+    from Blood import Blood
     
+    bag1 = Blood("2019-11-01", 20)
+    bag1.verify("A+")
+    
+    bag2 = Blood("2019-11-01", 10)
+    bag2.verify("A-")
+    
+    bag3 = Blood("2019-11-01", 5)
+    bag3.verify("B+")
+    
+    c1.addBlood(bag1)
+    c1.addBlood(bag2)
+    c1.addBlood(bag3)
+
+    print(c1)

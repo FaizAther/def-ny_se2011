@@ -1,6 +1,6 @@
 from Efficiency import Efficiency
 
-class Tracker(object):
+class Tracker():
     """docstring for Tracker."""
 
     CLASSIFY = {'seeder' : 0.5, 'leecher' : 0.35, 'danger' : 0.15}
@@ -35,32 +35,31 @@ class Tracker(object):
         return str
 
 if __name__ == "__main__":
-    from Blood import Blood
-    from MedicalFacility import MedicalFacility
+    from MedicalFacility import *
 
     t = Tracker()
     h1 = MedicalFacility("Sydney Children Hospital",
                             "20, High Street, Randwick 2031, Sydney, NSW, AU",
                             1000000)
     t.medicalFacilities(h1)
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
-    h1.addBlood("2019/11/14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
+    h1.addBloodFromParams("2019-11-14", 200, type='AB+')
 
     h2 = MedicalFacility("Melbourne Children Hospital",
                             "10, Low Street, Richmond 3031, Melboure, VIC, AU",
                             500000)
-    h2.addBlood("2019/11/14", 200, type='AB+')
+    h2.addBloodFromParams("2019-11-14", 200, type='AB+')
     t.medicalFacilities(h2)
     print(t)

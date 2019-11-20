@@ -1,7 +1,12 @@
-class Storage(object):
+class Storage():
+    Blood = {'blood':[]}
+    Fridge = {'fridge':[Blood]}
+    Section = {'section':[Fridge]}
+    Room = {'room':[Section]}
 
     def __init__(self):
         self._inventory = []
+        self._allBlood = []
         self._types = {'O-' : 0, 'O+' : 0, 'B-' : 0, 'B+' : 0, 'A-' : 0, 'A+' : 0, 'AB-' : 0, 'AB+' : 0}
         self.inventory("Default")
 
@@ -73,7 +78,7 @@ class Storage(object):
                             i += 1
                         t.get(k).insert(j, blood)
                         self._types[blood.type()]+=blood.amount()
-
+        self._allBlood.append(blood)
 
     def removeUsedBloodObj(self, blood):
         usedBlood = []
@@ -85,7 +90,7 @@ class Storage(object):
                         usedBlood.append(b)
                         self._types[b.type()]-=b.amount()
                         a.remove(b)
-
+        if b in self._allBlood: self._allBlood.remove(b)
 
 
 
@@ -161,19 +166,19 @@ if __name__ == "__main__":
     from Blood import Blood
 
 #Adding blood into rooms
-#Does not add expiered blood
+#Does not add expired blood
 #Adds based on oldest blood first
 
     #print("Checks oldest blood first")
     #print("Should not add expired blood")
     #print()
 
-    b1 = Blood("2019/10/10", 100)
+    b1 = Blood("2019-10-10", 100)
     b1.verify("AB+")
     s.addBlood(b1)
 
-    # Checking Expiered blood
-    b2 = Blood("2019/09/02", 300)
+    # Checking Expired blood
+    b2 = Blood("2019-09-02", 300)
     b2.verify("AB-")
     s.addBlood(b2)
 
@@ -181,7 +186,7 @@ if __name__ == "__main__":
     #print(s)
     #print()
 
-    b3 = Blood("2019/11/02", 300)
+    b3 = Blood("2019-11-02", 300)
     b3.verify("AB-")
     s.addBlood(b3)
 
@@ -190,7 +195,7 @@ if __name__ == "__main__":
     #print(s)
     #print()
 
-    b4 = Blood("2019/10/31", 500)
+    b4 = Blood("2019-10-31", 500)
     b4.verify("AB-")
     s.addBlood(b4)
 
@@ -199,7 +204,7 @@ if __name__ == "__main__":
     #print(s)
     #print()
 
-    b5 = Blood("2019/11/01", 300)
+    b5 = Blood("2019-11-01", 300)
     b5.verify("AB-")
     s.addBlood(b5)
 
@@ -224,7 +229,7 @@ if __name__ == "__main__":
 
 
 #Blood inventory
-#Before checking for any expiered blood
+#Before checking for any expired blood
     #print("After adding multiple sets of blood")
     #print("Before conducting expiration tests")
     #print(s)

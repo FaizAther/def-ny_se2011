@@ -1,6 +1,6 @@
-class Efficiency(object):
+class Efficiency():
 
-    #Compatible blood groups
+    #Compatible blood types
     PATIENT = {'AB+' : ["O-","O+","B-","B+","A-","A+","AB-","AB+"],
     'AB-' : ["O-","B-","A-","AB-"],
     'A+' : ["O-","O+","A-","A+"],
@@ -29,7 +29,7 @@ class Efficiency(object):
             return weight * ( 1 - ( value - min ) / max )
         else:
             #return (-1 * (weight * ((max - value) / (max - min))))
-            #preturn -weight * ( ( value - min ) / max )
+            #return -weight * ( ( value - min ) / max )
             return weight * ( ( value - min ) / max )
 
 
@@ -125,14 +125,9 @@ class Efficiency(object):
         Efficiency.weightedSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
         Efficiency.sortMByWeight(wantedBlood)
 
-        #Efficiency.sortByWeight(wantedBlood)
-
-        print(wantedBlood)
-        print()
         for b in wantedBlood:
             print(b)
 
-        #
         storage.removeUsedBloodObj(wantedBlood[0])
 
         #returns the best blood suitable
@@ -374,26 +369,25 @@ if __name__== "__main__":
     #s.inventory("Room1")
     #print(s)
 
-
-    b1 = Blood("2019/10/29", 300)
+    b1 = Blood("2019-10-29", 300)
     b1.verify("A-")
     s.addBlood(b1)
 
-    b7 = Blood("2019/11/02", 150)
-    b7.verify("A-")
-    s.addBlood(b7)
+    b2 = Blood("2019/11/02", 150)
+    b2.verify("A-")
+    s.addBlood(b2)
 
-    b8 = Blood("2019/11/01", 150)
-    b8.verify("A-")
-    s.addBlood(b8)
+    b3 = Blood("2019/11/01", 150)
+    b3.verify("A-")
+    s.addBlood(b3)
     
-    b9 = Blood("2019/10/21", 160)
-    b9.verify("O-")
-    s.addBlood(b9)
-
-    b4 = Blood("2019/10/15", 170)
+    b4 = Blood("2019/10/21", 160)
     b4.verify("O-")
     s.addBlood(b4)
+
+    b5 = Blood("2019/10/15", 170)
+    b5.verify("O-")
+    s.addBlood(b5)
     
     b6 = Blood("2019/10/15", 200)
     b6.verify("A-")

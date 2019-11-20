@@ -1,20 +1,21 @@
+import datetime
+import json
+
 donorList = []
 
 def assignDonorId(donor):
 	donorList.append(donor)
 	return len(donorList)-1
 
-import datetime
-
-class Donor(object):
+class Donor():
 
 	import datetime
 
-	def __init__(self, name, postCode, group):
+	def __init__(self, name, postCode, type = None):
 		self._name = name
 		self._postCode = postCode
 		self._isVerified = False
-		self._group = None
+		self._type = type
 		self._id = assignDonorId(self)
 
 
@@ -27,13 +28,37 @@ class Donor(object):
 	def isVerified(self):
 		return self._isVerified
 
-	def verify(self, group):
-		self._group = group
+	def verify(self, type):
+		self._type = type
 		self._isVerified = True
 
-	def group(self):
-		return self._group
+	def type(self):
+		return self._type
+		
+	def __str__(self):
+		return "ID: %3s | Name: %15s | Type: %3s" % (self._id, self._name, self._type or "?")
 
+	def toObject(self):
+		return self._name, self._postCode, self._type
+
+try:
+	f = open("donors.json")
+
+	j = f.read()
+
+	ds = json.loads(j)
+	for d in ds:
+		Donor(*d)
+
+	f.close()
+except Exception as e:
+	print(e)
+
+def saveDonors():
+    f = open("donors.json",'w')
+    b = map(lambda b: b.toObject(), donorList)
+    f.write(json.dumps([*b]))
+    f.close()
 
 if __name__ == "__main__":
 
