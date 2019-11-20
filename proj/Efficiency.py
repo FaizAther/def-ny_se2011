@@ -164,17 +164,6 @@ class Efficiency(object):
         wantedBlood = Efficiency.sortMByExpiration(wantedBlood)
 
 
-#BUBBLE SORT
-        # sort by blood type rank
-        #wantedBlood = Efficiency.sortByTypeRank(wantedBlood)
-        # sort by blood type quantity
-        #wantedBlood = Efficiency.sortByTypeQuan(storage, wantedBlood)
-        # sort by quantity
-        #wantedBlood = Efficiency.sortByQuantity(wantedBlood)
-        # sort by expiration
-        #wantedBlood = Efficiency.sortByExpiration(wantedBlood)
-
-
         Efficiency.weightedSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
         Efficiency.sortMByWeight(wantedBlood)
 
@@ -231,17 +220,6 @@ class Efficiency(object):
         notBest = Efficiency.sortMByExpiration(notBest)
         # sort by quantity
         notBest = Efficiency.sortMByQuantity(notBest)
-
-    # #BUBBLE SORT
-    #     # sort by quantity
-    #     best = Efficiency.sortByQuantity(best)
-    #     # sort by expiration
-    #     best = Efficiency.sortByExpiration(best)
-
-    #     # sort by expiration
-    #     notBest = Efficiency.sortByExpiration(notBest)
-    #     # sort by quantity
-    #     notBest = Efficiency.sortByQuantity(notBest)
 
 
         #no blood matches quantity
@@ -426,56 +404,6 @@ class Efficiency(object):
         return bList
 
 
-#BUBBLE SORT
-#-----------------------------------------------------------------------------
-    # #sorts based on quantity
-    # def sortByQuantity(bList):
-    #     n = len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(bList[j].amount() > bList[j+1].amount()):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-    #     return bList
-
-    # #sorts based on expiration duration
-    # def sortByExpiration(bList):
-    #     n = len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(bList[j].isExpired() > bList[j+1].isExpired()):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-    #     return bList
-
-    # #sorts based on weight
-    # def sortByWeight(bList):
-    #     n = len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(bList[j].getWeight() > bList[j+1].getWeight()):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-    #     return bList
-
-    # # sort by blood type quantity
-    # def sortByTypeQuan(storage, bList):
-    #     n= len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(storage.type(bList[j].type()) < storage.type(bList[j+1].type())):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-    #     return bList
-
-    # # sort by blood type rank
-    # def sortByTypeRank(bList):
-    #     n = len(bList)
-    #     for i in range(n):
-    #         for j in range(0, n-i-1):
-    #             if(Efficiency.BLOOD_RANK[bList[j].type()] > Efficiency.BLOOD_RANK[bList[j+1].type()]):
-    #                 bList[j], bList[j+1] = bList[j+1], bList[j]
-    #     return bList
-#-----------------------------------------------------------------------------
-
-
-
 if __name__== "__main__":
 
     print(Efficiency.PATIENT)
@@ -487,11 +415,6 @@ if __name__== "__main__":
     s = Storage()
     #s.inventory("Room1")
     #print(s)
-    
-    
-    #b2, b6, b1, b3, b5, b4
-    #or
-    #b6, b2, b1, b3, b5, b4
 
 
     b1 = Blood("2019/10/29", 300)
