@@ -15,19 +15,35 @@ class MedicalFacility():
     def __init__(self, name, address, capacity):
         if name in facilityList: raise Exception("Facility with this name already exists")
         if capacity < 0: raise Exception("Capacity for a new Facility can not be negative")
-        
+
         facilityList[name] = self
         self._name = name
         self._address = address
         self._capacity = Capacity(capacity)
         self._id = assignFacilityId(self)
         self._weight = 0
+        self._donatable = 0
+
+    def getTransfer(self):
+        give, transfered = self._capacity.transfer(self._donatable)
+        self._donatable -= transfered
+        return give
+
+    def typeStoragePerCapacity(self, type):
+        return self._capacity.typeStoragePerCapacity()
+
+    def getDonatable(self):
+        return self._donatable
+
+    def donatable(self, type):
+        self._donatable = self._weight * self._capacity.type(type)
 
     def getWeight(self):
         return self._weight
 
     def weight(self, weight):
-        self._weight += weight
+
+        self._weight = weight
 
     def initWeight(self):
         self._weight = 0
@@ -55,7 +71,7 @@ class MedicalFacility():
     # Postconditions:
     #    Blood is moved to location's capacity if not already there
     #    Blood is used and removed from the system
-    
+
     # Remove blood: This function will be used when a facility uses blood, removes expired blood or transfers blood
     # Preconditions:
     #    Blood is in this location
@@ -94,7 +110,7 @@ def saveFacilities():
 
 # This is the list of facilities to use as reference when getting facilities by name
 facilityList = {}
-try: 
+try:
     f = open("facilities.json")
 
     j = f.read()

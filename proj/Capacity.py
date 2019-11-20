@@ -20,6 +20,26 @@ class Capacity():
             self._types[t] = round(Capacity.TYPE_ALGO * i * max, 0)
             i+=1
 
+    def typeStoragePerCapacity(self, type):
+        return self._storage.type(type) / self.types[type]
+
+    def transfer(self, type, maxTransfer):
+        give = []
+        amount = 0
+        for b in self._storage.getTypeArr(type):
+            amount += b.amount()
+            if amount > maxTransfer:
+                break
+            give.append(b)
+            self._storage.removeUsedBloodObj(b)
+        amount -= b.amount()
+        return give
+
+
+
+    def type(self, type):
+        return self._types[type]
+
     def storage(self):
         return self._storage
 
@@ -28,7 +48,7 @@ class Capacity():
 
     def min(self):
         return self._min
-        
+
     def totalBloodAmount(self):
         return sum(self._storage._types.values())
 
@@ -55,7 +75,7 @@ class Capacity():
         self._inventory.remove(blood)
         blood._storage = None
         self._min[blood._type] -= blood._amount
-    # Postcondition: 
+    # Postcondition:
     #    Blood is no longer assigned to a capacity
     #    Blood totals are updated
 
@@ -73,18 +93,18 @@ class Capacity():
 
 if __name__ == "__main__":
     c1= Capacity(1000)
-    
+
     from Blood import Blood
-    
+
     b1 = Blood("2019-11-01", 200)
     b1.verify("A+")
-    
+
     b2 = Blood("2019-11-01", 150)
     b2.verify("A-")
-    
+
     b3 = Blood("2019-11-01", 250)
     b3.verify("B+")
-    
+
     c1.addBlood(b1)
     c1.addBlood(b2)
     c1.addBlood(b3)

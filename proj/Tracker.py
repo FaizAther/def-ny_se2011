@@ -15,16 +15,71 @@ class Tracker():
     def medicalFacilities(self, medicalFacility):
         self._medicalFacilities.append(medicalFacility)
 
-    def invokeEfficiency(medicalFacility, type, requested):
+    def invokeEfficiency(self, medicalFacility, type, requested):
         blood = Efficiency.getBestBlood(medicalFacility.storage(), type, requested)
         if (medicalFacility.capacity().checkLevels(blood.type())):
             # Impliment in Tracker.py
-            findSeeder(medicalFacility, blood.type())
+            self.findSeeder(medicalFacility, blood.type())
 
         return blood
 
-    def findSeeder(medicalFacility, type):
-        return None
+    def findSeeder(self, medicalFacility, type):
+        #self._medicalFacilities.remove(medicalFacility)
+        for mF in self._medicalFacilities:
+            mF.initWeight()
+            mF.initDonatable()
+
+        for mF in self._medicalFacilities:
+            if mF != medicalFacility:
+                mF.weight(mF.typeStoragePerCapacity() - CLASSIFY['seeder'])
+                mF.donatable(type)
+            else:
+                mF.weight(None)
+                mF.dobatable(None)
+        #Sort by most donatable
+        self.sortByDonatability(mF)
+        transfer = 0
+        for mF in self._medicalFacility:
+            for b in mF.getTransfer():
+                medicalFacility.addBlood(b)
+                
+            if (!medicalFacility.capacity().checkLevels(type):
+                break
+
+        return transfer
+
+        def sortByDonatability(bList):
+            if len(bList) > 1:
+                mid = len(bList)//2
+                left = bList[:mid]
+                right = bList[mid:]
+
+                Efficiency.sortByDonatability(left)
+                Efficiency.sortByDonatability(right)
+
+                i = 0
+                j = 0
+                k = 0
+                while i < len(left) and j < len(right):
+                    if left[i].getDonatable() < right[j].getDonatable():
+                        bList[k] = left[i]
+                        i = i + 1
+                    else:
+                        bList[k] = right[j]
+                        j = j + 1
+                    k = k + 1
+
+                while i < len(left):
+                    bList[k] = left[i]
+                    i = i + 1
+                    k = k + 1
+
+                while j < len(right):
+                    bList[k] = right[j]
+                    j = j + 1
+                    k = k + 1
+
+            return bList
 
     def __str__(self):
         str = "Medical Facilities"
