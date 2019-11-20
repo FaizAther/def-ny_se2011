@@ -82,7 +82,7 @@ class Blood():
         if o['storage']: getFacility(o['storage']).addBlood(b)
 
     def toObject(self):
-        return {'collectionDate': str(self._collectionDate), 'amount': self._amount, 'isVerified': self._isVerified, 'type': self._type, 'storage': self._storage._facility._name if self._storage else ''}
+        return {'collectionDate': str(self._collectionDate), 'amount': self._amount, 'isVerified': self._isVerified, 'type': self._type, 'storage': self._storage._name if self._storage else ''}
 
 
 
@@ -98,15 +98,17 @@ def saveBlood():
     f.write(json.dumps([*b]))
     f.close()
 
-f = open("blood.json")
+try:
+	f = open("blood.json")
 
-j = f.read()
+	j = f.read()
 
-bs = json.loads(j)
-for b in bs:
-    Blood.fromObject(b)
-f.close()
-
+	bs = json.loads(j)
+	for b in bs:
+	    Blood.fromObject(b)
+	f.close()
+except Exception as e:
+	print(e)
 
 if __name__ == "__main__":
 

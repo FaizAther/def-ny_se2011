@@ -69,7 +69,10 @@ class MedicalFacility():
 
     def addBlood(self, blood):
         self.storage().addBlood(blood)
+        blood._storage = self
 
+    def removeExpiredBlood(self):
+        return self.storage().expiration()
 
     def addBloodFromParams(self, date, quantity, **kwargs):
         blood = Blood(date, quantity)

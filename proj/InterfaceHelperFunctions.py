@@ -4,6 +4,7 @@ from Blood import *
 from Capacity import *
 from MedicalFacility import *
 from Efficiency import *
+from Donor import *
 from datetime import *
 
 
@@ -96,3 +97,35 @@ def adminStatus():
 	print("Medical Facilities:")
 	for m in sorted([*facilityList.values()], key=lambda h: h._capacity.totalBloodAmount(), reverse = True):
 		print("\t%s: %s/%s mL"%(m._name, m._capacity.totalBloodAmount(), m._capacity._max))
+		
+		
+def registerDonor(f = None):
+	"""Register a donor"""
+	name = getInput(str, "Enter donor name: ")
+	pc = int(getInput(isPositive, "Enter postcode: "))
+	btype = getInput(isBloodType, "Enter blood type: ")
+
+	d = Donor(name, pc, btype)
+	d.verify(btype)
+
+def listDonors(f = None):
+	"""List all donors"""
+	print("\n".join(map(str, donorList)))
+	
+	
+def queryDonor(f = None):
+	"""Find donors by blood type"""
+	btype = getInput(isBloodType, "Enter blood type: ")
+	print("\n".join(map(str, filter(lambda d: d._type == btype, donorList))))
+	
+def getType(f):
+	"""Display all bags of a certain blood type"""
+	btype = getInput(isBloodType, "Enter blood type: ")
+	bs = [*filter(lambda b: b._type == btype, f._capacity._storage._allBlood)]
+	
+	print("\n".join(map(str, bs)))
+	print("Total:", sum(map(lambda b: b._amount, bs)))
+	
+def removeExpiredBlood(f):
+	"""Removes expired blood"""
+	return f.removeExpiredBlood()
