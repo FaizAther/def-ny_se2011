@@ -29,6 +29,7 @@ class Efficiency(object):
             return weight * ( 1 - ( value - min ) / max )
         else:
             #return (-1 * (weight * ((max - value) / (max - min))))
+            #preturn -weight * ( ( value - min ) / max )
             return weight * ( ( value - min ) / max )
 
 
@@ -53,7 +54,7 @@ class Efficiency(object):
 
     def values(c, array, options):
         if len(array) == 0:
-            return r
+            return None
 
         if (c == 'Expiration'):
             v = []
