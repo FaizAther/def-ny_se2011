@@ -17,14 +17,15 @@ class Efficiency():
 
     EXPIERY_LIMIT = 2
 
-    WASTAGE_LIMIT = .10
+    WASTAGE_LIMIT = 0.10
 
     def bloodRank(bType):
         return Efficiency.BLOOD_RANK[bType]
 
 
-    def weight(value, min, max, weight):
-        if weight > 0: 
+    #Calculate score for individual parameters
+    def calculateScore(value, min, max, weight):
+        if weight > 0:
             #return weight * ((min - value) / (min - max))
             return weight * ( 1 - ( value - min ) / max )
         else:
@@ -33,12 +34,12 @@ class Efficiency():
             return weight * ( ( value - min ) / max )
 
 
-    def weightedSum(contributors, array, **options):
+    def scoreSum(contributors, array, **options):
         for v in array:
-            v.initWeight()
+            v.initScore()
 
         for c in contributors:
-            low, high = Efficiency.values(c, array, options)
+            low, high = Efficiency.minMax(c, array, options)
 
             for v in array:
                 if type(v).__name__ == 'Blood':
@@ -50,41 +51,44 @@ class Efficiency():
                         value = options['storage'].type(v.type())
                     elif c == 'BloodRank':
                         value = Efficiency.BLOOD_RANK[v.type()]
-                    v.weight(Efficiency.weight(value, low, high, contributors[c]))
+                    v.score(Efficiency.calculateScore(value, low, high, contributors[c]))
 
-    def values(c, array, options):
+
+    #Min and Max values of each parameters
+    def minMax(c, array, options):
         if len(array) == 0:
             return None
+            #return []
 
         if (c == 'Expiration'):
             v = []
             for b in array:
                 v.append(b.isExpired())
-            return Efficiency.getLowHigh(v)
+            return Efficiency.getMinMax(v)
 
         elif (c == 'Wastage'):
             v = []
             for b in array:
                 v.append(b.amount() - options['requested'])
-            return Efficiency.getLowHigh(v)
+            return Efficiency.getMinMax(v)
 
         elif (c == 'TotalQuantity'):
             v = []
             for b in array:
                 v.append(options['storage'].type(b.type()))
-            return Efficiency.getLowHigh(v)
+            return Efficiency.getMinMax(v)
 
         elif (c == 'BloodRank'):
             v = []
             for b in array:
                 v.append(Efficiency.BLOOD_RANK[b.type()])
-            return Efficiency.getLowHigh(v)
+            return Efficiency.getMinMax(v)
 
         else:
             print("What?")
 
-
-    def getLowHigh(array):
+    #return Min and Max values of each parameters
+    def getMinMax(array):
         if len(array) == 0:
             return 0, 0
         else:
@@ -100,8 +104,8 @@ class Efficiency():
         return low, high
 
 
+    #The best blood that can be used
     def getBestBlood(storage, bType, rQuan):
-        #The best blood that can be used
         wantedBlood = []
         bestBloodRank = []
 
@@ -111,22 +115,8 @@ class Efficiency():
             if(Efficiency.getBestList(bList, rQuan) != None):
                 wantedBlood.append(Efficiency.getBestList(bList, rQuan))
 
-#MERGE SORT
-        # sort by blood type rank
-        wantedBlood = Efficiency.sortMByTypeRank(wantedBlood)
-        # sort by blood type quantity
-        wantedBlood = Efficiency.sortMByTypeQuan(storage, wantedBlood)
-        # sort by quantity
-        wantedBlood = Efficiency.sortMByQuantity(wantedBlood)
-        # sort by expiration
-        wantedBlood = Efficiency.sortMByExpiration(wantedBlood)
-
-
-        Efficiency.weightedSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
-        Efficiency.sortMByWeight(wantedBlood)
-
-        for b in wantedBlood:
-            print(b)
+        Efficiency.scoreSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
+        Efficiency.sortByScore(wantedBlood)
 
         storage.removeUsedBloodObj(wantedBlood[0])
 
@@ -136,7 +126,6 @@ class Efficiency():
 
     #Sorts through each list of compatible bloods
     #Returns the best available blood from each list
-
     def getBestList(bList, rQuan):
 
         #bloods that do not match best suitable criteria
@@ -163,16 +152,11 @@ class Efficiency():
                 print("Required blood smaller than quantity")
 
 
-    #MERGE SORT
-        # sort by quantity
-        best = Efficiency.sortMByQuantity(best)
-        # sort by expiration
-        best = Efficiency.sortMByExpiration(best)
+        best = Efficiency.sortByQuantity(best)
+        best = Efficiency.sortByExpiration(best)
 
-        # sort by expiration
-        notBest = Efficiency.sortMByExpiration(notBest)
-        # sort by quantity
-        notBest = Efficiency.sortMByQuantity(notBest)
+        notBest = Efficiency.sortByExpiration(notBest)
+        notBest = Efficiency.sortByQuantity(notBest)
 
 
         #no blood matches quantity
@@ -186,22 +170,21 @@ class Efficiency():
             return best[0]
 
 #MERGE SORT
-
-    #Merge Sort based on Quantity
-    def sortMByQuantity(bList):
+    #Merge Sort based on Blood Score
+    def sortByScore(bList):
         if len(bList) > 1:
             mid = len(bList)//2
             left = bList[:mid]
             right = bList[mid:]
 
-            Efficiency.sortMByQuantity(left)
-            Efficiency.sortMByQuantity(right)
+            Efficiency.sortByScore(left)
+            Efficiency.sortByScore(right)
 
             i = 0
             j = 0
             k = 0
             while i < len(left) and j < len(right):
-                if left[i].amount() < right[j].amount():
+                if left[i].getScore() > right[j].getScore():
                     bList[k] = left[i]
                     i = i + 1
                 else:
@@ -221,15 +204,49 @@ class Efficiency():
 
         return bList
 
-    #Merge Sort based on Expiration
-    def sortMByExpiration(bList):
+
+    #Merge Sort based on Quantity
+    def sortByQuantity(bList):
         if len(bList) > 1:
             mid = len(bList)//2
             left = bList[:mid]
             right = bList[mid:]
 
-            Efficiency.sortMByExpiration(left)
-            Efficiency.sortMByExpiration(right)
+            Efficiency.sortByQuantity(left)
+            Efficiency.sortByQuantity(right)
+
+            i = 0
+            j = 0
+            k = 0
+            if left[i].amount() < right[j].amount():
+                bList[k] = left[i]
+                i = i + 1
+            else:
+                bList[k] = right[j]
+                j = j + 1
+            k = k + 1
+
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
+
+        return bList
+
+    #Merge Sort based on Expiration
+    def sortByExpiration(bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
+
+            Efficiency.sortByExpiration(left)
+            Efficiency.sortByExpiration(right)
 
             i = 0
             j = 0
@@ -255,159 +272,43 @@ class Efficiency():
 
         return bList
 
-    #Merge Sort based on Blood Weight
-    def sortMByWeight(bList):
-        if len(bList) > 1:
-            mid = len(bList)//2
-            left = bList[:mid]
-            right = bList[mid:]
-
-            Efficiency.sortMByWeight(left)
-            Efficiency.sortMByWeight(right)
-
-            i = 0
-            j = 0
-            k = 0
-            while i < len(left) and j < len(right):
-                if left[i].getWeight() > right[j].getWeight():
-                    bList[k] = left[i]
-                    i = i + 1
-                else:
-                    bList[k] = right[j]
-                    j = j + 1
-                k = k + 1
-
-            while i < len(left):
-                bList[k] = left[i]
-                i = i + 1
-                k = k + 1
-
-            while j < len(right):
-                bList[k] = right[j]
-                j = j + 1
-                k = k + 1
-
-        return bList
-
-    #Merge Sort based on blood type quantity
-    def sortMByTypeQuan(storage, bList):
-        if len(bList) > 1:
-            mid = len(bList)//2
-            left = bList[:mid]
-            right = bList[mid:]
-
-            Efficiency.sortMByTypeQuan(storage, left)
-            Efficiency.sortMByTypeQuan(storage, right)
-
-            i = 0
-            j = 0
-            k = 0
-            while i < len(left) and j < len(right):
-                if(storage.type(left[i].type()) > storage.type(right[j].type())):
-                    bList[k] = left[i]
-                    i = i + 1
-                else:
-                    bList[k] = right[j]
-                    j = j + 1
-                k = k + 1
-
-            while i < len(left):
-                bList[k] = left[i]
-                i = i + 1
-                k = k + 1
-
-            while j < len(right):
-                bList[k] = right[j]
-                j = j + 1
-                k = k + 1
-
-        return bList
-
-    def sortMByTypeRank(bList):
-        if len(bList) > 1:
-            mid = len(bList)//2
-            left = bList[:mid]
-            right = bList[mid:]
-
-            Efficiency.sortMByTypeRank(left)
-            Efficiency.sortMByTypeRank(right)
-
-            i = 0
-            j = 0
-            k = 0
-            while i < len(left) and j < len(right):
-                if(Efficiency.BLOOD_RANK[left[i].type()] < Efficiency.BLOOD_RANK[right[j].type()]):
-                    bList[k] = left[i]
-                    i = i + 1
-                else:
-                    bList[k] = right[j]
-                    j = j + 1
-                k = k + 1
-
-            while i < len(left):
-                bList[k] = left[i]
-                i = i + 1
-                k = k + 1
-
-            while j < len(right):
-                bList[k] = right[j]
-                j = j + 1
-                k = k + 1
-
-        return bList
-
-
 if __name__== "__main__":
 
-    print(Efficiency.PATIENT)
-    #print(s)
+    #print(Efficiency.PATIENT)
 
     from Blood import Blood
     from Storage import Storage
-    
+
     s = Storage()
-    #s.inventory("Room1")
-    #print(s)
 
     b1 = Blood("2019-10-29", 300)
     b1.verify("A-")
     s.addBlood(b1)
 
-    b2 = Blood("2019/11/02", 150)
+    b2 = Blood("2019-11-02", 150)
     b2.verify("A-")
     s.addBlood(b2)
 
-    b3 = Blood("2019/11/01", 150)
+    b3 = Blood("2019-11-01", 150)
     b3.verify("A-")
     s.addBlood(b3)
     
-    b4 = Blood("2019/10/21", 160)
+    b4 = Blood("2019-10-21", 160)
     b4.verify("O-")
     s.addBlood(b4)
 
-    b5 = Blood("2019/10/15", 170)
+    b5 = Blood("2019-10-15", 170)
     b5.verify("O-")
     s.addBlood(b5)
     
-    b6 = Blood("2019/10/15", 200)
+    b6 = Blood("2019-10-15", 200)
     b6.verify("A-")
     s.addBlood(b6)
-    
-    #print(s)
-    
-    #print("Best blood choice for A+")
-    #print(Efficiency.getBestBlood(s, "A+", 100))
-
 
     #Checking Expiration
     #s.expiration()
-    print("Blood Inventory - Quantity")
-    print(s.types())
+    #print(s.types())
     #print(s)
-    print()
 
-
-    #Efficiency.findBlood(s, "A+")
-
-    print("Best blood choice for A-")
+    #print("Best blood choice for A-")
     print(Efficiency.getBestBlood(s, "A-", 150))

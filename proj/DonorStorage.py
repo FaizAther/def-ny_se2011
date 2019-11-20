@@ -11,7 +11,6 @@ class DonorStorage():
 	def type(self, bType):
 		return self._types[bType]
 
-
 	def inventory(self, desc):
 		self._inventory.append(self.room(desc))
 
@@ -29,12 +28,17 @@ class DonorStorage():
 			str+=" Blood:"
 			for t in r.get('types'):
 				str+="\n\t"
-				str+=t.__str__()
-				#for i in r.values():
+				for k in t.keys():
+					str+="{ "
+					str+=k
+					str+=" :"
+					for d in t[k]:
+						str+= " -D- "
+						str+=d.__str__()
+					str+=" -: }"
 			str+="\n"
 			str+=self._types.__str__()
 		return str
-
 
 	def addDonor(self, donor, **args):
 
@@ -50,18 +54,13 @@ class DonorStorage():
 						t.get(k).append(donor)
 						self._types[donor.type()]+=1
 
-
 	def numDonorType(self, bType):
 		counter = 0
 		counter = self.type(bType)
-		#print(counter)
 		return counter
-
-
 
 if __name__ == "__main__":
     d = DonorStorage()
-    #print(d)
 
     from Donor import Donor
 
@@ -69,6 +68,8 @@ if __name__ == "__main__":
     d1.verify("AB+")
     d.addDonor(d1)
 
-    print(d)
+    d2 = Donor("David", 2035, "B+")
+    d2.verify("B+")
+    d.addDonor(d2)
 
-    d.numDonorType("AB+")
+    #cprint(d)

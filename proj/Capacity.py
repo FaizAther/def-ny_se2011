@@ -72,22 +72,20 @@ class Capacity():
         ])
 
 if __name__ == "__main__":
-    c1= Capacity(100)
-    print(c1)
+    c1= Capacity(1000)
     
     from Blood import Blood
     
-    bag1 = Blood("2019-11-01", 20)
-    bag1.verify("A+")
+    b1 = Blood("2019-11-01", 200)
+    b1.verify("A+")
     
-    bag2 = Blood("2019-11-01", 10)
-    bag2.verify("A-")
+    b2 = Blood("2019-11-01", 150)
+    b2.verify("A-")
     
-    bag3 = Blood("2019-11-01", 5)
-    bag3.verify("B+")
+    b3 = Blood("2019-11-01", 250)
+    b3.verify("B+")
     
-    c1.addBlood(bag1)
-    c1.addBlood(bag2)
-    c1.addBlood(bag3)
-
+    c1.addBlood(b1)
+    c1.addBlood(b2)
+    c1.addBlood(b3)
     print(c1)
