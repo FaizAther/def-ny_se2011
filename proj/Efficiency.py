@@ -76,13 +76,19 @@ class Efficiency():
             return weight * ( ( value - min ) / max )
 
     #VERIFICATION
+    # params contributors: the weightage given for each category
+    # params array:  wantedBlood - bloods from each suitable type for the requested arrays
+    # params options:  storage class and requested quantity
+    # params options['requested'] : requested bloods
+    # params options['storage'] : storage class
+
     def weightedSum(contributors, array, **options):
         for v in array:
             v.initWeight()
 
         for c in contributors:
             low, high = Efficiency.values(c, array, options)
-
+            # value : value of the criteria
             for v in array:
                 if type(v).__name__ == 'Blood':
                     if c == 'Expiration':
@@ -99,6 +105,7 @@ class Efficiency():
 
 
     #VERIFICATION
+    # return minimum and maximum value of each criteria
     def values(c, array, options):
         if len(array) == 0:
             return []
