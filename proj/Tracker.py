@@ -40,7 +40,7 @@ if __name__ == "__main__":
     t = Tracker()
     h1 = MedicalFacility("Sydney Children Hospital",
                             "20, High Street, Randwick 2031, Sydney, NSW, AU",
-                            1000000)
+                            5000)
     t.medicalFacilities(h1)
     h1.addBloodFromParams("2019-11-14", 200, type='AB+')
     h1.addBloodFromParams("2019-11-14", 200, type='AB+')
@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     h2 = MedicalFacility("Melbourne Children Hospital",
                             "10, Low Street, Richmond 3031, Melboure, VIC, AU",
-                            500000)
+                            3000)
     h2.addBloodFromParams("2019-11-14", 200, type='AB+')
     t.medicalFacilities(h2)
-    print(t)
+    #print(t)

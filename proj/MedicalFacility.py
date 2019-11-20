@@ -2,8 +2,6 @@ from Blood import *
 from Capacity import Capacity
 import json
 
-
-
 def assignFacilityId(facility):
     facilityList[facility._name] = facility
     return len(facilityList)-1
@@ -27,8 +25,10 @@ class MedicalFacility():
 
     def getWeight(self):
         return self._weight
+
     def weight(self, weight):
         self._weight += weight
+
     def initWeight(self):
         self._weight = 0
 
@@ -42,7 +42,6 @@ class MedicalFacility():
 
     def address(self):
         return self._address
-
 
     # Send a message to this facility notifying of expired blood
     def notifyExpired(self, bloodId):
@@ -122,5 +121,5 @@ if __name__ == "__main__":
     h2.addBloodFromParams("2019-11-14", 200, type='B+')
     h2.addBloodFromParams("2019-10-14", 300, type='B+')
 
-    print(h1)
-    print(h2)
+    #print(h1)
+    #print(h2)
