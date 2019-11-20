@@ -103,13 +103,13 @@ class Storage():
     def expiration(self):
         badBlood = []
         for r in self._inventory:
-            print("R - {}".format(r))
+            #print("R - {}".format(r))
             for t in r.get('types'):
-                print("T - {}".format(t))
+                #print("T - {}".format(t))
                 for a in t.values():
-                    print("A - {}".format(a))
+                    #print("A - {}".format(a))
                     for b in a:
-                        print("B - {}".format(b))
+                        #print("B - {}".format(b))
                         if (b.isExpired() == True):
                             badBlood.append(b)
                             self._types[b.type()]-=b.amount()

@@ -121,5 +121,5 @@ if __name__ == "__main__":
     h2.addBloodFromParams("2019-11-14", 200, type='B+')
     h2.addBloodFromParams("2019-10-14", 300, type='B+')
 
-    print(h1)
+    #print(h1)
     #print(h2)

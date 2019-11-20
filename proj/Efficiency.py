@@ -311,4 +311,4 @@ if __name__== "__main__":
     #print(s)
 
     #print("Best blood choice for A-")
-    print(Efficiency.getBestBlood(s, "A-", 150))
+    #print(Efficiency.getBestBlood(s, "A-", 150))
