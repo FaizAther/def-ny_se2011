@@ -22,47 +22,6 @@ class Efficiency(object):
     def bloodRank(bType):
         return Efficiency.BLOOD_RANK[bType]
 
-#----------------------------------------------------------------------------
-
-    # # TODO // Change to max/min finder
-    # def maxMin(storage, bType):
-    #     #maximum quantity
-    #     max = 0
-    #     #blood type - maximum quantity
-    #     maxT = ""
-    #     for t in Efficiency.PATIENT[bType]:
-    #         print(storage.type(t))
-    #         if max < storage.type(t):
-    #             max = storage.type(t)
-    #             maxT = t
-    #     print("Highest Amount: {}, {}".format( maxT, max))
-    #     return maxT
-
-#----------------------------------------------------------------------------
-
-    #Returns an array
-    #Descending order of blood type
-    #Based on quantity
-
-    # def amount(storage, bType):
-    #     #descending order array based on quantity
-    #     maxA = []
-
-    #     for t in Efficiency.PATIENT[bType]:
-    #         #print(storage.type(t))
-    #         i = 0
-    #         j = len(maxA)
-    #         hit = False
-    #         for s in maxA:
-    #             if not hit and storage.type(s) <= storage.type(t):
-    #                 j = i
-    #                 hit = True
-    #             i+=1
-    #         maxA.insert(j, t)
-    #     return maxA
-
-
-#----------------------------------------------------------------------------
 
     def weight(value, min, max, weight):
         if weight > 0: 
@@ -73,7 +32,6 @@ class Efficiency(object):
             return weight * ( ( value - min ) / max )
 
 
-    #VERIFICATION
     def weightedSum(contributors, array, **options):
         for v in array:
             v.initWeight()
@@ -93,7 +51,6 @@ class Efficiency(object):
                         value = Efficiency.BLOOD_RANK[v.type()]
                     v.weight(Efficiency.weight(value, low, high, contributors[c]))
 
-    #VERIFICATION
     def values(c, array, options):
         if len(array) == 0:
             return r
