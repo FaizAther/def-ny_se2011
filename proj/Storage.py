@@ -50,7 +50,6 @@ class Storage(object):
     #Does not add expired blood
     #Add based on closest to expiery first
 
-    #VERIFICATION
     def addBlood(self, blood, **args):
 
         #Does not add if blood is expired
@@ -76,7 +75,6 @@ class Storage(object):
                         self._types[blood.type()]+=blood.amount()
 
 
-    #VERIFICATION
     def removeUsedBloodObj(self, blood):
         usedBlood = []
         for r in self._inventory[0].get('types'):
@@ -93,7 +91,6 @@ class Storage(object):
 
     #return a list of bloods
     #Return??
-    #VERIFICATION
 
     def getTypeArr(self,bloodType):
             #print(self._inventory[1].get('types'))
@@ -114,9 +111,13 @@ class Storage(object):
     def expiration(self):
         badBlood = []
         for r in self._inventory:
+            print("R - {}".format(r))
             for t in r.get('types'):
+                print("T - {}".format(t))
                 for a in t.values():
+                    print("A - {}".format(a))
                     for b in a:
+                        print("B - {}".format(b))
                         #print(b.isExpired())
                         if (b.isExpired() == True):
                             #print ("{} is Expired".format(b))
@@ -128,7 +129,6 @@ class Storage(object):
         return badBlood
 
 
-    #VERIFICATION
     def numBagsType(self, bType):
         counter = 0
         for r in self._inventory:
@@ -324,6 +324,8 @@ if __name__ == "__main__":
     #print("NON REMOVED")
     #print(s)
     #print()
+
+    s.expiration()
 
     #s.removeUsedBloodObj(b23)
 

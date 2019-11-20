@@ -64,7 +64,7 @@ class Blood(object):
 
     def __str__(self):
         #return "Blood expiry={}, amount={}".format(self.isExpired(), self._amount)
-        return "(expiry,amount)=({},{})".format(self.isExpired(), self._amount)
+        return "T={}(expiry,amount)=({},{}==>W{})".format(self._type, self.isExpired(), self._amount, self._weight)
 
 if __name__ == "__main__":
 
