@@ -25,6 +25,7 @@ class Efficiency():
 
     #Calculate score for individual parameters
     def calculateScore(value, min, max, weight):
+        if max == 0: return 0
         if weight > 0:
             #return weight * ((min - value) / (min - max))
             return weight * ( 1 - ( value - min ) / max )

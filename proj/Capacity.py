@@ -5,7 +5,7 @@ class Capacity():
 
     TYPE_ALGO = 1/36
 
-    MINIMUM_LIMIT = 0.15
+    MINIMUM_LIMIT = 0.35
 
     def __init__(self, max):
 
@@ -20,6 +20,30 @@ class Capacity():
             self._types[t] = round(Capacity.TYPE_ALGO * i * max, 0)
             i+=1
 
+    def changeCapacity(self, new):
+        self._max = new
+
+    def typeStoragePerCapacity(self, type):
+        return self._storage.type(type) / self._types[type]
+
+    def transfer(self, type, maxTransfer):
+        give = []
+        amount = 0
+        ## TODO SORT TYPE BLOOD ARRAY BY AMOUNT
+        for b in self._storage.getTypeArr(type):
+            amount += b.amount()
+            if amount > maxTransfer:
+                break
+            give.append(b)
+            self._storage.removeUsedBloodObj(b)
+        amount -= b.amount()
+        return give, amount
+
+
+
+    def type(self, type):
+        return self._types[type]
+
     def storage(self):
         return self._storage
 
@@ -28,7 +52,7 @@ class Capacity():
 
     def min(self):
         return self._min
-        
+
     def totalBloodAmount(self):
         return sum(self._storage._types.values())
 
@@ -44,7 +68,7 @@ class Capacity():
     #    Capacity inventory is sorted by expiry date
 
     def checkLevels(self, type):
-        if self._type[type] < Capacity.MINIMUM_LIMIT * self._storage.type(type):
+        if self._storage.type(type) < Capacity.MINIMUM_LIMIT * self._types[type]:
             return True
         return False
 
@@ -55,7 +79,7 @@ class Capacity():
         self._inventory.remove(blood)
         blood._storage = None
         self._min[blood._type] -= blood._amount
-    # Postcondition: 
+    # Postcondition:
     #    Blood is no longer assigned to a capacity
     #    Blood totals are updated
 
@@ -67,24 +91,24 @@ class Capacity():
         return "\n".join(["Total Capacity: %s"%(self._max),
             "Type totals:",
             "\n".join(map(lambda x:"\t{}: {}".format(x[0], x[1]), sorted(self._storage._types.items(), key=lambda x: -x[1]))),
-			"Blood bags:",
+            "Blood bags:",
             "\n".join(map(str,self._storage._allBlood))
         ])
 
 if __name__ == "__main__":
     c1= Capacity(1000)
-    
+
     from Blood import Blood
-    
+
     b1 = Blood("2019-11-01", 200)
     b1.verify("A+")
-    
+
     b2 = Blood("2019-11-01", 150)
     b2.verify("A-")
-    
+
     b3 = Blood("2019-11-01", 250)
     b3.verify("B+")
-    
+
     c1.addBlood(b1)
     c1.addBlood(b2)
     c1.addBlood(b3)
