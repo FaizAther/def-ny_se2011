@@ -98,7 +98,6 @@ class Storage():
     #Check expiration of blood
     #Removes expired blood from inventory
     #Adds expired blood into badBlood array
-
     #VERIFICATION
     def expiration(self):
         badBlood = []
