@@ -13,7 +13,7 @@ bloodList.clear()
 today = date.today().strftime("%Y-%m-%d")
 
 # Create a generic facility
-m1 = MedicalFacility("Hospital1", None, 200000)
+m1 = MedicalFacility("Hospital1", None, 30000)
 
 # Add some blood
 bag1 = Blood(today, 400)
@@ -253,6 +253,24 @@ bag3.verify("B-")
 m2.addBlood(bag1)
 m2.addBlood(bag2)
 m2.addBlood(bag3)
+
+
+# Create second facility
+m3 = MedicalFacility("Hospital3", None, 50000)
+
+# Add some blood
+bag1 = Blood("2018-11-21", 250)
+bag1.verify("O-")
+
+bag2 = Blood("2018-11-21", 450)
+bag2.verify("O-")
+
+bag3 = Blood("2018-11-21", 350)
+bag3.verify("B-")
+
+m3.addBlood(bag1)
+m3.addBlood(bag2)
+m3.addBlood(bag3)
 
 donorList.clear()
 

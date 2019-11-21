@@ -65,7 +65,7 @@ def requestBlood(f):
 	"""Request blood to use"""
 	btype = getInput(isBloodType, "Enter blood type: ")
 	amount = int(getInput(isPositive, "Enter amount: "))
-	blood = Tracker().invokeEfficiency(f, btype, amount)
+	blood = Tracker([*facilityList.values()]).invokeEfficiency(f, btype, amount)
 	if type(blood) is not list: blood = [blood]
 	if blood:
 		if len(blood) > 1:

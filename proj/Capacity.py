@@ -21,7 +21,7 @@ class Capacity():
             i+=1
 
     def typeStoragePerCapacity(self, type):
-        return self._storage.type(type) / self.types[type]
+        return self._storage.type(type) / self._types[type]
 
     def transfer(self, type, maxTransfer):
         give = []
