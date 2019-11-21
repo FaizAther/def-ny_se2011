@@ -35,7 +35,7 @@ class Tracker():
                 mF.donatable(type)
             else:
                 mF.weight(None)
-                mF.dobatable(None)
+                mF.donatable(None)
         #Sort by most donatable
         ## CHECK THIS
         self._medicalFacilities = self.sortByDonatability(self._medicalFacilities)
