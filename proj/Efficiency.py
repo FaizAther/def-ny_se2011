@@ -121,8 +121,8 @@ class Efficiency():
         Efficiency.scoreSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
         Efficiency.sortByScore(wantedBlood)
 
-        # for b in wantedBlood:
-        #     print(b)
+        for b in wantedBlood:
+            print(b)
 
         storage.removeUsedBloodObj(wantedBlood[0])
 
@@ -180,17 +180,15 @@ class Efficiency():
     def sortByScore(bList):
         n = len(bList)
         i = 1
-        while i < len(bList):
-
-            curVal = bList[i]
+        while(i < n):
             j = i
-
-            while j > 0 and bList[j-1].getScore() < curVal.getScore():
-                bList[j] = bList[j-1]
+            while((j >= 1) and (bList[j-1].getScore() < bList[j].getScore())):
+                temp = bList[j-1]
+                bList[j-1] = bList[j]
+                bList[j] = temp
                 j = j - 1
-
-            bList[j] = curVal
             i = i + 1
+
         return bList
 
 #MERGE SORT
@@ -207,13 +205,14 @@ class Efficiency():
             i = 0
             j = 0
             k = 0
-            if left[i].amount() < right[j].amount():
-                bList[k] = left[i]
-                i = i + 1
-            else:
-                bList[k] = right[j]
-                j = j + 1
-            k = k + 1
+            while i < len(left) and j < len(right):
+                if left[i].amount() < right[j].amount():
+                    bList[k] = left[i]
+                    i = i + 1
+                else:
+                    bList[k] = right[j]
+                    j = j + 1
+                k = k + 1
 
             while i < len(left):
                 bList[k] = left[i]
@@ -300,4 +299,4 @@ if __name__== "__main__":
     #print(s)
 
     #print("Best blood choice for A-")
-    #print(Efficiency.getBestBlood(s, "A-", 150))
+    print(Efficiency.getBestBlood(s, "A-", 150))

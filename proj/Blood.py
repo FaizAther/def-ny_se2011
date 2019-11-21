@@ -66,9 +66,9 @@ class Blood():
         #return "(expiry,amount)=({},{})".format(self.isExpired(), self._amount)
         #return "T={}(expiry,amount)=({},{}==>W{})".format(self._type, self.isExpired(), self._amount, self._score)
         #return "ID: %3s | Collection Date: %10s | Type: %3s | Amount: %5d | D2E: %d " % (self._id, self._collectionDate, self._type or "?", self._amount, self.isExpired())
-        #bloodVal = "ID: {} | Collection Date: {} | Type: {} | Amount: {} | D2E: {} | Weight: {}".format(self._id, self._collectionDate, self._type or "?", self._amount, self.isExpired(), self.getScore())
+        bloodVal = "ID: {} | Collection Date: {} | Type: {} | Amount: {} | D2E: {} | Weight: {}".format(self._id, self._collectionDate, self._type or "?", self._amount, self.isExpired(), self.getScore())
 
-        bloodVal = "ID: {} | Collection Date: {} | Type: {} | Amount: {} | D2E: {}".format(self._id, self._collectionDate, self._type or "?", self._amount, self.isExpired())
+        #bloodVal = "ID: {} | Collection Date: {} | Type: {} | Amount: {} | D2E: {}".format(self._id, self._collectionDate, self._type or "?", self._amount, self.isExpired())
         return bloodVal
 
     def __lt__(self, other):
