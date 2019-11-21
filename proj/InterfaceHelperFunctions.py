@@ -130,3 +130,10 @@ def getType(f):
 def removeExpiredBlood(f):
 	"""Removes expired blood"""
 	return f.removeExpiredBlood()
+	
+	
+def changeCapacity(f):
+	"""Change the capacity of your facility"""
+	
+	n = int(getInput(isPositive, "Enter new capacity: "))
+	f._capacity.changeCapacity(n)

@@ -20,6 +20,9 @@ class Capacity():
             self._types[t] = round(Capacity.TYPE_ALGO * i * max, 0)
             i+=1
 
+    def changeCapacity(self, new):
+        self._max = new
+
     def typeStoragePerCapacity(self, type):
         return self._storage.type(type) / self._types[type]
 
@@ -88,7 +91,7 @@ class Capacity():
         return "\n".join(["Total Capacity: %s"%(self._max),
             "Type totals:",
             "\n".join(map(lambda x:"\t{}: {}".format(x[0], x[1]), sorted(self._storage._types.items(), key=lambda x: -x[1]))),
-			"Blood bags:",
+            "Blood bags:",
             "\n".join(map(str,self._storage._allBlood))
         ])
 
