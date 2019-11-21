@@ -45,7 +45,7 @@ class Tracker():
                 for b in mF.getTransfer(type):
                     medicalFacility.addBlood(b)
 
-            if (!medicalFacility.capacity().checkLevels(type):
+            if not medicalFacility.capacity().checkLevels(type):
                 break
 
         return transfer
@@ -119,4 +119,4 @@ if __name__ == "__main__":
                             3000)
     h2.addBloodFromParams("2019-11-14", 200, type='AB+')
     t.medicalFacilities(h2)
-    #print(t)
+    print(t)
