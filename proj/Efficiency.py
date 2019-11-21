@@ -30,8 +30,17 @@ class Efficiency():
             return weight * ( 1 - ( value - min ) / max )
         else:
             #return (-1 * (weight * ((max - value) / (max - min))))
-            #return -weight * ( ( value - min ) / max )
             return weight * ( ( value - min ) / max )
+
+        # if weight == 0.15:
+        #     #return weight * ((min - value) / (min - max))
+        #     #weight * (1-(value-max)/min)
+        #     return weight * (1-(value-max)/min)
+        # else:
+        #     #return (-1 * (weight * ((max - value) / (max - min))))
+        #     #return -weight * ( ( value - min ) / max )
+        #     return weight * ( 1 - ( value - min ) / max )
+            
 
 
     def scoreSum(contributors, array, **options):
@@ -117,6 +126,9 @@ class Efficiency():
 
         Efficiency.scoreSum(Efficiency.CONTRIBUTORS, wantedBlood, requested=rQuan, storage=storage)
         Efficiency.sortByScore(wantedBlood)
+
+        for b in wantedBlood:
+            print(b)
 
         storage.removeUsedBloodObj(wantedBlood[0])
 
@@ -311,4 +323,4 @@ if __name__== "__main__":
     #print(s)
 
     #print("Best blood choice for A-")
-    #print(Efficiency.getBestBlood(s, "A-", 150))
+    print(Efficiency.getBestBlood(s, "A-", 150))
