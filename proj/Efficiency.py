@@ -183,9 +183,7 @@ class Efficiency():
         while(i < n):
             j = i
             while((j >= 1) and (bList[j-1].getScore() < bList[j].getScore())):
-                temp = bList[j-1]
-                bList[j-1] = bList[j]
-                bList[j] = temp
+                bList[j-1], bList[j] = bList[j], bList[j-1]
                 j = j - 1
             i = i + 1
 
