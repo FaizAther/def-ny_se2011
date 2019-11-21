@@ -272,6 +272,19 @@ m3.addBlood(bag1)
 m3.addBlood(bag2)
 m3.addBlood(bag3)
 
+bag1 = Blood(today, 250)
+bag1.verify("O-")
+
+bag2 = Blood(today, 450)
+bag2.verify("O-")
+
+bag3 = Blood(today, 350)
+bag3.verify("B-")
+
+m3.addBlood(bag1)
+m3.addBlood(bag2)
+m3.addBlood(bag3)
+
 donorList.clear()
 
 p1 = Donor("John", 2033, "AB+")

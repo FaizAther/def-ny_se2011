@@ -108,9 +108,7 @@ class Storage():
                 #print("T - {}".format(t))
                 for a in t.values():
                     #print("A - {}".format(a))
-                    print(a)
-                    for b in a:
-                        print(b)
+                    for b in [*a]:
                         #print("B - {}".format(b))
                         if (b.isExpired() == True):
                             badBlood.append(b)
