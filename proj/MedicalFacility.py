@@ -27,7 +27,7 @@ class MedicalFacility():
     def getTransfer(self, type):
         give, transfered = self._capacity.transfer(type, self._donatable)
         self._donatable -= transfered
-        return give
+        return give, transfered
 
     def typeStoragePerCapacity(self, type):
         return self._capacity.typeStoragePerCapacity()
