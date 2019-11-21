@@ -4,6 +4,7 @@ from Blood import *
 from Capacity import *
 from MedicalFacility import *
 from Efficiency import *
+from Tracker import *
 from Donor import *
 from datetime import *
 
@@ -64,7 +65,7 @@ def requestBlood(f):
 	"""Request blood to use"""
 	btype = getInput(isBloodType, "Enter blood type: ")
 	amount = int(getInput(isPositive, "Enter amount: "))
-	blood = Efficiency.getBestBlood(f._capacity._storage, btype, amount)
+	blood = Tracker().invokeEfficiency(f, btype, amount)
 	if type(blood) is not list: blood = [blood]
 	if blood:
 		if len(blood) > 1:
