@@ -40,10 +40,11 @@ facilityCommands = {
 print("Type help for a list of commands")
 
 while 1:
-	bs = u.removeExpiredBlood()
-	if bs:
-		print("Expired blood bags were removed:")
-		print("\n".join(map(str,bs)))
+	if u != "Admin": 
+		bs = u.removeExpiredBlood()
+		if bs:
+			print("Expired blood bags were removed:")
+			print("\n".join(map(str,bs)))
 	command = getInput().lower().strip()
 	if command == "help":
 		print("Commands are:")

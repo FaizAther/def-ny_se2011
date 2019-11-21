@@ -65,7 +65,7 @@ class Capacity():
     #    Capacity inventory is sorted by expiry date
 
     def checkLevels(self, type):
-        if self._storage.type(type) < Capacity.MINIMUM_LIMIT * self._type[type]:
+        if self._storage.type(type) < Capacity.MINIMUM_LIMIT * self._types[type]:
             return True
         return False
 
