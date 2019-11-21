@@ -5,7 +5,7 @@ class Capacity():
 
     TYPE_ALGO = 1/36
 
-    MINIMUM_LIMIT = 0.15
+    MINIMUM_LIMIT = 0.35
 
     def __init__(self, max):
 
@@ -65,7 +65,7 @@ class Capacity():
     #    Capacity inventory is sorted by expiry date
 
     def checkLevels(self, type):
-        if self._type[type] < Capacity.MINIMUM_LIMIT * self._storage.type(type):
+        if self._storage.type(type) < Capacity.MINIMUM_LIMIT * self._type[type]:
             return True
         return False
 
