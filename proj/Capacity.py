@@ -26,6 +26,7 @@ class Capacity():
     def transfer(self, type, maxTransfer):
         give = []
         amount = 0
+        ## TODO SORT TYPE BLOOD ARRAY BY AMOUNT
         for b in self._storage.getTypeArr(type):
             amount += b.amount()
             if amount > maxTransfer:
@@ -33,7 +34,7 @@ class Capacity():
             give.append(b)
             self._storage.removeUsedBloodObj(b)
         amount -= b.amount()
-        return give
+        return give, amount
 
 
 

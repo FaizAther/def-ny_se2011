@@ -31,18 +31,20 @@ class Tracker():
 
         for mF in self._medicalFacilities:
             if mF != medicalFacility:
-                mF.weight(mF.typeStoragePerCapacity() - CLASSIFY['seeder'])
+                mF.weight(mF.typeStoragePerCapacity(type) - CLASSIFY['seeder'])
                 mF.donatable(type)
             else:
                 mF.weight(None)
                 mF.dobatable(None)
         #Sort by most donatable
-        self.sortByDonatability(mF)
+        ## CHECK THIS
+        self._medicalFacilities = self.sortByDonatability(self._medicalFacilities)
         transfer = 0
-        for mF in self._medicalFacility:
-            for b in mF.getTransfer():
-                medicalFacility.addBlood(b)
-                
+        for mF in self._medicalFacilities:
+            if mF != medicalFacility:
+                for b in mF.getTransfer(type):
+                    medicalFacility.addBlood(b)
+
             if (!medicalFacility.capacity().checkLevels(type):
                 break
 

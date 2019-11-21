@@ -24,8 +24,8 @@ class MedicalFacility():
         self._weight = 0
         self._donatable = 0
 
-    def getTransfer(self):
-        give, transfered = self._capacity.transfer(self._donatable)
+    def getTransfer(self, type):
+        give, transfered = self._capacity.transfer(type, self._donatable)
         self._donatable -= transfered
         return give
 
@@ -42,7 +42,6 @@ class MedicalFacility():
         return self._weight
 
     def weight(self, weight):
-
         self._weight = weight
 
     def initWeight(self):
