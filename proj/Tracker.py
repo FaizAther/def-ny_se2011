@@ -42,7 +42,8 @@ class Tracker():
         transfer = 0
         for mF in self._medicalFacilities:
             if mF != medicalFacility:
-                for b in mF.getTransfer(type):
+                give, transfered = mF.getTransfer(type)
+                for b in give:
                     medicalFacility.addBlood(b)
 
             if not medicalFacility.capacity().checkLevels(type):
