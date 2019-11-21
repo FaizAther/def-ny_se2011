@@ -40,9 +40,11 @@ class Tracker():
         ## CHECK THIS
         self._medicalFacilities = self.sortByDonatability(self._medicalFacilities)
         transfer = 0
+        print(self._medicalFacilities)
         for mF in self._medicalFacilities:
             if mF != medicalFacility:
                 give, transfered = mF.getTransfer(type)
+                print(give, transfered)
                 for b in give:
                     medicalFacility.addBlood(b)
 
@@ -51,38 +53,38 @@ class Tracker():
 
         return transfer
 
-        def sortByDonatability(bList):
-            if len(bList) > 1:
-                mid = len(bList)//2
-                left = bList[:mid]
-                right = bList[mid:]
+    def sortByDonatability(self, bList):
+        if len(bList) > 1:
+            mid = len(bList)//2
+            left = bList[:mid]
+            right = bList[mid:]
 
-                Efficiency.sortByDonatability(left)
-                Efficiency.sortByDonatability(right)
+            Efficiency.sortByDonatability(left)
+            Efficiency.sortByDonatability(right)
 
-                i = 0
-                j = 0
-                k = 0
-                while i < len(left) and j < len(right):
-                    if left[i].getDonatable() < right[j].getDonatable():
-                        bList[k] = left[i]
-                        i = i + 1
-                    else:
-                        bList[k] = right[j]
-                        j = j + 1
-                    k = k + 1
-
-                while i < len(left):
+            i = 0
+            j = 0
+            k = 0
+            while i < len(left) and j < len(right):
+                if left[i].getDonatable() < right[j].getDonatable():
                     bList[k] = left[i]
                     i = i + 1
-                    k = k + 1
-
-                while j < len(right):
+                else:
                     bList[k] = right[j]
                     j = j + 1
-                    k = k + 1
+                k = k + 1
 
-            return bList
+            while i < len(left):
+                bList[k] = left[i]
+                i = i + 1
+                k = k + 1
+
+            while j < len(right):
+                bList[k] = right[j]
+                j = j + 1
+                k = k + 1
+
+        return bList
 
     def __str__(self):
         str = "Medical Facilities"
