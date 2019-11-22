@@ -36,7 +36,7 @@ class Donor():
 		return self._type
 		
 	def __str__(self):
-		return "ID: %3s | Name: %15s | Type: %3s" % (self._id, self._name, self._type or "?")
+		return "ID: %3s | Postcode: %04s | Name: %15s | Type: %3s" % (self._id, self._postCode, self._name, self._type or "?")
 
 	def toObject(self):
 		return self._name, self._postCode, self._type

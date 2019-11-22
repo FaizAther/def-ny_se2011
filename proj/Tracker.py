@@ -5,9 +5,9 @@ class Tracker():
 
     CLASSIFY = {'seeder' : 0.5, 'leecher' : 0.35, 'danger' : 0.15}
 
-    def __init__(self):
+    def __init__(self, facilityList):
 
-        self._medicalFacilities = []
+        self._medicalFacilities = facilityList
 
     def test():
         print("hello")
@@ -31,20 +31,20 @@ class Tracker():
 
         for mF in self._medicalFacilities:
             if mF != medicalFacility:
-                mF.weight(mF.typeStoragePerCapacity(type) - CLASSIFY['seeder'])
+                mF.weight(mF.typeStoragePerCapacity(type) - Tracker.CLASSIFY['seeder'])
                 mF.donatable(type)
             else:
                 mF.weight(None)
-                mF.donatable(None)
+                mF.setDonatable(-1000000000000)
         #Sort by most donatable
         ## CHECK THIS
         self._medicalFacilities = self.sortByDonatability(self._medicalFacilities)
         transfer = 0
-        print(self._medicalFacilities)
         for mF in self._medicalFacilities:
             if mF != medicalFacility:
                 give, transfered = mF.getTransfer(type)
-                print(give, transfered)
+                if len(give) > 0:
+                    print(f"Blood type running low: Transferring {len(give)} blood bags from {mF._name}")
                 for b in give:
                     medicalFacility.addBlood(b)
 
@@ -59,8 +59,8 @@ class Tracker():
             left = bList[:mid]
             right = bList[mid:]
 
-            Efficiency.sortByDonatability(left)
-            Efficiency.sortByDonatability(right)
+            self.sortByDonatability(left)
+            self.sortByDonatability(right)
 
             i = 0
             j = 0

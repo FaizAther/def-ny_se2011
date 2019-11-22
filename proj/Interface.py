@@ -33,7 +33,8 @@ facilityCommands = {
 	'donors': listDonors,
 	'register donor': registerDonor,
 	'query donor': queryDonor,
-	'type': getType
+	'type': getType,
+	'set capacity': changeCapacity
 }
 
 

@@ -29,9 +29,18 @@ class MedicalFacility():
         self._donatable -= transfered
         return give, transfered
 
+    def setDonatable(self, v):
+        self._donatable = v
+        
+    def setWeight(self, v):
+        self._weight = v
+        
     def typeStoragePerCapacity(self, type):
-        return self._capacity.typeStoragePerCapacity()
+        return self._capacity.typeStoragePerCapacity(type)
 
+    def initDonatable(self):
+        self._donatable = 0
+        
     def getDonatable(self):
         return self._donatable
 

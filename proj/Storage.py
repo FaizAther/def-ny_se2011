@@ -53,8 +53,8 @@ class Storage():
     def addBlood(self, blood, **args):
 
         #Does not add if blood is expired
-        if blood.isExpired() == True:
-            return
+        #if blood.isExpired() == True:
+        #    return
 
         if args.get('room') == None:
             args['room'] = "Default"
@@ -98,7 +98,6 @@ class Storage():
     #Check expiration of blood
     #Removes expired blood from inventory
     #Adds expired blood into badBlood array
-
     #VERIFICATION
     def expiration(self):
         badBlood = []
@@ -108,12 +107,13 @@ class Storage():
                 #print("T - {}".format(t))
                 for a in t.values():
                     #print("A - {}".format(a))
-                    for b in a:
+                    for b in [*a]:
                         #print("B - {}".format(b))
                         if (b.isExpired() == True):
                             badBlood.append(b)
                             self._types[b.type()]-=b.amount()
                             a.remove(b)
+                            self._allBlood.remove(b)
         return badBlood
 
 
