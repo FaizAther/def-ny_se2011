@@ -1,4 +1,4 @@
-predicate bloodZero(bloods: array?<int>)
+predicate bloodZero(bloods: array<int>)
     reads bloods
     requires bloods != null
 {
@@ -19,7 +19,7 @@ function method calcScore(value:real , min:real , max:real, weight:real ) : real
 }
 
 // find maximum value for the given array of criteria value
-method findMax(a:array?<real>) returns(max:real)
+method findMax(a:array<real>) returns(max:real)
   requires a!=null;
   ensures (forall j :int :: (j >= 0 && j < a.Length ==> max >= a[j]));
   ensures (a.Length > 0)==>(exists j : int :: j>=0 && j < a.Length && max==a[j]);
@@ -49,7 +49,7 @@ method findMax(a:array?<real>) returns(max:real)
 }
 
 // find minimum value for the given array of criteria value
-method findMin(a:array?<real>) returns(min:real)
+method findMin(a:array<real>) returns(min:real)
   requires a!=null;
   ensures (forall j :int :: (j >= 0 && j < a.Length ==> min <= a[j]));
   ensures (a.Length > 0)==>(exists j : int :: j>=0 && j < a.Length && min==a[j]);
@@ -77,7 +77,7 @@ method findMin(a:array?<real>) returns(min:real)
   }
 }
 
-method scoreSum(a:array?<real>, weight:real, score:array?<real>)
+method scoreSum(a:array<real>, weight:real, score:array<real>)
 modifies score
 requires a != null
 requires score != null
